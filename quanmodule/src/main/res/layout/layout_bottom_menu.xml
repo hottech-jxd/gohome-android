@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.MainActivity" />
+    </data>
+
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <View
+        android:background="#bababa"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:onClick="@{clickHandler.onClick}"
+        android:id="@+id/bottom_index"
+        android:padding="@dimen/dp_8"
+        android:background="@drawable/style_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/bottom_index_image"
+            android:src="@mipmap/home2"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="1dp"
+            android:id="@+id/bottom_index_title"
+            android:text="@string/bottom_menu_index"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/bottom_menu_color"
+            android:layout_below="@id/bottom_index_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:onClick="@{clickHandler.onClick}"
+        android:id="@+id/bottom_benefit"
+        android:background="@drawable/style_bottom_bg"
+        android:padding="@dimen/dp_8"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/benefit"
+            android:id="@+id/bottom_benefit_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="1dp"
+            android:id="@+id/bottom_benefit_title"
+            android:text="@string/bottom_menu_favorite"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/bottom_menu_color2"
+            android:layout_below="@id/bottom_benefit_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_quan"
+        android:background="@drawable/style_bottom_bg"
+        android:padding="@dimen/dp_8"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/quan"
+            android:id="@+id/bottom_quan_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="1dp"
+            android:id="@+id/bottom_quan_title"
+            android:text="@string/bottom_menu_category"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/bottom_menu_color2"
+            android:layout_below="@id/bottom_quan_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/style_bottom_bg"
+        android:id="@+id/bottom_my"
+        android:padding="@dimen/dp_8"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/my"
+            android:id="@+id/bottom_my_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="1dp"
+            android:id="@+id/bottom_my_title"
+            android:text="@string/bottom_menu_my"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/bottom_menu_color2"
+            android:layout_below="@id/bottom_my_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v7.widget.LinearLayoutCompat>
+
+
+</layout>

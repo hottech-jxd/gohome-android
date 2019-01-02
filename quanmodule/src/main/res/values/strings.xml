@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">scoremodule</string>
+
+    <string name="bottom_menu_index">首页</string>
+    <string name="bottom_menu_favorite">收藏</string>
+    <string name="bottom_menu_category">分类</string>
+    <string name="bottom_menu_my">个人中心</string>
+</resources>
