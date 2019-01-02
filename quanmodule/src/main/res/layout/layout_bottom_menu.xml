@@ -49,6 +49,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+            android:visibility="gone"
             android:onClick="@{clickHandler.onClick}"
         android:id="@+id/bottom_benefit"
         android:background="@drawable/style_bottom_bg"
@@ -75,6 +76,8 @@
     </RelativeLayout>
 
     <RelativeLayout
+            android:visibility="gone"
+            android:onClick="@{clickHandler.onClick}"
         android:id="@+id/bottom_quan"
         android:background="@drawable/style_bottom_bg"
         android:padding="@dimen/dp_8"
@@ -100,6 +103,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+            android:onClick="@{clickHandler.onClick}"
         android:background="@drawable/style_bottom_bg"
         android:id="@+id/bottom_my"
         android:padding="@dimen/dp_8"

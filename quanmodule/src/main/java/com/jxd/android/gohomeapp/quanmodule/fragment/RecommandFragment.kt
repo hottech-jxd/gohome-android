@@ -9,10 +9,25 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
+import cn.iwgang.countdownview.CountdownView
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.facebook.drawee.view.SimpleDraweeView
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+import com.jxd.android.gohomeapp.libcommon.bean.*
+import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
+import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
+import com.jxd.android.gohomeapp.quanmodule.adapter.HorizontalBannerAdapter
+import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandAdapter
+import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandDevider
+import com.youth.banner.Banner
+import com.youth.banner.listener.OnBannerListener
+import kotlinx.android.synthetic.main.quan_fragment_recommand.*
 
 
 private const val ARG_PARAM1 = "param1"
@@ -30,7 +45,7 @@ class RecommandFragment : BaseFragment()
 
     private var category: String? = null
     private var dataAdapter: DataAdapter?=null
-    private var recommandAdapter:RecommandAdapter?=null
+    private var recommandAdapter: RecommandAdapter?=null
     private var data= ArrayList<String>()
     private var recommands = ArrayList<MultiItemEntity>()
 
@@ -41,6 +56,10 @@ class RecommandFragment : BaseFragment()
             category = it.getString(ARG_CATEGORY)
 
         }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.quan_fragment_recommand , container , false)
     }
 
     private fun mockData():ArrayList<MultiItemEntity>{
@@ -127,7 +146,7 @@ class RecommandFragment : BaseFragment()
         recommandAdapter= RecommandAdapter(recommands)
 
         recommand_recyclerView.layoutManager= GridLayoutManager(context,2)
-        recommandAdapter!!.setSpanSizeLookup(object:BaseQuickAdapter.SpanSizeLookup{
+        recommandAdapter!!.setSpanSizeLookup(object: BaseQuickAdapter.SpanSizeLookup{
             override fun getSpanSize(gridLayoutManager: GridLayoutManager?, position: Int): Int {
                 if( recommandAdapter!!.getItemViewType(position) == ItemTypeEnum.BANNER.type ){
                     return 2
@@ -194,12 +213,12 @@ class RecommandFragment : BaseFragment()
         horizontalBanner.adapter=horizontalBannerAdapter
     }
 
-    override fun fetchData() {
+    fun fetchData() {
 
     }
 
     override fun getLayoutResourceId(): Int {
-        return R.layout.fragment_recommand
+        return 0
     }
 
     override fun onRefresh() {
@@ -207,7 +226,7 @@ class RecommandFragment : BaseFragment()
     }
 
     override fun OnBannerClick(position: Int) {
-        newIntent<DetailActivity>()
+        //newIntent<DetailActivity>()
     }
 
     companion object {

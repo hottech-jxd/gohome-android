@@ -62,5 +62,10 @@ dependencies {
     kapt 'com.alibaba:arouter-compiler:1.2.2'
     /*banner组件库*/
     implementation 'com.youth.banner:banner:1.4.10'
-
+    /*recyckerview库*/
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
+    /*倒计时组件库*/
+    implementation 'com.github.iwgang:countdownview:2.1.6'
+    /*一个通用的RecyclerView的分割线库*/
+    implementation 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:2.0'
 }

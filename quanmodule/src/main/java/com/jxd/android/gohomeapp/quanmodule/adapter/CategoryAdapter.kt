@@ -3,8 +3,8 @@ package com.huotu.android.couponsleague.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.huotu.android.couponsleague.R
-import com.huotu.android.couponsleague.bean.Category
+import com.jxd.android.gohomeapp.libcommon.bean.Category
+import com.jxd.android.gohomeapp.quanmodule.R
 
 class CategoryAdapter(data :ArrayList<Category>) : BaseQuickAdapter<Category,BaseViewHolder>(R.layout.layout_category_item , data ) {
 

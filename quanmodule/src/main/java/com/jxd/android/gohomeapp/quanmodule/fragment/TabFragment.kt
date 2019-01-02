@@ -12,7 +12,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.huotu.android.couponsleague.adapter.CategoryAdapter
 import com.jxd.android.gohomeapp.libcommon.bean.Category
+import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
 import kotlinx.android.synthetic.main.quan_fragment_tab.*
 
 
@@ -33,9 +35,9 @@ class TabFragment : BaseFragment() ,View.OnClickListener{
     private var category: String? = null
 
     private var categoryList=ArrayList<Category>()
-    private var categoryAdapter:CategoryAdapter?=null
+    private var categoryAdapter: CategoryAdapter?=null
     private var dataList =ArrayList<String>()
-    private var dataAdapter:DataAdapter?=null
+    private var dataAdapter: DataAdapter?=null
     private var column_price_sort= 0
 
 

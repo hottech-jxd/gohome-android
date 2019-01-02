@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.drawee.view.SimpleDraweeView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recommand_image_1"
+        android:layout_width="match_parent"
+        app:viewAspectRatio="1.7"
+    app:actualImageScaleType="centerCrop"
+    app:placeholderImageScaleType="centerCrop"
+    app:failureImageScaleType="centerCrop"
+        android:layout_height="wrap_content" />

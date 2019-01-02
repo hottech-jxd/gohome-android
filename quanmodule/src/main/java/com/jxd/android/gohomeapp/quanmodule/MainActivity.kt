@@ -18,6 +18,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityMainBinding
 import com.jxd.android.gohomeapp.quanmodule.fragment.BenefitsFragment
 import com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment
+import com.jxd.android.gohomeapp.quanmodule.fragment.MyFragment
 import kotlinx.android.synthetic.main.quan_activity_main.view.*
 
 @Route(path=ARouterPath.QuanActivityIndexPath)
@@ -84,12 +85,16 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
         fragments.clear()
         var indexFragment : IndexFragment =  (ARouter.getInstance().build(ARouterPath.QuanFragmentIndexPath).navigation()) as IndexFragment
         fragments.add(indexFragment)
-        var benefitFragment:BenefitsFragment = ARouter.getInstance().build(ARouterPath.QuanFragmentBenifitPath).navigation() as BenefitsFragment
-        fragments.add(benefitFragment)
+//        var benefitFragment:BenefitsFragment = ARouter.getInstance().build(ARouterPath.QuanFragmentBenifitPath).navigation() as BenefitsFragment
+//        fragments.add(benefitFragment)
 //        fragments.add(QuanFragment.newInstance())
-//        fragments.add(MyFragment.newInstance())
+        var myFragment = ARouter.getInstance().build(ARouterPath.QuanFragmentMyPath).navigation() as MyFragment
+        fragments.add( myFragment )
 //
-        fragmentAdapter = AppFragmentAdapter( supportFragmentManager , fragments )
+        var titles = ArrayList<String>()
+        titles.add(getString(R.string.bottom_menu_index))
+        titles.add(getString(R.string.bottom_menu_my))
+        fragmentAdapter = AppFragmentAdapter( supportFragmentManager , fragments , titles)
         //main_viewPager.adapter = fragmentAdapter
         activityMainBinding!!.fragmentAdapter = fragmentAdapter
 //

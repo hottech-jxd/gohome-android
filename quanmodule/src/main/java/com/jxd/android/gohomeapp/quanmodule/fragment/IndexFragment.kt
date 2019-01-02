@@ -18,6 +18,8 @@ import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.R.id.index_tab
+import kotlinx.android.synthetic.main.quan_fragment_index.*
 
 
 /**
