@@ -2,9 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.jxd.android.gohomeapp.quanmodule">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application>
-        <activity android:name="com.jxd.android.gohomeapp.quanmodule.MainActivity">
-        </activity>
+        <activity android:name="com.jxd.android.gohomeapp.quanmodule.MainActivity" android:theme="@style/QuanAppTheme"/>
+        <activity android:name=".SearchActivity" android:theme="@style/QuanAppTheme"/>
+        <activity android:name=".DetailActivity" android:theme="@style/QuanAppTheme"/>
+
+
+        <meta-data
+                android:name="android.max_aspect"
+                android:value="2.4" />
+
+        <!--适配华为（huawei）刘海屏-->
+        <meta-data
+                android:name="android.notch_support"
+                android:value="true"/>
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+                android:name="notch.config"
+                android:value="portrait|landscape" />
+
     </application>
 
 </manifest>

@@ -5,4 +5,7 @@
     <color name="bottom_menu_color">#ff4c52</color>
     <color name="bottom_menu_color2">#898989</color>
     <color name="black">#000000</color>
+    <color name="linecolor">#EBEBEB</color>
+    <color name="truslaparent">#88000000</color>
+    <color name="progress_color">#ff4c52</color>
 </resources>

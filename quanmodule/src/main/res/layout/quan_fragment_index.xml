@@ -3,6 +3,7 @@
 
     <data>
         <variable name="fragmentadapter" type="com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter" />
+        <variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment" />
     </data>
 
 <android.support.constraint.ConstraintLayout
@@ -35,7 +36,7 @@
             android:id="@+id/index_tab"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="@dimen/dp_40"
             app:tabIndicatorColor="@color/black"
             app:tabIndicatorHeight="3dp"
             app:tabSelectedTextColor="@color/black"
@@ -47,6 +48,7 @@
             app:tabTextColor="#8b8b8b"
             app:tabMode="scrollable" />
         <ImageView
+                android:onClick="@{()->clickHandler.showCategorys()}"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:id="@+id/index_more"

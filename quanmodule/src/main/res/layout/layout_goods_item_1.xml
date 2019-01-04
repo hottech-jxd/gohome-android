@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="0dp"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/dp_4"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -25,9 +27,11 @@
 
     <TextView
         android:textSize="14sp"
+        android:paddingBottom="@dimen/dp_5"
         android:textColor="@color/black"
         android:id="@+id/good_item_1_title"
         android:maxLines="2"
+        android:lineSpacingExtra="@dimen/dp_3"
         app:layout_constraintTop_toBottomOf="@id/good_item_1_logo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -37,47 +41,52 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:text="￥21.55"
+        android:textSize="@dimen/sp_14"
         android:id="@+id/good_item_1_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/good_item_1_title"
+        app:layout_constraintRight_toLeftOf="@id/good_item_1_count"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <TextView
         android:id="@+id/good_item_1_count"
         android:text="销售量108件"
+        android:textSize="@dimen/sp_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/good_item_1_price"
+        app:layout_constraintLeft_toRightOf="@id/good_item_1_price"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
+            android:layout_marginTop="@dimen/dp_4"
         android:id="@+id/good_item_1_final_label"
         app:layout_constraintTop_toBottomOf="@id/good_item_1_price"
         app:layout_constraintLeft_toLeftOf="@id/good_item_1_price"
         android:text="券后"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/good_item_1_final_price"
         android:text="￥4.15"
         android:textColor="#fe4c55"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_16"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/good_item_1_price"
+        app:layout_constraintTop_toTopOf="@id/good_item_1_final_label"
         app:layout_constraintLeft_toRightOf="@id/good_item_1_final_label"/>
 
     <ImageView
         android:id="@+id/good_item_1_favorite"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_22"
         android:src="@mipmap/favorite_gray"
-        app:layout_constraintTop_toTopOf="@id/good_item_1_final_label"
+        app:layout_constraintBottom_toBottomOf="@id/good_item_1_final_label"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
@@ -86,6 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="券￥4"
+        android:textSize="@dimen/sp_12"
         android:textColor="#fe4c55"
         android:background="@drawable/shape_quan_bg"
         android:paddingLeft="5dp"
@@ -103,21 +113,24 @@
         android:orientation="horizontal"
         android:layout_marginLeft="8dp"
         android:paddingTop="2dp"
-        android:paddingBottom="2dp"
+        android:paddingBottom="@dimen/dp_2"
         android:paddingRight="8dp"
         android:paddingLeft="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:text="分享赚"
+            android:text="分享赚￥"
+            android:textSize="@dimen/sp_12"
             android:textColor="#fe4c55"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_width="16dp"
-            android:src="@mipmap/zhuan2"
-            android:layout_height="16dp" />
+
+        <!--<ImageView-->
+            <!--android:layout_width="16dp"-->
+            <!--android:src="@mipmap/zhuan2"-->
+            <!--android:layout_height="16dp" />-->
         <TextView
+                android:textSize="@dimen/sp_12"
             android:textColor="#fe4c55"
             android:text="1.2"
             android:layout_width="wrap_content"

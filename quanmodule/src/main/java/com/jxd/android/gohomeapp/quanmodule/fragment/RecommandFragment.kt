@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
+import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
@@ -41,6 +42,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class RecommandFragment : BaseFragment()
         , SwipeRefreshLayout.OnRefreshListener
+    ,BaseQuickAdapter.OnItemChildClickListener
         , OnBannerListener {
 
     private var category: String? = null
@@ -60,6 +62,16 @@ class RecommandFragment : BaseFragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.quan_fragment_recommand , container , false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
+        super.onLazyInitView(savedInstanceState)
+
+        fetchData()
     }
 
     private fun mockData():ArrayList<MultiItemEntity>{
@@ -131,6 +143,21 @@ class RecommandFragment : BaseFragment()
         bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
         item8 = RecommandItem7(bean)
         recommands.add(item8)
+        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
+        item8 = RecommandItem7(bean)
+        recommands.add(item8)
+        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
+        item8 = RecommandItem7(bean)
+        recommands.add(item8)
+        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
+        item8 = RecommandItem7(bean)
+        recommands.add(item8)
+        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
+        item8 = RecommandItem7(bean)
+        recommands.add(item8)
+        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
+        item8 = RecommandItem7(bean)
+        recommands.add(item8)
 
         return recommands
     }
@@ -144,6 +171,7 @@ class RecommandFragment : BaseFragment()
         mockData()
 
         recommandAdapter= RecommandAdapter(recommands)
+        //recommandAdapter!!.onItemChildClickListener=this
 
         recommand_recyclerView.layoutManager= GridLayoutManager(context,2)
         recommandAdapter!!.setSpanSizeLookup(object: BaseQuickAdapter.SpanSizeLookup{
@@ -172,9 +200,9 @@ class RecommandFragment : BaseFragment()
 
 
         var bannerUrl = ArrayList<String>()
-        bannerUrl.add("http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg")
-        bannerUrl.add("http://app.infunpw.com/commons/images/cinema/cinema_films/3566.jpg")
-        bannerUrl.add("http://app.infunpw.com/commons/images/cinema/cinema_films/3757.jpg")
+        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
+        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
+        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
         var indexBanner = header.findViewById<Banner>(R.id.recommand_banner)
         indexBanner.setImageLoader(FrescoImageLoader( indexBanner , DensityUtils.getScreenWidth(context!!)))
         indexBanner.setImages(bannerUrl)
@@ -214,7 +242,7 @@ class RecommandFragment : BaseFragment()
     }
 
     fun fetchData() {
-
+        initView()
     }
 
     override fun getLayoutResourceId(): Int {
@@ -227,6 +255,13 @@ class RecommandFragment : BaseFragment()
 
     override fun OnBannerClick(position: Int) {
         //newIntent<DetailActivity>()
+        showToast("todo")
+    }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        if(view!!.id == R.id.recommand_banner){
+            showToast("todo")
+        }
     }
 
     companion object {

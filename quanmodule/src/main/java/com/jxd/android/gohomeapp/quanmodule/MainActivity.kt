@@ -16,10 +16,9 @@ import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityMainBinding
-import com.jxd.android.gohomeapp.quanmodule.fragment.BenefitsFragment
 import com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment
 import com.jxd.android.gohomeapp.quanmodule.fragment.MyFragment
-import kotlinx.android.synthetic.main.quan_activity_main.view.*
+import kotlinx.android.synthetic.main.layout_bottom_menu.*
 
 @Route(path=ARouterPath.QuanActivityIndexPath)
 class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChangeListener{
@@ -27,7 +26,7 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
     var fragments = ArrayList<BaseFragment>()
     var fragmentAdapter : AppFragmentAdapter?=null
     var activityMainBinding:QuanActivityMainBinding?=null
-    var clickHandler=ClickHandler()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +36,7 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
         initView()
 
 
-        initFragments()
+        //initFragments()
     }
 
     override fun initView() {
@@ -45,7 +44,8 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
         //ARouter.getInstance().inject(this)
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.quan_activity_main)
-        activityMainBinding!!.clickHandler = this
+        activityMainBinding!!.setLifecycleOwner(this)
+        //activityMainBinding!!.clickHandler = this
 
 //        bottom_index.setOnClickListener(this)
 //        bottom_benefit.setOnClickListener(this)
@@ -97,6 +97,8 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
         fragmentAdapter = AppFragmentAdapter( supportFragmentManager , fragments , titles)
         //main_viewPager.adapter = fragmentAdapter
         activityMainBinding!!.fragmentAdapter = fragmentAdapter
+
+
 //
     }
 
@@ -114,21 +116,23 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
 
     private fun changeMenuIcon(index:Int) {
 
-//        bottom_index_image.setImageResource(if (index == 0) R.mipmap.home2 else R.mipmap.home)
-//        bottom_index_title.setTextColor(if(index==0) ContextCompat.getColor (this , R.color.textcolor) else ContextCompat.getColor(this , R.color.textcolor2 ))
-//        bottom_benefit_image.setImageResource(if (index == 1) R.mipmap.benefit2 else R.mipmap.benefit)
-//        bottom_benefit_title.setTextColor( if (index ==1) ContextCompat.getColor(this , R.color.textcolor) else ContextCompat.getColor(this, R.color.textcolor2) )
-//        bottom_quan_image.setImageResource(if(index==2) R.mipmap.quan2 else R.mipmap.quan)
-//        bottom_quan_title.setTextColor( if (index ==2) ContextCompat.getColor(this , R.color.textcolor) else ContextCompat.getColor(this, R.color.textcolor2) )
-//        bottom_my_image.setImageResource(if(index==3)R.mipmap.my2 else  R.mipmap.my)
-//        bottom_my_title.setTextColor( if (index ==3) ContextCompat.getColor(this , R.color.textcolor) else ContextCompat.getColor(this, R.color.textcolor2) )
+        bottom_index_image.setImageResource(if (index == 0) R.mipmap.home2 else R.mipmap.home)
+        bottom_index_title.setTextColor(if(index==0) ContextCompat.getColor (this , R.color.bottom_menu_color) else ContextCompat.getColor(this , R.color.bottom_menu_color2 ))
+        //bottom_benefit_image.setImageResource(if (index == 1) R.mipmap.benefit2 else R.mipmap.benefit)
+        //bottom_benefit_title.setTextColor( if (index ==1) ContextCompat.getColor(this , R.color.textcolor) else ContextCompat.getColor(this, R.color.textcolor2) )
+        //bottom_quan_image.setImageResource(if(index==2) R.mipmap.quan2 else R.mipmap.quan)
+        //bottom_quan_title.setTextColor( if (index ==2) ContextCompat.getColor(this , R.color.textcolor) else ContextCompat.getColor(this, R.color.textcolor2) )
+        bottom_my_image.setImageResource(if(index==1)R.mipmap.my2 else  R.mipmap.my)
+        bottom_my_title.setTextColor( if (index ==1) ContextCompat.getColor(this , R.color.bottom_menu_color) else ContextCompat.getColor(this, R.color.bottom_menu_color2) )
     }
 
+//    fun indexImage():Int{
+//        return if( activityMainBinding!!.mainViewPager.currentItem==0 ) R.mipmap.home2 else R.mipmap.home
+//    }
+//
+//    fun myImage():Int{
+//        return if ( activityMainBinding!!.mainViewPager.currentItem==1) R.mipmap.my2 else R.mipmap.my
+//    }
 
-    class ClickHandler{
 
-        fun clickListener(view:View){
-
-        }
-    }
 }

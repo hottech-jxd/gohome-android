@@ -68,4 +68,22 @@ dependencies {
     implementation 'com.github.iwgang:countdownview:2.1.6'
     /*一个通用的RecyclerView的分割线库*/
     implementation 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:2.0'
+    /*android 4.4以上沉浸式状态栏和沉浸式导航栏管理工具库*/
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    /*tag标签库*/
+    implementation 'me.gujun.android.taggroup:library:1.4@aar'
+
+    /*网络依赖*/
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    /*rxjava*/
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.17'
+
+    implementation 'com.uber.autodispose:autodispose:0.8.0'
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.8.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    kapt "androidx.databinding:databinding-compiler:3.2.1-alpha10"
 }

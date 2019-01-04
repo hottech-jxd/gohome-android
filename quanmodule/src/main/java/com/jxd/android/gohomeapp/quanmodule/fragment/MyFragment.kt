@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.R
 
@@ -20,6 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
+@Route(path=ARouterPath.QuanFragmentMyPath)
 class MyFragment : BaseFragment() , View.OnClickListener {
 
     private var param1: String? = null

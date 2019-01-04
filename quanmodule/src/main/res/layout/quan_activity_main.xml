@@ -2,7 +2,7 @@
 
 <layout>
     <data>
-        <variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.MainActivity" />
+        <!--<variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.MainActivity" />-->
         <variable name="fragmentAdapter" type="com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter" />
     </data>
 
@@ -32,7 +32,6 @@
 
     <include layout="@layout/layout_bottom_menu"
         android:id="@+id/main_bottom"
-             app:clickHandler="@{clickHandler}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"

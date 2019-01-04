@@ -59,6 +59,8 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:1.11.0'
     // 支持 GIF 动图，需要添加
     implementation 'com.facebook.fresco:animated-gif:1.9.0'
+    /*android 4.4以上沉浸式状态栏和沉浸式导航栏管理工具库*/
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
 
 }
 repositories {

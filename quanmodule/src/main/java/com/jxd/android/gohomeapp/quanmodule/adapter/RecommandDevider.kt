@@ -1,6 +1,8 @@
 package com.jxd.android.gohomeapp.quanmodule.adapter
 
 import android.content.Context
+import android.support.annotation.ColorRes
+import android.support.v4.content.ContextCompat
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.jxd.android.gohomeapp.libcommon.bean.ItemTypeEnum
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -59,5 +61,24 @@ class RecommandDevider(var recommandAdapter: RecommandAdapter , context:Context)
                     //.setRightSideLine(true,0xffffff,5f,0f,0f)
                     .create()
         }
+    }
+}
+
+
+
+class ItemDevider2(var context: Context , var space:Float , var colorRes: Int  ):Y_DividerItemDecoration(context){
+    override fun getDivider(itemPosition: Int): Y_Divider {
+        var divider : Y_Divider= Y_DividerBuilder().create()
+        if(itemPosition%2 ==0 ){
+            return Y_DividerBuilder()
+                .setLeftSideLine(true , ContextCompat.getColor( context , colorRes) , space , 0f ,0f )
+                .create()
+        }else{
+            return Y_DividerBuilder()
+                .setLeftSideLine(true , ContextCompat.getColor( context , colorRes) , space/2 , 0f ,0f )
+                .setRightSideLine(true , ContextCompat.getColor(context , colorRes) , space , 0f, 0f)
+                .create()
+        }
+
     }
 }

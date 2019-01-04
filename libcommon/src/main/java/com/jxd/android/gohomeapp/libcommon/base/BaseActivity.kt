@@ -2,6 +2,9 @@ package com.jxd.android.gohomeapp.libcommon.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.gyf.barlibrary.BarHide
+import com.gyf.barlibrary.ImmersionBar
+import com.jxd.android.gohomeapp.libcommon.R
 import me.yokeyword.fragmentation.SupportActivity
 
 /**
@@ -22,6 +25,15 @@ open abstract class BaseActivity : SupportActivity() {
         super.onCreate(savedInstanceState)
 
         //initView()
+
+        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true).init()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        ImmersionBar.with(this).destroy()
     }
 
     abstract fun initView()

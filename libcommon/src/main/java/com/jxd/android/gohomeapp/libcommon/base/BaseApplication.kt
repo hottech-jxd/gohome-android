@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
+import com.facebook.drawee.backends.pipeline.Fresco
 
 /**
  *
@@ -19,6 +20,11 @@ import android.support.multidex.MultiDexApplication
  */
 open class BaseApplication : MultiDexApplication(){
 
+    override fun onCreate() {
+        super.onCreate()
+
+
+    }
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)

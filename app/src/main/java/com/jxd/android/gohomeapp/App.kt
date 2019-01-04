@@ -2,6 +2,7 @@ package com.jxd.android.gohomeapp
 
 import com.alibaba.android.arouter.launcher.ARouter
 import com.jxd.android.gohomeapp.libcommon.base.BaseApplication
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import me.yokeyword.fragmentation.Fragmentation
 
 /**
@@ -21,14 +22,9 @@ class App : BaseApplication()  {
     override fun onCreate() {
         super.onCreate()
 
-        if(BuildConfig.DEBUG){
-            ARouter.openDebug()
-            ARouter.openLog()
-        }
-        ARouter.init(this)
 
 
-        Fragmentation.builder().stackViewMode(Fragmentation.NONE).debug(BuildConfig.DEBUG).install()
+        QuanModule.init(this)
 
     }
 }

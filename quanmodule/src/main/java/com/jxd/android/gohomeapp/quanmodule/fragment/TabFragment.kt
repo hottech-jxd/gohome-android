@@ -15,6 +15,9 @@ import android.view.ViewGroup
 import com.huotu.android.couponsleague.adapter.CategoryAdapter
 import com.jxd.android.gohomeapp.libcommon.bean.Category
 import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
+import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider2
+import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandDevider
+import kotlinx.android.synthetic.main.layout_column.*
 import kotlinx.android.synthetic.main.quan_fragment_tab.*
 
 
@@ -66,26 +69,27 @@ class TabFragment : BaseFragment() ,View.OnClickListener{
     }
 
     override fun initView() {
-//        column_lay_price.setOnClickListener(this)
-//
-//        categoryAdapter = CategoryAdapter(categoryList)
-//        tab_recyclerview_class.layoutManager = GridLayoutManager(context , 4)
-//        tab_recyclerview_class.adapter = categoryAdapter
-//        dataAdapter=DataAdapter(dataList)
-//        tab_recyclerview_list.layoutManager=GridLayoutManager(context,2)
-//        tab_recyclerview_list.adapter=dataAdapter
+        column_lay_price.setOnClickListener(this)
+
+        categoryAdapter = CategoryAdapter(categoryList)
+        tab_recyclerview_class.layoutManager = GridLayoutManager(context , 4)
+        tab_recyclerview_class.adapter = categoryAdapter
+        dataAdapter=DataAdapter(dataList)
+        tab_recyclerview_list.layoutManager=GridLayoutManager(context,2)
+        tab_recyclerview_list.adapter=dataAdapter
+        tab_recyclerview_list.addItemDecoration( ItemDevider2(context!! , 15f , R.color.white ) )
     }
 
     fun fetchData() {
         categoryList.clear()
-        categoryList.add(Category(1 ,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"T桖"))
-        categoryList.add(Category(2 ,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"休闲裤"))
-        categoryList.add(Category(3, "http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"外套"))
-        categoryList.add(Category(4,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"短裤"))
-        categoryList.add(Category(5,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"牛仔裤"))
-        categoryList.add(Category(6,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"寸衫"))
-        categoryList.add(Category(7,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"套装"))
-        categoryList.add(Category(8,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"牛仔衣"))
+        categoryList.add(Category(1 ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"T桖"))
+        categoryList.add(Category(2 ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"休闲裤"))
+        categoryList.add(Category(3, "http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"外套"))
+        categoryList.add(Category(4,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"短裤"))
+        categoryList.add(Category(5,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔裤"))
+        categoryList.add(Category(6,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"寸衫"))
+        categoryList.add(Category(7,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"套装"))
+        categoryList.add(Category(8,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔衣"))
         //categoryList.add(Category(9,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"抖音款"))
         categoryAdapter!!.setNewData(categoryList)
 

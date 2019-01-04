@@ -9,8 +9,10 @@ import com.jxd.android.gohomeapp.databinding.ActivityMainBinding
 //import com.jxd.android.gohomeapp.databinding.ActivityMainBinding
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
+import com.jxd.android.gohomeapp.libcommon.util.newIntent
+import com.jxd.android.gohomeapp.quanmodule.MainActivity
 
-@Route(path = ARouterPath.AppActivityIndexPath)
+//@Route(path = ARouterPath.AppActivityIndexPath)
 class MainActivity : BaseActivity() , View.OnClickListener {
 
 
@@ -38,7 +40,10 @@ class MainActivity : BaseActivity() , View.OnClickListener {
 
 
     override fun onClick(v: View?) {
-        ARouter.getInstance().build(ARouterPath.QuanActivityIndexPath).navigation()
+        //ARouter.getInstance().build(ARouterPath.QuanActivityIndexPath).navigation()
         //ARouter.getInstance().build("/app/test").navigation()
+
+        newIntent<MainActivity>()
+
     }
 }

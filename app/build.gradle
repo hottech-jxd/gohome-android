@@ -54,7 +54,7 @@ dependencies {
     //} else {
 
     //}
-    implementation project(':libcommon')
+    //implementation project(':libcommon')
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:support-media-compat:28.0.0'
