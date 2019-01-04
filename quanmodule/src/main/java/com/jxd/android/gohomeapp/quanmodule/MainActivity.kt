@@ -36,16 +36,16 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
         initView()
 
 
-        //initFragments()
+        initFragments()
     }
 
     override fun initView() {
 
-        //ARouter.getInstance().inject(this)
+        ARouter.getInstance().inject(this)
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.quan_activity_main)
         activityMainBinding!!.setLifecycleOwner(this)
-        //activityMainBinding!!.clickHandler = this
+        activityMainBinding!!.clickHandler = this
 
 //        bottom_index.setOnClickListener(this)
 //        bottom_benefit.setOnClickListener(this)

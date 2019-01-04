@@ -47,7 +47,7 @@ dependencies {
     implementation('com.alibaba:arouter-api:1.4.1') {
         exclude module: 'appcompat-v7'
     }
-    kapt 'com.alibaba:arouter-compiler:1.2.2'
+    //kapt 'com.alibaba:arouter-compiler:1.2.2'
 
     //if (isModule.toBoolean()) {
         implementation project(':quanmodule')

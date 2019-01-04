@@ -2,7 +2,7 @@
 
 <layout>
     <data>
-        <variable name="clickListener" type="com.jxd.android.gohomeapp.quanmodule.MainActivity" />
+        <variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.MainActivity" />
     </data>
 
 <android.support.v7.widget.LinearLayoutCompat
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:onClick="@{clickListener.onClick}"
+        android:onClick="@{clickHandler.onClick}"
         android:id="@+id/bottom_index"
         android:padding="@dimen/dp_8"
         android:background="@drawable/style_bottom_bg"
@@ -50,7 +50,7 @@
 
     <RelativeLayout
             android:visibility="gone"
-            android:onClick="@{clickListener.onClick}"
+            android:onClick="@{clickHandler.onClick}"
         android:id="@+id/bottom_benefit"
         android:background="@drawable/style_bottom_bg"
         android:padding="@dimen/dp_8"
@@ -77,7 +77,7 @@
 
     <RelativeLayout
             android:visibility="gone"
-            android:onClick="@{clickListener.onClick}"
+            android:onClick="@{clickHandler.onClick}"
         android:id="@+id/bottom_quan"
         android:background="@drawable/style_bottom_bg"
         android:padding="@dimen/dp_8"
@@ -103,7 +103,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-            android:onClick="@{clickListener.onClick}"
+            android:onClick="@{clickHandler.onClick}"
         android:background="@drawable/style_bottom_bg"
         android:id="@+id/bottom_my"
         android:padding="@dimen/dp_8"

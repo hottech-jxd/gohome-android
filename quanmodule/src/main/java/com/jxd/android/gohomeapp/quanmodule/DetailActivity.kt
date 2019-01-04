@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
@@ -32,9 +33,9 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
     private var detailAdapter:DetailAdapter?=null
     private var data=ArrayList<DetailBean>()
     //private var goodsViewModel:GoodsViewModel?=null
-    private var quanActivityDetailBinding :QuanActivityDetailBinding?=null
+    var quanActivityDetailBinding :QuanActivityDetailBinding?=null
     @Autowired
-    var goodsId:Long=0
+    @JvmField var goodsId:Long=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,9 +76,11 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
 
     override fun initView(){
 
+        ARouter.getInstance().inject(this)
+
         var goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
 
-        quanActivityDetailBinding = DataBindingUtil.setContentView(this , R.layout.quan_activity_detail)
+        quanActivityDetailBinding = DataBindingUtil.setContentView( this  , R.layout.quan_activity_detail)
         quanActivityDetailBinding!!.goodsViewModel = goodsViewModel
         quanActivityDetailBinding!!.setLifecycleOwner(this)
 

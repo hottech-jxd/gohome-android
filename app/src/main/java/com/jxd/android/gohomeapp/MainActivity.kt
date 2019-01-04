@@ -12,7 +12,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
 import com.jxd.android.gohomeapp.quanmodule.MainActivity
 
-//@Route(path = ARouterPath.AppActivityIndexPath)
+
 class MainActivity : BaseActivity() , View.OnClickListener {
 
 
@@ -31,7 +31,6 @@ class MainActivity : BaseActivity() , View.OnClickListener {
 
     override fun initView() {
 
-        ARouter.getInstance().inject(this)
 
         activityMainBinding  = DataBindingUtil.setContentView(this, R.layout.activity_main )
         activityMainBinding!!.clickHandler = this

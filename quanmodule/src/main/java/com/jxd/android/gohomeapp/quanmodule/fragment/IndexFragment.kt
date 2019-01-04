@@ -20,7 +20,7 @@ import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
-import com.jxd.android.gohomeapp.quanmodule.DetailActivity
+//import com.jxd.android.gohomeapp.quanmodule.DetailActivity
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.index_tab
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIndexBinding
@@ -121,7 +121,8 @@ class IndexFragment : BaseFragment()
         }
 
         fragmentAdapter = AppFragmentAdapter(this.childFragmentManager , fragments , category)
-        index_viewPager.adapter = fragmentAdapter
+        indexBinding!!.fragmentadapter = fragmentAdapter
+        //index_viewPager.adapter = fragmentAdapter
         index_viewPager.offscreenPageLimit=3
         index_tab.setupWithViewPager(index_viewPager,true)
 

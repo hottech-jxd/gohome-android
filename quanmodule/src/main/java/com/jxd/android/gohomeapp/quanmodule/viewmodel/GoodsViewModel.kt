@@ -10,7 +10,7 @@ import android.databinding.ObservableField
 import android.databinding.ObservableMap
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
 import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
-import com.jxd.android.gohomeapp.quanmodule.http.bindLifeCycle
+
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.GoodsRepository
 import io.reactivex.disposables.CompositeDisposable
