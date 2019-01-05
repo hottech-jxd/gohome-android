@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable name="clickHandler" type="android.view.View.OnClickListener" />
+    </data>
+
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.FavoriteActivity">
+
+    <include android:layout_height="wrap_content"
+             app:clickHandler="@{clickHandler}"
+             android:layout_width="match_parent"
+             layout="@layout/layout_common_header"
+             android:id="@+id/favorite_header"/>
+
+    <View android:layout_width="match_parent" android:layout_height="@dimen/dp_1"
+          android:background="@color/linecolor"
+          android:id="@+id/favorite_line"
+          app:layout_constraintTop_toBottomOf="@id/favorite_header"/>
+
+
+    <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
+            android:id="@+id/favorite_refreshview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/favorite_bottom"
+            app:layout_constraintTop_toBottomOf="@id/favorite_line">
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/favorite_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
+
+    <LinearLayout
+            android:id="@+id/favorite_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/white"
+            android:padding="0dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:paddingLeft="15dp"
+                android:drawableLeft="@mipmap/unselected"
+                android:id="@+id/favorite_select"
+                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:text="已选(0)"
+                android:onClick="@{clickHandler.onClick}"
+                android:drawablePadding="5dp"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        <TextView
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:background="#888888"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/favorite_share"
+                android:onClick="@{clickHandler.onClick}"
+                android:text="立即分享"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+            android:visibility="gone"
+            android:id="@+id/favorite_loading"
+            app:layout_constraintTop_toBottomOf="@id/favorite_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+</android.support.constraint.ConstraintLayout>
+
+</layout>

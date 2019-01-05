@@ -16,6 +16,7 @@
     tools:context=".fragment.IndexFragment">
 
     <include layout="@layout/layout_header"
+             app:clickHandler="@{clickHandler}"
         android:id="@+id/index_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -76,7 +76,7 @@ class IndexFragment : BaseFragment()
 //        header_left_lay.setOnClickListener(this)
 //        index_more.setOnClickListener(this)
 
-        header_search_lay.setOnClickListener(this)
+        //header_search_lay.setOnClickListener(this)
 
         initFragments()
 
@@ -134,16 +134,16 @@ class IndexFragment : BaseFragment()
             R.id.header_search_lay->{
                 search()
             }
-//            R.id.header_right_image->{
-//                newIntentForLogin<FavoriteActivity>()
-//            }
+            R.id.header_right_image->{
+                //newIntentForLogin<FavoriteActivity>()
+                (parentFragment as MainFragment)
+                    .start(FavoriteFragment.newInstance("",""))
+            }
             R.id.header_left_lay->{
                 selectPlat()
             }
             R.id.index_more->{
                 showCategorys()
-
-
             }
         }
     }

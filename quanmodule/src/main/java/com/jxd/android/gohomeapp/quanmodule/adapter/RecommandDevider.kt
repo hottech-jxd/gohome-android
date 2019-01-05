@@ -82,3 +82,12 @@ class ItemDevider2(var context: Context , var space:Float , var colorRes: Int  )
 
     }
 }
+
+class ItemDevider3(var context: Context , var space:Float , var colorRes:Int, var startPadding:Float ):Y_DividerItemDecoration(context){
+
+    override fun getDivider(itemPosition: Int): Y_Divider {
+        return Y_DividerBuilder()
+            .setBottomSideLine(true , ContextCompat.getColor(context , colorRes) , space , startPadding , 0f)
+            .create()
+    }
+}
