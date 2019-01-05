@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable name="clickHandler" type="android.view.View.OnClickListener" />
+    </data>
+
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f2f2f2"
+        android:paddingBottom="@dimen/dp_10"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_me_header_bg"
+        android:paddingBottom="@dimen/dp_50"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:layout_height="wrap_content" >
+
+    <LinearLayout
+            android:id="@+id/my_header_lay_message"
+            android:background="#FBBD00"
+            android:paddingTop="@dimen/dp_6"
+            android:paddingBottom="@dimen/dp_6"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/my_header_message"
+                  android:singleLine="true"
+                  android:text="asdfsafsafsafsdfa"
+                  android:drawableLeft="@mipmap/notice"
+                  android:textSize="@dimen/dp_12"
+                  android:drawablePadding="@dimen/dp_6"
+                  android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:paddingLeft="@dimen/dp_22"
+            android:paddingTop="@dimen/dp_28"
+            android:paddingBottom="@dimen/dp_20"
+            android:id="@+id/my_header_lay_info"
+            android:layout_below="@id/my_header_lay_message"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="@dimen/dp_48"
+                app:roundAsCircle="true"
+                app:roundingBorderWidth="@dimen/dp_0"
+                   android:id="@+id/my_header_logo"
+                app:actualImageScaleType="centerCrop"
+                app:placeholderImageScaleType="centerCrop"
+                app:placeholderImage="@mipmap/avator"
+                   app:failureImage="@mipmap/avator"
+                   android:layout_height="@dimen/dp_48"/>
+
+        <TextView
+                android:id="@+id/my_header_username"
+                android:text="asfsafsa"
+                android:paddingLeft="@dimen/dp_14"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_18"
+                android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_below="@id/my_header_lay_info"
+            android:id="@+id/my_header_lay_shouyi"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+                  android:layout_height="wrap_content">
+
+        <LinearLayout android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="vertical"
+                      android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/sp_15"
+                      android:textColor="@color/white"
+                      android:text="￥15"
+                      android:id="@+id/my_header_this_week_momey"
+                    android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_marginTop="@dimen/dp_12"
+                      android:text="本周预估"
+                      android:textColor="@color/white"
+                      android:textSize="@dimen/sp_12"
+                      android:textStyle="bold"
+                      android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="vertical"
+                      android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/sp_15"
+                      android:textColor="@color/white"
+                      android:text="￥1523"
+                      android:id="@+id/my_header_pre_week_momey"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_marginTop="@dimen/dp_12"
+                      android:text="上周预估"
+                      android:textColor="@color/white"
+                      android:textSize="@dimen/sp_12"
+                      android:textStyle="bold"
+                      android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="0dp"
+                      android:gravity="center"
+                      android:layout_weight="1"
+                      android:orientation="vertical"
+                      android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/sp_15"
+                      android:textColor="@color/white"
+                      android:text="￥23415"
+                      android:id="@+id/my_header_all_momey"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_marginTop="@dimen/dp_12"
+                      android:text="累计收益"
+                      android:textColor="@color/white"
+                      android:textSize="@dimen/sp_12"
+                      android:textStyle="bold"
+                      android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:id="@+id/my_header_lay_more"
+                      android:onClick="@{clickHandler.onClick}"
+                      android:orientation="vertical"
+                      android:layout_height="wrap_content">
+            <ImageView android:textSize="@dimen/sp_15"
+                      android:textColor="@color/white"
+                      android:src="@mipmap/go"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_marginTop="@dimen/dp_12"
+                      android:text="更多"
+                      android:textColor="@color/white"
+                      android:textSize="@dimen/sp_12"
+                      android:textStyle="bold"
+                      android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+    <RelativeLayout
+            android:layout_gravity="bottom"
+            android:background="@drawable/shape_my_white_circle_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_17"
+            android:paddingRight="@dimen/dp_17"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_16"
+    android:layout_marginLeft="@dimen/dp_12"
+    android:layout_marginRight="@dimen/dp_12"
+    android:layout_marginTop="@dimen/dp_1">
+
+        <TextView android:layout_width="wrap_content"
+                  android:text="余额"
+                  android:paddingLeft="@dimen/dp_2"
+                  android:textColor="#747474"
+                  android:id="@+id/my_header_balance_label"
+                  android:textSize="@dimen/sp_12"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:id="@+id/my_header_balance"
+                  android:textColor="@color/black"
+                  android:layout_below="@id/my_header_balance_label"
+                  android:textSize="@dimen/sp_20"
+                  android:text="2342342元"
+                  android:textStyle="bold"
+                  android:layout_marginTop="@dimen/dp_5"
+                  android:layout_height="wrap_content"/>
+
+        <ImageView android:id="@+id/my_header_cash"
+                 android:src="@mipmap/cash"
+                   android:onClick="@{clickHandler.onClick}"
+                  android:textSize="@dimen/dp_1"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
+
+</layout>

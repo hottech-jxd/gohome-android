@@ -11,6 +11,7 @@ import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
 import com.jxd.android.gohomeapp.quanmodule.MainActivity
+import com.jxd.android.gohomeapp.quanmodule.MainActivity2
 
 
 class MainActivity : BaseActivity() , View.OnClickListener {
@@ -42,7 +43,7 @@ class MainActivity : BaseActivity() , View.OnClickListener {
         //ARouter.getInstance().build(ARouterPath.QuanActivityIndexPath).navigation()
         //ARouter.getInstance().build("/app/test").navigation()
 
-        newIntent<MainActivity>()
+        newIntent<MainActivity2>()
 
     }
 }

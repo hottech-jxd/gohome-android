@@ -2,7 +2,7 @@
 
 <layout>
     <data>
-        <variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.MainActivity" />
+        <variable name="clickHandler" type="android.view.View.OnClickListener" />
     </data>
 
 <android.support.v7.widget.LinearLayoutCompat

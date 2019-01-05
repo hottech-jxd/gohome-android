@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:padding="@dimen/dp_16"
+        android:background="@color/white"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<TextView
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14"
+        android:text="提现"
+        android:id="@+id/cash_item_title"
+        android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/cash_item_time"
+              android:layout_below="@id/cash_item_title"
+            android:layout_width="wrap_content"
+              android:textSize="@dimen/dp_12"
+              android:textColor="#B3B3B3"
+              android:text="2018.1.1 12:22"
+              android:layout_height="wrap_content"/>
+
+    <TextView
+            android:textColor="#C10100"
+            android:textSize="@dimen/sp_14"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/cash_item_title"
+            android:text="100.11"
+            android:id="@+id/cash_item_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/cash_item_status"
+              android:layout_below="@id/cash_item_amount"
+              android:layout_width="wrap_content"
+              android:textSize="@dimen/dp_12"
+              android:textColor="#B3B3B3"
+              android:text="成功"
+              android:layout_alignParentRight="true"
+              android:layout_height="wrap_content"/>
+
+</RelativeLayout>

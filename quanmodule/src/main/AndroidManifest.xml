@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application>
-        <activity android:name="com.jxd.android.gohomeapp.quanmodule.MainActivity" android:theme="@style/QuanAppTheme"/>
+        <activity android:name="com.jxd.android.gohomeapp.quanmodule.MainActivity2" android:theme="@style/QuanAppTheme"/>
         <activity android:name=".SearchActivity" android:theme="@style/QuanAppTheme"/>
         <activity android:name=".DetailActivity" android:theme="@style/QuanAppTheme"/>
 

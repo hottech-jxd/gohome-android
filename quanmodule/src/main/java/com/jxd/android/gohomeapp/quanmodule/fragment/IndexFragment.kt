@@ -150,6 +150,7 @@ class IndexFragment : BaseFragment()
 
     fun search(){
         ARouter.getInstance().build(ARouterPath.QuanActivitySearch).navigation()
+
     }
 
      fun showCategorys(){

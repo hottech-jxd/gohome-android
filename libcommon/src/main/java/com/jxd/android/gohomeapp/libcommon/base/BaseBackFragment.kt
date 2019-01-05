@@ -19,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-abstract class BaseFragment : SupportFragment() {
+abstract class BaseBackFragment : SwipeBackFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -16,11 +16,13 @@ import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityMainBinding
+import com.jxd.android.gohomeapp.quanmodule.fragment.CashFragment
 import com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment
 import com.jxd.android.gohomeapp.quanmodule.fragment.MyFragment
 import kotlinx.android.synthetic.main.layout_bottom_menu.*
+import kotlinx.android.synthetic.main.quan_activity_main.*
 
-@Route(path=ARouterPath.QuanActivityIndexPath)
+//@Route(path=ARouterPath.QuanActivityIndexPath)
 class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChangeListener{
 
     var fragments = ArrayList<BaseFragment>()
@@ -31,7 +33,6 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
 
         initView()
 
@@ -51,7 +52,7 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
 //        bottom_benefit.setOnClickListener(this)
 //        bottom_quan.setOnClickListener(this)
 //        bottom_my.setOnClickListener(this)
-//        main_viewPager.addOnPageChangeListener(this)
+        main_viewPager.addOnPageChangeListener(this)
     }
 
 //    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -65,22 +66,24 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
 
                 changeMenuIcon(0)
             }
-            R.id.bottom_benefit->{
+//            R.id.bottom_benefit->{
+//                activityMainBinding!!.mainViewPager.setCurrentItem(1,true)
+//                changeMenuIcon(1)
+//            }
+//            R.id.bottom_quan->{
+//                activityMainBinding!!.mainViewPager.setCurrentItem(2,true)
+//                changeMenuIcon(2)
+//            }
+            R.id.bottom_my->{
                 activityMainBinding!!.mainViewPager.setCurrentItem(1,true)
                 changeMenuIcon(1)
-            }
-            R.id.bottom_quan->{
-                activityMainBinding!!.mainViewPager.setCurrentItem(2,true)
-                changeMenuIcon(2)
-            }
-            R.id.bottom_my->{
-                activityMainBinding!!.mainViewPager.setCurrentItem(3,true)
-                changeMenuIcon(3)
             }
         }
     }
 
     private fun initFragments(){
+
+
 
         fragments.clear()
         var indexFragment : IndexFragment =  (ARouter.getInstance().build(ARouterPath.QuanFragmentIndexPath).navigation()) as IndexFragment
