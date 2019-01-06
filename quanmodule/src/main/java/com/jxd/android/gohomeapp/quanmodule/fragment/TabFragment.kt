@@ -12,7 +12,11 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.huotu.android.couponsleague.adapter.CategoryAdapter
+import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.bean.Category
 import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider2
@@ -33,9 +37,11 @@ const val ARG_CATEGORY = "category"
  * create an instance of this fragment.
  *
  */
+@Route(path = ARouterPath.QuanFragmentTabPath )
 class TabFragment : BaseFragment() ,View.OnClickListener{
 
-    private var category: String? = null
+    @Autowired
+    @JvmField var category: Category? = null
 
     private var categoryList=ArrayList<Category>()
     private var categoryAdapter: CategoryAdapter?=null
@@ -47,8 +53,10 @@ class TabFragment : BaseFragment() ,View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            category = it.getString(ARG_CATEGORY)
+            //category = it.getString(ARG_CATEGORY)
         }
+
+        ARouter.getInstance().inject(this)
     }
 
 
@@ -81,17 +89,17 @@ class TabFragment : BaseFragment() ,View.OnClickListener{
     }
 
     fun fetchData() {
-        categoryList.clear()
-        categoryList.add(Category(1 ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"T桖"))
-        categoryList.add(Category(2 ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"休闲裤"))
-        categoryList.add(Category(3, "http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"外套"))
-        categoryList.add(Category(4,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"短裤"))
-        categoryList.add(Category(5,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔裤"))
-        categoryList.add(Category(6,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"寸衫"))
-        categoryList.add(Category(7,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"套装"))
-        categoryList.add(Category(8,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔衣"))
-        //categoryList.add(Category(9,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"抖音款"))
-        categoryAdapter!!.setNewData(categoryList)
+//        categoryList.clear()
+//        categoryList.add(Category("1" ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"T桖"))
+//        categoryList.add(Category("2" ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"休闲裤"))
+//        categoryList.add(Category("3", "http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"外套"))
+//        categoryList.add(Category("4","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"短裤"))
+//        categoryList.add(Category("5","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔裤"))
+//        categoryList.add(Category("6","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"寸衫"))
+//        categoryList.add(Category("7","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"套装"))
+//        categoryList.add(Category("8","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔衣"))
+//        //categoryList.add(Category(9,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"抖音款"))
+//        categoryAdapter!!.setNewData(categoryList)
 
         for(i in 0..20) {
             dataList.add(i.toString())

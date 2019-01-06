@@ -2,6 +2,8 @@
 <layout>
 
     <data>
+        <import type="android.view.View"/>
+        <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
         <variable name="fragmentadapter" type="com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter" />
         <variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment" />
     </data>
@@ -110,6 +112,13 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="100dp"/>
+
+
+    <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+            android:layout_width="match_parent"
+            android:id="@+id/index_progress"
+            android:visibility="@{goodsViewModel.loading ? View.VISIBLE : View.GONE}"
+            android:layout_height="match_parent"/>
 
 
 </android.support.constraint.ConstraintLayout>

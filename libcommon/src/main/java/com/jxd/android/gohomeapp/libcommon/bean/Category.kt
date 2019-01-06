@@ -1,3 +1,8 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
-data class Category (var id :Int ,var logo :String , var title :String)
+import java.io.Serializable
+
+/**
+ * 商品分类
+ */
+data class Category (var categoryId  : String ,var name  :String ):Serializable

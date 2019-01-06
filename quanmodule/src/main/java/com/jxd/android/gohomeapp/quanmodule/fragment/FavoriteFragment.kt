@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.bean.FavoriteBean
+import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.FavoriteAdapter
@@ -103,7 +104,18 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     }
 
     override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.header_left_image -> {
+                _mActivity.onBackPressed()
+            }
+            R.id.header_right_text -> {
+                batchDelete()
+            }
+        }
+    }
 
+    private fun batchDelete(){
+        showToast("todo")
     }
 
     override fun onRefresh() {

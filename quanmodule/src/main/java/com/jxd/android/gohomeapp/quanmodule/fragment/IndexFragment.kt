@@ -1,5 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.ClipData.newIntent
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -15,17 +17,24 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 
 import com.facebook.drawee.view.SimpleDraweeView
+import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.libcommon.bean.Category
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
+import com.jxd.android.gohomeapp.libcommon.util.showToast
 //import com.jxd.android.gohomeapp.quanmodule.DetailActivity
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.index_tab
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIndexBinding
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import kotlinx.android.synthetic.main.layout_header.*
 import kotlinx.android.synthetic.main.quan_fragment_index.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -42,7 +51,7 @@ class IndexFragment : BaseFragment()
         , SwipeRefreshLayout.OnRefreshListener
         , View.OnClickListener {
 
-    var category = ArrayList<String>()
+    var categories = ArrayList<Category>()
     var fragments = ArrayList<BaseFragment>()
     var fragmentAdapter : AppFragmentAdapter?=null
     var indexBinding: QuanFragmentIndexBinding?=null
@@ -50,8 +59,14 @@ class IndexFragment : BaseFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden){
+            ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,6 +76,25 @@ class IndexFragment : BaseFragment()
         indexBinding = DataBindingUtil.inflate(inflater ,  R.layout.quan_fragment_index , container , false )
         indexBinding!!.clickHandler = this
         //return inflater.inflate(R.layout.quan_fragment_index , container,false)
+
+        var goodsViewModel:GoodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
+        indexBinding!!.goodsViewModel = goodsViewModel
+
+
+        indexBinding!!.goodsViewModel!!.liveDataGoodsCategories
+            .observe(this , Observer { it->
+                if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
+                    showToast(it.resultMsg)
+                    return@Observer
+                }
+                if(it.list==null) return@Observer
+                categories.clear()
+                categories.addAll( it.list!!)
+                initFragments()
+
+            })
+
+
         return indexBinding!!.root
     }
 
@@ -78,7 +112,11 @@ class IndexFragment : BaseFragment()
 
         //header_search_lay.setOnClickListener(this)
 
-        initFragments()
+
+        indexBinding!!.goodsViewModel!!.getGoodsCategorys()
+
+        //initFragments()
+
 
     }
 
@@ -97,30 +135,38 @@ class IndexFragment : BaseFragment()
 
 
     private fun initFragments(){
-        category.clear()
-        category.add("推荐")
-        category.add("男装")
-        category.add("女装")
-        category.add("护肤")
-        category.add("食品")
-        category.add("百货")
-        category.add("内衣袜子")
-        category.add("数码")
-        category.add("箱包配饰")
-        category.add("家电")
-        category.add("成人")
-        category.add("家纺")
-        category.add("运动")
-        category.add("宠物")
-        category.add("手机")
+//        category.clear()
+//        category.add("推荐")
+//        category.add("男装")
+//        category.add("女装")
+//        category.add("护肤")
+//        category.add("食品")
+//        category.add("百货")
+//        category.add("内衣袜子")
+//        category.add("数码")
+//        category.add("箱包配饰")
+//        category.add("家电")
+//        category.add("成人")
+//        category.add("家纺")
+//        category.add("运动")
+//        category.add("宠物")
+//        category.add("手机")
 
         fragments.clear()
-        fragments.add(RecommandFragment.newInstance(category[0]))
-        for(i in 1 until category.size){
-            fragments.add( TabFragment.newInstance( category[i] ) )
+        fragments.add(RecommandFragment.newInstance("推荐"))
+        for(i in 0 until categories.size){
+            var tabFragment =  ARouter.getInstance()
+                .build(ARouterPath.QuanFragmentTabPath)
+                //.withObject("category", categories[i])
+                .navigation() as TabFragment
+            //fragments.add( TabFragment.newInstance( category[i] ) )
+            fragments.add(tabFragment)
         }
 
-        fragmentAdapter = AppFragmentAdapter(this.childFragmentManager , fragments , category)
+        var titles = ArrayList( categories.map { it->it.name })
+        titles.add(0 , "推荐")
+
+        fragmentAdapter = AppFragmentAdapter(this.childFragmentManager , fragments , titles )
         indexBinding!!.fragmentadapter = fragmentAdapter
         //index_viewPager.adapter = fragmentAdapter
         index_viewPager.offscreenPageLimit=3

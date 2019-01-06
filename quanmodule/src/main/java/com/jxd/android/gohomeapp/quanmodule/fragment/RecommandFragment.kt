@@ -22,10 +22,7 @@ import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
-import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
-import com.jxd.android.gohomeapp.quanmodule.adapter.HorizontalBannerAdapter
-import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandAdapter
-import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandDevider
+import com.jxd.android.gohomeapp.quanmodule.adapter.*
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.quan_fragment_recommand.*
@@ -43,6 +40,7 @@ private const val ARG_PARAM2 = "param2"
 class RecommandFragment : BaseFragment()
         , SwipeRefreshLayout.OnRefreshListener
     ,BaseQuickAdapter.OnItemChildClickListener
+    ,BannerItemClickListener
         , OnBannerListener {
 
     private var category: String? = null
@@ -171,7 +169,8 @@ class RecommandFragment : BaseFragment()
         mockData()
 
         recommandAdapter= RecommandAdapter(recommands)
-        //recommandAdapter!!.onItemChildClickListener=this
+        recommandAdapter!!.onItemChildClickListener=this
+        recommandAdapter!!.onBannerItemClickListener=this
 
         recommand_recyclerView.layoutManager= GridLayoutManager(context,2)
         recommandAdapter!!.setSpanSizeLookup(object: BaseQuickAdapter.SpanSizeLookup{
@@ -258,9 +257,18 @@ class RecommandFragment : BaseFragment()
         showToast("todo")
     }
 
+    override fun onBannerItemClicked(position: Int, bannerIndex: Int) {
+        var data = recommandAdapter!!.getItem(position)
+        var url =(data as RecommandItem1).data[bannerIndex];
+
+        showToast(url)
+    }
+
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         if(view!!.id == R.id.recommand_banner){
             showToast("todo")
+        }else if(view!!.id==R.id.recommand_image_1){
+            (parentFragment!!.parentFragment as MainFragment).start(CategoryFragment.newInstance("",""))
         }
     }
 

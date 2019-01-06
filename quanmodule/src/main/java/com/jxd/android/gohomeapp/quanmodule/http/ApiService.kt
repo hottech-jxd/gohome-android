@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.http
 
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
+import com.jxd.android.gohomeapp.libcommon.bean.Category
 import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -22,4 +23,10 @@ interface ApiService {
     @POST("goods/detail")
     @FormUrlEncoded
     fun getGoodsDetail(@Field("goodsid") goodsid:Long ):Observable<ApiResult<DetailBean?>>
+
+    /**
+     * 获得商品分类列表
+     */
+    @GET("goods/categories")
+    fun getGoodsCategories():Observable<ApiResult<ArrayList<Category>?>>
 }

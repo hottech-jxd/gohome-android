@@ -9,7 +9,7 @@ import com.jxd.android.gohomeapp.quanmodule.R
 class CategoryAdapter(data :ArrayList<Category>) : BaseQuickAdapter<Category,BaseViewHolder>(R.layout.layout_category_item , data ) {
 
     override fun convert(helper: BaseViewHolder?, item: Category?) {
-        helper!!.getView<SimpleDraweeView>(R.id.category_item_logo).setImageURI(item!!.logo)
-        helper!!.setText(R.id.category_item_title , item!!.title)
+        //helper!!.getView<SimpleDraweeView>(R.id.category_item_logo).setImageURI(item!!.logo)
+        helper!!.setText(R.id.category_item_title , item!!.name)
     }
 }

@@ -18,7 +18,11 @@ import com.youth.banner.listener.OnBannerListener
 
 
 class RecommandAdapter(data : ArrayList<MultiItemEntity>)
-    : BaseMultiItemQuickAdapter<MultiItemEntity , BaseViewHolder>(data) , OnBannerListener {
+    : BaseMultiItemQuickAdapter<MultiItemEntity , BaseViewHolder>(data)
+     {
+
+    var onBannerItemClickListener:BannerItemClickListener?=null
+
 
     init {
         addItemType(ItemTypeEnum.BANNER.type , R.layout.layout_recommand_item_1 )
@@ -60,23 +64,21 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         var urls = (item as RecommandItem1).data
         var banner = helper!!.getView<Banner>(R.id.recommand_banner)
 
-
-
         banner.setImageLoader(FrescoImageLoader(banner , DensityUtils.getScreenWidth(mContext) ))
         banner.setImages(urls)
-        //banner.setOnBannerListener(this)
-        banner.setOnBannerListener { position -> {
-            var url = urls[position].toString()
-            this.setOnItemClick( helper.getView(R.id.recommand_banner)  , helper.adapterPosition )
-        } }
+        banner.setOnBannerListener(BannerListener( helper.adapterPosition , banner , onBannerItemClickListener ))
+        banner.setTag(item)
         banner.start()
 
-        //helper.addOnClickListener(R.id.recommand_banner)
+        helper.addOnClickListener(R.id.recommand_banner)
+
     }
 
     private fun set_2(helper: BaseViewHolder?,item: MultiItemEntity?){
         var image = helper!!.getView<SimpleDraweeView>(R.id.recommand_image_1)
         image.setImageURI("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
+
+        helper.addOnClickListener(R.id.recommand_image_1)
     }
 
     private fun set_3(helper: BaseViewHolder?,item: MultiItemEntity?){
@@ -113,8 +115,17 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
     }
 
 
-    override fun OnBannerClick(position: Int) {
-        var test = position.toString()
+}
 
+
+class BannerListener(var position: Int , var banner : Banner, var bannerItemClickListener: BannerItemClickListener? ): OnBannerListener{
+
+    override fun OnBannerClick( bannerIndex: Int ) {
+        if(bannerItemClickListener==null) return
+        bannerItemClickListener!!.onBannerItemClicked(position , bannerIndex)
     }
+}
+
+interface BannerItemClickListener{
+    fun onBannerItemClicked( position: Int , bannerIndex :Int )
 }

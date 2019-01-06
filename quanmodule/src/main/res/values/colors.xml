@@ -9,4 +9,6 @@
     <color name="truslaparent">#88000000</color>
     <color name="progress_color">#ff4c52</color>
     <color name="refresh_color">#F2AB00</color>
+    <color name="my_status_color">#F2AB00</color>
+    <color name="default_status_color">#ffffff</color>
 </resources>

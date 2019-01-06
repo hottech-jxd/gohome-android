@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
@@ -58,6 +59,14 @@ class MyFragment : BaseFragment() , View.OnClickListener , TabLayout.OnTabSelect
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if(!hidden) {
+            ImmersionBar.with(this).statusBarColor(R.color.my_status_color).init()
+        }
     }
 
     override fun initView() {

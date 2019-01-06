@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.repository
 
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
+import com.jxd.android.gohomeapp.libcommon.bean.Category
 import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
 import com.jxd.android.gohomeapp.quanmodule.http.ApiService
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
@@ -24,6 +25,10 @@ object GoodsRepository {
 
     fun getGoodsDetail(goodsId:Long): Observable<ApiResult<DetailBean?>> {
         return apiService!!.getGoodsDetail(goodsId)
+    }
+
+    fun getGoodsCategories():Observable<ApiResult<ArrayList<Category>?>>{
+        return apiService!!.getGoodsCategories()
     }
 
 }

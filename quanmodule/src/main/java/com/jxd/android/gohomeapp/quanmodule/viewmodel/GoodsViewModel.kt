@@ -9,6 +9,7 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableMap
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
+import com.jxd.android.gohomeapp.libcommon.bean.Category
 import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
 
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
@@ -35,6 +36,7 @@ class GoodsViewModel(application: Application) :  AndroidViewModel(application) 
     var error = MutableLiveData<String>()
     var hasError = MutableLiveData<Boolean>()
     var liveDataGoodsDetail = MutableLiveData<ApiResult<DetailBean?>>()
+    var liveDataGoodsCategories = MutableLiveData<ApiResult<ArrayList<Category>?>>()
 
     private val mDisposable = CompositeDisposable()
 
@@ -43,7 +45,7 @@ class GoodsViewModel(application: Application) :  AndroidViewModel(application) 
     fun getGoodsDetail(goodsId:Long){
 
         GoodsRepository.getGoodsDetail(goodsId)
-            .wrapper(3000)
+            .wrapper()
             .doOnSubscribe{t -> mDisposable.add(t)
                 //loading.value =true
                 loading.postValue(true)
@@ -60,7 +62,7 @@ class GoodsViewModel(application: Application) :  AndroidViewModel(application) 
             .subscribe({
                 loading.postValue(false)
                 //test.postValue("eeeeeeeeeeeeeeeee")
-                liveDataGoodsDetail.value = it
+                liveDataGoodsDetail.postValue(it)
             } , {it->
                 loading.postValue(false)
                 hasError.value =true
@@ -68,6 +70,29 @@ class GoodsViewModel(application: Application) :  AndroidViewModel(application) 
             })
 
 
+    }
+
+
+
+    fun getGoodsCategorys(){
+        GoodsRepository.getGoodsCategories()
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .doOnNext{
+                liveDataGoodsCategories.postValue(it)
+            }
+            .doOnError {
+                hasError.postValue(true)
+                error.postValue( "error->>"+ it.message )
+            }
+            .subscribe()
     }
 
 
