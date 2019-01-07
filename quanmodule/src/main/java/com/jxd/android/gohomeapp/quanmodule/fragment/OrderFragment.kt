@@ -50,9 +50,7 @@ class OrderFragment : BaseFragment() {
         initView()
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
+
 
     override fun initView() {
         for(i in 0..10){

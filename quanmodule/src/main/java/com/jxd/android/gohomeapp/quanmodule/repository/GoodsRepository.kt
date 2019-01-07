@@ -2,7 +2,8 @@ package com.jxd.android.gohomeapp.quanmodule.repository
 
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
 import com.jxd.android.gohomeapp.libcommon.bean.Category
-import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
+import com.jxd.android.gohomeapp.libcommon.bean.CouponBean
+import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
 import com.jxd.android.gohomeapp.quanmodule.http.ApiService
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
 import io.reactivex.Observable
@@ -23,12 +24,16 @@ import io.reactivex.Observable
 object GoodsRepository {
     private var apiService = RetrofitManager.getApiService()
 
-    fun getGoodsDetail(goodsId:Long): Observable<ApiResult<DetailBean?>> {
+    fun getGoodsDetail(goodsId:String ): Observable<ApiResult<GoodsDetailBean?>> {
         return apiService!!.getGoodsDetail(goodsId)
     }
 
     fun getGoodsCategories():Observable<ApiResult<ArrayList<Category>?>>{
         return apiService!!.getGoodsCategories()
+    }
+
+    fun getCouponList():Observable<ApiResult<ArrayList<CouponBean>?>>{
+        return apiService!!.getCouponList()
     }
 
 }

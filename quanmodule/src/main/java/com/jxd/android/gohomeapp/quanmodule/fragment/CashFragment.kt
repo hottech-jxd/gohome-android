@@ -82,9 +82,6 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
         cash_recyclerview.adapter = cashRecordAdapter
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
 
     override fun onClick(v: View?) {
         if(v!!.id == R.id.header_left_image){

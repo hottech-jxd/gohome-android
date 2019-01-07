@@ -53,9 +53,6 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener {
         header_title.text="提现到银行"
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
 
     override fun onClick(v: View?) {
         if(v!!.id==R.id.header_left_image){

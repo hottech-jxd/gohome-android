@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".fragment.ShareFragment">
+
+    <include layout="@layout/layout_common_header"
+             android:layout_width="match_parent"
+             android:id="@+id/share_header"
+             android:background="#f2f2f2"
+             android:paddingBottom="@dimen/dp_1"
+             android:layout_height="wrap_content"/>
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_below="@id/share_header"
+            android:layout_above="@id/share_lay_2"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/share_images"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <View android:layout_width="match_parent" android:layout_height="@dimen/dp_7"
+                  android:background="#f2f2f2"
+                  android:id="@+id/share_line1"
+                  android:layout_below="@id/share_images"
+                  />
+
+            <RelativeLayout android:layout_width="match_parent"
+                          android:orientation="vertical"
+                          android:id="@+id/share_lay_1"
+                            android:background="@color/white"
+                            android:padding="@dimen/dp_16"
+                          android:layout_below="@id/share_line1"
+                          android:layout_height="wrap_content">
+                <TextView
+                        android:drawableLeft="@mipmap/pinduoduo"
+                        android:drawablePadding="@dimen/dp_3"
+                        android:layout_width="match_parent"
+                        android:singleLine="true"
+                        android:textColor="#333333"
+                        android:textStyle="bold"
+                        android:text="asfasfasfsafasfsafasf"
+                        android:textSize="@dimen/sp_16"
+                        android:ellipsize="end"
+                        android:id="@+id/share_title"
+                        android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/share_count"
+                          android:layout_below="@id/share_title"
+                          android:textSize="@dimen/sp_12"
+                          android:textColor="#8F8F8F"
+                          android:text="5455人已买"
+                          android:paddingTop="@dimen/dp_14"
+                        android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/share_final_price"
+                          android:textSize="@dimen/sp_14"
+                          android:textColor="#EA4D46"
+                          android:layout_marginTop="@dimen/dp_10"
+                          android:layout_below="@id/share_count"
+                          android:text="￥34"
+                          android:paddingTop="@dimen/dp_14"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/share_price"
+                          android:layout_alignBottom="@id/share_final_price"
+                          android:layout_toRightOf="@id/share_final_price"
+                          android:layout_marginLeft="@dimen/dp_6"
+                          android:textSize="@dimen/sp_12"
+                          android:textColor="#8F8F8F"
+                          android:paddingBottom="@dimen/dp_1"
+                          android:text="￥44"
+                          android:paddingTop="@dimen/dp_14"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/share_coupon"
+                          android:textSize="@dimen/sp_13"
+                          android:textColor="@color/white"
+                          android:padding="@dimen/dp_5"
+                          android:layout_marginTop="@dimen/dp_10"
+                          android:layout_below="@id/share_final_price"
+                          android:text="10元优惠券"
+                          android:background="@drawable/shape_cash_circle_grad_bg"
+                          android:paddingTop="@dimen/sp_14"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/share_zhuan"
+                          android:textSize="@dimen/sp_13"
+                          android:textColor="#E02E24"
+                          android:padding="@dimen/dp_5"
+                          android:layout_alignParentRight="true"
+                          android:layout_alignBottom="@id/share_coupon"
+                          android:text="预计赚￥5.9"
+                          android:paddingTop="@dimen/sp_13"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="@dimen/dp_7"
+                  android:background="#f2f2f2"
+                  android:id="@+id/share_line2"
+                  android:layout_below="@id/share_lay_1"/>
+
+            <LinearLayout
+            android:layout_below="@id/share_line2"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dp_0"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  android:paddingTop="@dimen/dp_10"
+                  android:paddingLeft="@dimen/dp_16"
+                  android:paddingRight="@dimen/dp_16"
+                  android:paddingBottom="@dimen/dp_10"
+        android:text="分享文案" android:textColor="@color/black" android:textSize="@dimen/sp_15"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:id="@+id/share_content"
+                  android:layout_marginLeft="@dimen/dp_20"
+                  android:layout_marginRight="@dimen/dp_16"
+                  android:layout_marginBottom="@dimen/dp_20"
+                  android:background="#f2f2f2"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="@dimen/dp_10"
+                  android:paddingLeft="@dimen/dp_10"
+                  android:paddingRight="@dimen/dp_10"
+                  android:lineSpacingExtra="@dimen/dp_4"
+                  android:paddingBottom="@dimen/dp_10"
+                  android:text="分享分享文案分享文案分享文案分享文分享分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案文案分享分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案文案分享分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案文案案分享文案分享文案分享文案分享文案分享文案分享文案文案"
+                  android:textColor="@color/black" android:textSize="@dimen/sp_14"/>
+
+
+    </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:id="@+id/share_lay_2"
+                  android:background="@color/white"
+                  android:layout_alignParentBottom="true"
+                  android:padding="@dimen/dp_10"
+                  android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <TextView android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:text="保存图片"
+                  android:gravity="center"
+                  android:drawableTop="@mipmap/download"
+                  android:textSize="@dimen/sp_14"
+                  android:drawablePadding="@dimen/dp_8"
+                  android:textColor="#494949"
+                  android:id="@+id/share_saveimage"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:text="复制文案"
+                  android:gravity="center"
+                  android:textSize="@dimen/sp_14"
+                  android:drawablePadding="@dimen/dp_8"
+                  android:textColor="#494949"
+                  android:id="@+id/share_copytext"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:text="微信"
+                  android:drawableTop="@mipmap/wechat"
+                  android:gravity="center"
+                  android:textSize="@dimen/sp_14"
+                  android:drawablePadding="@dimen/dp_8"
+                  android:textColor="#494949"
+                  android:id="@+id/share_wechat"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:text="朋友圈"
+                  android:drawableTop="@mipmap/wecomment"
+                  android:gravity="center"
+                  android:textSize="@dimen/sp_14"
+                  android:drawablePadding="@dimen/dp_8"
+                  android:textColor="#494949"
+                  android:id="@+id/share_wecomment"
+                  android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+</layout>

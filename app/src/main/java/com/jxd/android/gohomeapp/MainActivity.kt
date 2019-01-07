@@ -12,6 +12,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
 import com.jxd.android.gohomeapp.quanmodule.MainActivity
 import com.jxd.android.gohomeapp.quanmodule.MainActivity2
+import com.jxd.android.gohomeapp.quanmodule.fragment.CouponFragment
 
 
 class MainActivity : BaseActivity() , View.OnClickListener {
@@ -27,10 +28,18 @@ class MainActivity : BaseActivity() , View.OnClickListener {
         initView()
 
 
-
     }
 
     override fun initView() {
+
+
+        var couponFragment = CouponFragment.newInstance("","")
+
+        this.supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container_1 , couponFragment)
+            .commit()
+
 
 
         activityMainBinding  = DataBindingUtil.setContentView(this, R.layout.activity_main )

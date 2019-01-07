@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="#ffdadada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+<com.facebook.drawee.view.SimpleDraweeView android:layout_width="@dimen/dp_90"
+                                           android:id="@+id/share_item_image"
+                                           app:actualImageScaleType="centerCrop"
+                                           android:layout_height="@dimen/dp_90"/>
+    <ImageView android:layout_width="@dimen/dp_22"
+               android:id="@+id/share_item_check"
+               android:padding="@dimen/dp_5"
+               android:layout_height="@dimen/dp_22"
+               android:layout_alignParentTop="true"
+               android:src="@mipmap/g"
+               android:layout_alignRight="@id/share_item_image"/>
+
+</RelativeLayout>

@@ -2,7 +2,8 @@ package com.jxd.android.gohomeapp.quanmodule.http
 
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
 import com.jxd.android.gohomeapp.libcommon.bean.Category
-import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
+import com.jxd.android.gohomeapp.libcommon.bean.CouponBean
+import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -22,11 +23,17 @@ interface ApiService {
 
     @POST("goods/detail")
     @FormUrlEncoded
-    fun getGoodsDetail(@Field("goodsid") goodsid:Long ):Observable<ApiResult<DetailBean?>>
+    fun getGoodsDetail(@Field("goodsId") goodsId:String ):Observable<ApiResult<GoodsDetailBean?>>
 
     /**
      * 获得商品分类列表
      */
     @GET("goods/categories")
     fun getGoodsCategories():Observable<ApiResult<ArrayList<Category>?>>
+
+    /**
+     * 优惠劵列表 随机从后台选择的商品中选5件
+     */
+    @GET("goods/couponList")
+    fun getCouponList():Observable<ApiResult<ArrayList<CouponBean>?>>
 }

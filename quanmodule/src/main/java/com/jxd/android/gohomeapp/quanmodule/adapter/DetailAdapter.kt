@@ -6,19 +6,19 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
+import com.jxd.android.gohomeapp.libcommon.bean.PictureBean
 import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
 import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
 import com.jxd.android.gohomeapp.quanmodule.R
 
 
-class DetailAdapter(data :ArrayList<DetailBean>)
-    :BaseQuickAdapter<DetailBean,BaseViewHolder>(R.layout.layout_detail_item ,  data) , FrescoDraweeListener.ImageCallback {
+class DetailAdapter(data :ArrayList<PictureBean>)
+    :BaseQuickAdapter<PictureBean,BaseViewHolder>(R.layout.layout_detail_item ,  data) , FrescoDraweeListener.ImageCallback {
 
 
 
-    override fun convert(helper: BaseViewHolder?, item: DetailBean?) {
+    override fun convert(helper: BaseViewHolder?, item: PictureBean?) {
 
        var view = helper!!.getView<SimpleDraweeView>(R.id.detail_item_pic)
        var  sw = DensityUtils.getScreenWidth(mContext)

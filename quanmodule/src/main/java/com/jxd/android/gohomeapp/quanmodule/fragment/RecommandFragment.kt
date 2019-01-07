@@ -244,9 +244,7 @@ class RecommandFragment : BaseFragment()
         initView()
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
+
 
     override fun onRefresh() {
 

@@ -3,7 +3,9 @@ package com.jxd.android.gohomeapp.quanmodule.http
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jxd.android.gohomeapp.libcommon.bean.Constants
+import com.jxd.android.gohomeapp.quanmodule.BuildConfig
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,14 +27,33 @@ object RetrofitManager {
 
     private fun provideOkHttpClient( headerIntercepter: HeaderIntercepter?):OkHttpClient?{
 
-        if(okHttpClient==null) okHttpClient = OkHttpClient.Builder()
+        if(okHttpClient==null){
+            var builder =OkHttpClient.Builder()
                 .readTimeout(Constants.READ_TIMEOUT , TimeUnit.SECONDS)
                 .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(Constants.WRITE_TIMEOUT , TimeUnit.SECONDS)
-                .addInterceptor(headerIntercepter)
-                .build()
+            //.addInterceptor(headerIntercepter)
+
+            if(headerIntercepter!=null){
+                builder.addInterceptor(headerIntercepter)
+            }
+
+
+            if(BuildConfig.DEBUG){
+                builder.addInterceptor(provideHttpLogIntercepter())
+            }
+
+            okHttpClient =builder.build()
+        }
 
         return okHttpClient
+    }
+
+
+    private fun provideHttpLogIntercepter(): HttpLoggingInterceptor {
+        var httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        return httpLoggingInterceptor
     }
 
     private fun provideGson(): Gson? {

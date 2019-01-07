@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.R.id.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentMainBinding
 import com.jxd.android.gohomeapp.quanmodule.generated.callback.OnClickListener
 import kotlinx.android.synthetic.main.layout_bottom_menu.*
@@ -80,9 +81,6 @@ class MainFragment : BaseFragment() , View.OnClickListener {
         }
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
 
     override fun onClick(v: View?) {
         when(v!!.id) {

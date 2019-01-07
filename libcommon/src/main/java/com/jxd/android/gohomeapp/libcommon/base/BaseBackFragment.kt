@@ -35,5 +35,5 @@ abstract class BaseBackFragment : SwipeBackFragment() {
 
     }
 
-    abstract fun getLayoutResourceId():Int
+
 }

@@ -77,9 +77,6 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         super.onLazyInitView(savedInstanceState)
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
 
     override fun initView(){
         header_title.text="收藏夹"

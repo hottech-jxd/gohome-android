@@ -124,9 +124,7 @@ class IndexFragment : BaseFragment()
 //
 //    }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
+
 
 
     override fun onRefresh() {
@@ -201,12 +199,9 @@ class IndexFragment : BaseFragment()
 
      fun showCategorys(){
         index_category.visibility = if( index_category.visibility == View.VISIBLE ) View.GONE else View.VISIBLE
-
-         //newIntent<DetailActivity>()
-
-
+         
          ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
-             .withLong("goodsId", 88)
+             .withString("goodsId", "88")
              .navigation()
     }
 

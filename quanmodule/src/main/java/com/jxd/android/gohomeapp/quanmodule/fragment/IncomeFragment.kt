@@ -49,9 +49,6 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener {
         return  dataBinding.root
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
 
     override fun onClick(v: View?) {
         if(v!!.id==R.id.header_left_image){

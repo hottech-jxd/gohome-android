@@ -35,5 +35,5 @@ abstract class BaseFragment : SupportFragment() {
 
     }
 
-    abstract fun getLayoutResourceId():Int
+    //abstract fun getLayoutResourceId():Int
 }

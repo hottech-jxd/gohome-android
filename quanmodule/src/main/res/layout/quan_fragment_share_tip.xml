@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="clickHandler" type="android.view.View.OnClickListener" />
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clickable="true"
+             tools:context=".fragment.ShareTipFragment">
+
+    <include layout="@layout/layout_common_header"
+             app:clickHandler="@{clickHandler}"
+             android:layout_height="wrap_content"
+             android:id="@+id/share_tip_header"
+            android:layout_width="match_parent"/>
+    <View android:layout_width="match_parent" android:layout_height="@dimen/dp_1"
+          android:background="@color/linecolor"
+            android:id="@+id/share_tip_line" android:layout_below="@id/share_tip_header"/>
+
+    <android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+                                                android:layout_above="@id/share_tip_share"
+                                                android:layout_below="@id/share_tip_line"
+                                                android:layout_height="wrap_content">
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:src="@mipmap/noevent"
+               android:id="@+id/share_tip_image"
+               android:layout_marginTop="@dimen/dp_50"
+               android:layout_marginBottom="@dimen/dp_30"
+
+    android:layout_centerHorizontal="true"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:textColor="@color/black"
+              android:layout_below="@id/share_tip_image"
+              android:layout_marginLeft="@dimen/dp_10"
+              android:gravity="center"
+              android:id="@+id/share_tip_tip1"
+              android:lineSpacingExtra="@dimen/dp_5"
+              android:layout_marginRight="@dimen/dp_10"
+              android:textSize="@dimen/sp_17"
+              android:layout_centerHorizontal="true"
+    android:text="你当前未缴纳门锁使用服务费"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:textColor="@color/black"
+              android:layout_below="@id/share_tip_tip1"
+              android:id="@+id/share_tip_tip2"
+              android:layout_marginLeft="@dimen/dp_10"
+              android:gravity="center"
+              android:lineSpacingExtra="@dimen/dp_5"
+              android:layout_marginRight="@dimen/dp_10"
+              android:textSize="@dimen/sp_17"
+              android:layout_centerHorizontal="true"
+              android:text="暂无分享收益权限"/>
+
+    <LinearLayout
+            android:layout_below="@id/share_tip_tip2"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/dp_28"
+            android:background="@drawable/shape_share_tip_bg"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="wrap_content"
+                  android:textSize="@dimen/sp_15"
+                  android:text="1.具备分享功能"
+                  android:textColor="#3b3b3b"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginTop="@dimen/dp_20"
+                  android:textSize="@dimen/sp_15"
+                  android:text="2.好友购买后我能赚收益"
+                  android:textColor="#3b3b3b"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="wrap_content"
+                  android:textSize="@dimen/sp_15"
+                  android:layout_marginTop="@dimen/dp_20"
+                  android:text="3.收益可用来提现"
+                  android:textColor="#3b3b3b"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="wrap_content"
+                  android:textSize="@dimen/sp_15"
+                  android:text="4.收益可用来支付门锁使用服务费"
+                  android:textColor="#3b3b3b"
+                  android:layout_marginTop="@dimen/dp_20"
+                  android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="#FFC200" android:textColor="@color/white"
+              android:textSize="@dimen/sp_16"
+              android:text="立即获取收益权限"
+              android:gravity="center"
+              android:padding="@dimen/dp_14"
+              android:id="@+id/share_tip_share"
+              android:layout_alignParentBottom="true"
+    />
+
+
+</RelativeLayout>
+
+
+</layout>

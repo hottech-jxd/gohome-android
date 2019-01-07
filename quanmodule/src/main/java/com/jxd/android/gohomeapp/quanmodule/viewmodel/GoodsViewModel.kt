@@ -2,15 +2,11 @@ package com.jxd.android.gohomeapp.quanmodule.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.databinding.BaseObservable
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
-import android.databinding.ObservableMap
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
 import com.jxd.android.gohomeapp.libcommon.bean.Category
-import com.jxd.android.gohomeapp.libcommon.bean.DetailBean
+import com.jxd.android.gohomeapp.libcommon.bean.CouponBean
+import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
 
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.GoodsRepository
@@ -28,21 +24,15 @@ import io.reactivex.disposables.CompositeDisposable
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-class GoodsViewModel(application: Application) :  AndroidViewModel(application) {
+class GoodsViewModel(application: Application) :  BaseViewModel(application) {
 
-    var loading = MutableLiveData<Boolean>()
-    //var test =MutableLiveData<String>()
-    var complete=  MutableLiveData<Boolean>()
-    var error = MutableLiveData<String>()
-    var hasError = MutableLiveData<Boolean>()
-    var liveDataGoodsDetail = MutableLiveData<ApiResult<DetailBean?>>()
+    var liveDataGoodsDetail = MutableLiveData<ApiResult<GoodsDetailBean?>>()
     var liveDataGoodsCategories = MutableLiveData<ApiResult<ArrayList<Category>?>>()
-
-    private val mDisposable = CompositeDisposable()
-
+    var liveDataCouponList = MutableLiveData<ApiResult<ArrayList<CouponBean>?>>()
 
 
-    fun getGoodsDetail(goodsId:Long){
+
+    fun getGoodsDetail(goodsId:String){
 
         GoodsRepository.getGoodsDetail(goodsId)
             .wrapper()
@@ -55,9 +45,7 @@ class GoodsViewModel(application: Application) :  AndroidViewModel(application) 
                 complete.value =true
             }
             .doOnError {
-                loading.postValue(false)
-                hasError.value =true
-                error.value ="error"
+                onError(it)
             }
             .subscribe({
                 loading.postValue(false)
@@ -89,15 +77,31 @@ class GoodsViewModel(application: Application) :  AndroidViewModel(application) 
                 liveDataGoodsCategories.postValue(it)
             }
             .doOnError {
-                hasError.postValue(true)
-                error.postValue( "error->>"+ it.message )
+                onError(it)
             }
             .subscribe()
     }
 
 
-    override fun onCleared() {
-        super.onCleared()
-        mDisposable.clear()
+    fun getCouponList(){
+        GoodsRepository.getCouponList()
+            .wrapper()
+            .doOnSubscribe {
+                t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .doOnNext{
+                liveDataCouponList.postValue(it)
+            }
+            .doOnError {
+                onError(it )
+            }
+            .subscribe()
     }
+
+
 }

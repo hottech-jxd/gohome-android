@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable name="clickHandler" type="android.view.View.OnClickListener" />
+        <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#FFC000"
+             tools:context=".fragment.CouponFragment">
+
+    <RelativeLayout
+            android:id="@+id/coupone_lay_1"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_30"
+            android:paddingTop="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_20"
+            android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+        <ImageView android:layout_width="wrap_content"
+                   android:src="@mipmap/category"
+                   android:layout_centerVertical="true"
+                   android:layout_alignParentLeft="true"
+                   android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/coupon_cause"
+                android:src="@mipmap/cause"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/coupon_lay_2"
+            android:layout_below="@id/coupone_lay_1"
+            android:layout_width="match_parent"
+            android:paddingRight="@dimen/dp_20"
+            android:paddingLeft="@dimen/dp_30"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="我的商城"
+                android:id="@+id/coupone_mall"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_22"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="wrap_content"
+                  android:textSize="@dimen/sp_16"
+                  android:layout_toRightOf="@id/coupone_mall"
+                  android:layout_centerVertical="true"
+                  android:textColor="@color/white"
+                  android:text="可省120元"
+                  android:layout_marginLeft="@dimen/dp_10"
+                  android:layout_height="wrap_content"/>
+        <ImageView android:layout_width="wrap_content"
+                   android:id="@+id/coupon_go"
+                   android:layout_centerVertical="true"
+                   android:src="@mipmap/enter"
+                   android:paddingTop="@dimen/dp_10"
+                   android:paddingRight="@dimen/dp_5"
+                   android:paddingBottom="@dimen/dp_10"
+                   android:paddingLeft="@dimen/dp_24"
+                   android:layout_alignParentRight="true"
+                   android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+                                            android:layout_below="@id/coupon_lay_2"
+                                            android:id="@+id/coupon_recyclerview"
+                                            android:layout_marginTop="@dimen/dp_16"
+                                            android:background="@color/white"
+                                            android:layout_marginLeft="@dimen/dp_30"
+                                            android:layout_marginRight="@dimen/dp_30"
+                                            android:layout_marginBottom="@dimen/dp_30"
+                                            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
+
+
+</layout>

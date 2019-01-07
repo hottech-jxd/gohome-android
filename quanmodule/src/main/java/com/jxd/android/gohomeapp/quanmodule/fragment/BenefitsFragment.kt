@@ -34,9 +34,9 @@ class BenefitsFragment : BaseFragment() {
         }
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
+//    override fun getLayoutResourceId(): Int {
+//        return 0
+//    }
 
     override fun initView() {
 

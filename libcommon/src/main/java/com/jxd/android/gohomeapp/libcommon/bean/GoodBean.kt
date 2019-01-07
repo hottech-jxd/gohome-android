@@ -14,4 +14,47 @@ data class GoodBean (var goodsId :Long,
                      var time:String ,
                      var goodsIntro:String)
 
-data class DetailBean(var id :Int , var type:Int, var url:String)
+data class GoodsDetailBean(var goodsId: String ,
+                      /**
+                       * 商品名称
+                       */
+                      var name:String?,
+                      /**
+                       * 商品多张图片
+                       */
+                      var pictureUrls:ArrayList<String>?,
+                      /**
+                       * 价格
+                       */
+                      var price:String?,
+                      /**
+                       * 赏金
+                       */
+                      var reward:String?,
+                      /**
+                       * 销量
+                       */
+                      var saleAmount:Long,
+                      /**
+                       * 来源
+                       */
+                      var source:String?,
+                      /**
+                       * 优惠劵有效期
+                       */
+                      var couponExpiryDate:String? ,
+                      /**
+                       * 劵价格
+                       */
+                      var couponPrice:String?,
+                      /**
+                       * 商品详情【图片】
+                       */
+                      var detail:String?,
+                      /**
+                       * 劵后价格
+                       */
+                      var finalPrice:String?)
+
+
+data class PictureBean(var url:String?)

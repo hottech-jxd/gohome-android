@@ -106,9 +106,6 @@ class MyFragment : BaseFragment() , View.OnClickListener , TabLayout.OnTabSelect
 
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
 
 
     override fun onClick(v: View?) {

@@ -63,4 +63,6 @@ dependencies {
     implementation 'me.yokeyword:fragmentation:1.3.6'
     implementation 'me.yokeyword:fragmentation-swipeback:1.3.6'
     implementation 'com.android.support:multidex:1.0.3'
+    /*recyckerview库*/
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
 }

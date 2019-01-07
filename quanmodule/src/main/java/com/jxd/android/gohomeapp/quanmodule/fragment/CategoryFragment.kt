@@ -80,9 +80,7 @@ class CategoryFragment : BaseBackFragment() , View.OnClickListener{
         this.loadRootFragment(R.id.category_container , fragment, false, true)
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
+
 
     override fun onClick(v: View?) {
 

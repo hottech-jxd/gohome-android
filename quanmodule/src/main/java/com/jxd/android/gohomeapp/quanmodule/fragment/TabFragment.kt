@@ -107,9 +107,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener{
         dataAdapter!!.notifyDataSetChanged()
     }
 
-    override fun getLayoutResourceId(): Int {
-        return 0
-    }
+
 
     override fun onClick(v: View?) {
 //        when(v!!.id){
