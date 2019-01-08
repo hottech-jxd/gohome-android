@@ -36,4 +36,22 @@ interface ApiService {
      */
     @GET("goods/couponList")
     fun getCouponList():Observable<ApiResult<ArrayList<CouponBean>?>>
+
+
+    /**
+     * 提现申请
+     */
+    @POST("user/cashApply")
+    @FormUrlEncoded
+    fun cashApply(@Field("bank")  bank:String,
+                  @Field("branch")  branch:String,
+                  @Field("card")  card:String,
+                  @Field("name")  name:String,
+                  @Field("money")  money:String,
+                  @Field("mobile")  mobile:String,
+                  @Field("code")  code:String):Observable<ApiResult<Any?>>
+
+    @POST("user/sendCode")
+    @FormUrlEncoded
+    fun sendCode(@Field("mobile") mobile:String):Observable<ApiResult<Any?>>
 }

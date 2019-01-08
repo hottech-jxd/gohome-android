@@ -3,6 +3,7 @@ package com.jxd.android.gohomeapp.quanmodule.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -17,6 +18,7 @@ import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.TutorialsActivity
 import com.jxd.android.gohomeapp.quanmodule.adapter.CouponAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCouponBinding
@@ -121,7 +123,11 @@ class CouponFragment : BaseFragment() , View.OnClickListener , BaseQuickAdapter.
 
 
     override fun onClick(v: View?) {
-
+        when(v!!.id){
+            R.id.coupon_cause->{
+                this.startActivity(Intent(this.context, TutorialsActivity::class.java))
+            }
+        }
     }
 
     companion object {

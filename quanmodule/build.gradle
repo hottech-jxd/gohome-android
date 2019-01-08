@@ -15,8 +15,17 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+//        ndk {
+//            //设置支持的SO库架构
+//            abiFilters 'armeabi' , 'armeabi-v7a', 'x86'
+//        }
     }
+
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
 
     buildTypes {
         release {
@@ -28,7 +37,6 @@ android {
     dataBinding {
         enabled true
     }
-
 
 
 }
@@ -89,4 +97,16 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     //kapt "androidx.databinding:databinding-compiler:3.2.1-alpha10"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+
+    //implementation 'com.shuyu:GSYVideoPlayer:6.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-java:6.0.2'
+    //是否需要ExoPlayer模式
+    //implementation 'com.shuyu:GSYVideoPlayer-exo2:6.0.2'
+    //根据你的需求ijk模式的so
+    //implementation 'com.shuyu:gsyVideoPlayer-armv5:6.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.2'
+    //implementation 'com.shuyu:gsyVideoPlayer-arm64:6.0.2'
+    //implementation 'com.shuyu:gsyVideoPlayer-x64:6.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-x86:6.0.2'
+
 }

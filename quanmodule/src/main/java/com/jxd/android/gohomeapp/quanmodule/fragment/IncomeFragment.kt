@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
@@ -10,18 +11,26 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
+import android.widget.TextView
+import com.github.mikephil.charting.components.*
+import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.utils.MPPointF
+import com.github.mikephil.charting.utils.Utils
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.R.mipmap.x
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIncomeBinding
+import kotlinx.android.synthetic.main.layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_income.*
+import kotlinx.android.synthetic.main.quan_fragment_income.view.*
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +43,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  * 收益
  */
-class IncomeFragment : BaseBackFragment() , View.OnClickListener {
+class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueSelectedListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -59,6 +68,11 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener {
         return  dataBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        header_title.text="收益中心"
+    }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
@@ -68,8 +82,17 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener {
 
 
     fun initLineChart(){
-
+        income_lineChart.setNoDataText("")
+        income_lineChart.description.isEnabled=false
         income_lineChart.axisRight.isEnabled=false
+        income_lineChart.setOnChartValueSelectedListener(this)
+        income_lineChart.animateXY(1500,1500)
+        income_lineChart.axisRight.isEnabled=false
+
+        var myMarkerView = MyMarkerView(context , R.layout.layout_markerview)
+        income_lineChart.marker = myMarkerView
+        myMarkerView.chartView = income_lineChart
+
 
         var xAxis = income_lineChart.xAxis
 
@@ -95,28 +118,36 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener {
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         legend.form = Legend.LegendForm.LINE
-        legend.textColor = Color.RED
-        legend.xOffset = 10f
+        legend.textColor = Color.BLACK
+        legend.xOffset = 0f
         legend.yOffset = 10f
+        legend.yEntrySpace = 0f
+        //legend.formToTextSpace = 50f
+        //legend.mNeededHeight = 80f
+
 
 
 
 
 
         var list = ArrayList<Entry>()
-        var entry = Entry(1f,200f)
+        var entry = Entry1("02/01","￥12", 1f,200f)
         list.add(entry)
-        entry = Entry(2f, 180f)
+        entry = Entry1("03/01", "￥13", 2f, 180f)
         list.add(entry)
-        entry = Entry(3f, 380f)
+        entry = Entry1("04/01", "￥14", 3f, 380f)
         list.add(entry)
-        entry = Entry(4f, 580f)
+        entry = Entry1("05/01", "￥15", 4f, 580f)
         list.add(entry)
-        entry = Entry(5f, 180f)
+        entry = Entry1("06/01", "￥16", 5f, 180f)
         list.add(entry)
         var dataSet = LineDataSet(list, "本周期")
         dataSet.setDrawValues(false)
+        dataSet.setCircleColor(Color.BLACK)
+        dataSet.setDrawCircles(false)
         dataSet.setColor(Color.RED)
+        dataSet.setDrawCircleHole(false)
+        dataSet.valueTextColor =Color.BLACK
         dataSet.axisDependency = YAxis.AxisDependency.LEFT
 
         var lineData = LineData()
@@ -124,18 +155,22 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener {
 
 
         var list2 = ArrayList<Entry>()
-        entry = Entry(1f,20f)
-        list2.add(entry)
-        entry = Entry(2f, 18f)
-        list2.add(entry)
-        entry = Entry(3f, 38f)
-        list2.add(entry)
-        entry = Entry(4f, 58f)
-        list2.add(entry)
-        entry = Entry(5f, 18f)
-        list2.add(entry)
+        var entry2 = Entry2("02/01", "￥112", 1f,20f)
+        list2.add(entry2)
+        entry2 = Entry2("03/01", "￥113", 2f, 18f)
+        list2.add(entry2)
+        entry2 = Entry2("04/01","￥114", 3f, 38f)
+        list2.add(entry2)
+        entry2 = Entry2("05/01","￥115", 4f, 58f)
+        list2.add(entry2)
+        entry2 = Entry2("06/01","￥116", 5f, 18f)
+        list2.add(entry2)
         var dataSet2 = LineDataSet(list2, "上周期")
         dataSet2.setColor(Color.GREEN)
+        dataSet2.setDrawCircles(false)
+        dataSet2.setDrawCircleHole(false)
+        dataSet2.setCircleColor(Color.BLACK)
+        dataSet2.setDrawValues(false)
         dataSet2.axisDependency = YAxis.AxisDependency.LEFT
 
 
@@ -151,6 +186,14 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener {
         if(v!!.id==R.id.header_left_image){
             _mActivity.onBackPressed()
         }
+    }
+
+    override fun onNothingSelected() {
+
+    }
+
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+
     }
 
     companion object {
@@ -172,4 +215,56 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener {
                 }
             }
     }
+
+
+    class MyMarkerView: MarkerView{
+        var tvDate1 :TextView?=null
+        var tvContent1:TextView?=null
+        var tvDate2 :TextView?=null
+        var tvContent2:TextView?=null
+
+        constructor(context: Context?, layoutResource: Int) : super(context, layoutResource){
+            tvDate1 = findViewById(R.id.markerview_date1)
+            tvContent1 = findViewById(R.id.markerview_content1 )
+            tvDate2 = findViewById(R.id.markerview_date2)
+            tvContent2= findViewById(R.id.markerview_content2)
+        }
+
+        override fun getOffset(): MPPointF {
+            return MPPointF((-(width / 2)).toFloat(), (-height).toFloat())
+        }
+
+        override fun refreshContent(e: Entry?, highlight: Highlight?) {
+            super.refreshContent(e, highlight)
+
+            for(dataset  in chartView.data.dataSets) {
+                //if( currentDataSet ==null || currentDataSet!=null && dataset != currentDataSet) {
+                    var en = dataset.getEntriesForXValue(e!!.x)
+                if(en==null || en.size<1) continue
+                var eee = en[0]
+                    if (eee is Entry1) {
+                        var e1 = eee as Entry1
+                        tvDate1!!.text = e1.date
+                        tvContent1!!.text = e1.amount //Utils.formatNumber(e.x , 0, true)
+
+                    } else if( eee is Entry2 ) {
+                        var e2 = eee as Entry2
+                        tvDate2!!.text = e2.date
+                        tvContent2!!.text = e2.amount //Utils.formatNumber(e.getY(), 0, true)
+                    }
+                }
+
+
+            super.refreshContent(e, highlight)
+        }
+    }
+
+    class Entry1(var date:String , var amount:String , x:Float,  y:Float): Entry( x,  y) {
+
+    }
+
+    class Entry2(var date:String , var amount:String , x:Float,  y:Float): Entry( x,  y){
+
+    }
+
 }

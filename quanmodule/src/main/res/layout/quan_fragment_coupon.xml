@@ -10,6 +10,8 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:clipToPadding="true"
              android:background="#FFC000"
              tools:context=".fragment.CouponFragment">
 
@@ -18,13 +20,16 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_20"
             android:paddingRight="@dimen/dp_30"
-            android:paddingTop="@dimen/dp_20"
-            android:paddingBottom="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
             android:layout_width="match_parent"
                   android:layout_height="wrap_content">
 
         <ImageView android:layout_width="wrap_content"
                    android:src="@mipmap/category"
+                   android:paddingTop="@dimen/dp_10"
+                   android:paddingRight="@dimen/dp_16"
+                   android:paddingBottom="@dimen/dp_10"
                    android:layout_centerVertical="true"
                    android:layout_alignParentLeft="true"
                    android:layout_height="wrap_content"/>
@@ -32,7 +37,10 @@
         <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/coupon_cause"
+                android:onClick="@{clickHandler.onClick}"
                 android:src="@mipmap/cause"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                    android:layout_height="wrap_content"/>

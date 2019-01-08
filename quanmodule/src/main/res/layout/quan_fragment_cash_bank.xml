@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
+        <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
     </data>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
              android:layout_width="match_parent"
@@ -12,16 +14,18 @@
              tools:context=".fragment.CashBankFragment">
 
   <include android:layout_width="match_parent"
+           android:id="@+id/cashbank_header"
            app:clickHandler="@{clickHandler}"
            layout="@layout/layout_common_header"
            android:layout_height="wrap_content" />
 
     <LinearLayout
+            android:layout_below="@id/cashbank_header"
             android:paddingTop="@dimen/dp_16"
             android:paddingBottom="@dimen/dp_16"
             android:paddingLeft="@dimen/dp_16"
             android:paddingRight="@dimen/dp_16"
-            android:id="@+id/cash_lay_balance"
+            android:id="@+id/cashbank_lay_balance"
             android:orientation="vertical"
             android:background="#FBBD00"
             android:layout_width="match_parent"
@@ -43,7 +47,9 @@
     </LinearLayout>
 
 
-    <android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+    <android.support.v4.widget.NestedScrollView
+            android:layout_below="@id/cashbank_lay_balance"
+            android:layout_width="match_parent"
                                                 android:layout_height="wrap_content">
 
     <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
@@ -229,6 +235,9 @@
                           android:text="获取验证码"
                           android:textColor="#00ff00"
                           android:padding="@dimen/dp_10"
+                          android:id="@+id/cashbank_getcode"
+                          android:onClick="@{clickHandler.onClick}"
+                          android:visibility="visible"
                           android:textSize="@dimen/sp_14"
                           android:layout_height="wrap_content"/>
 
@@ -237,6 +246,7 @@
                         android:layout_marginStart="2dp"
                         android:layout_marginLeft="2dp"
                         android:padding="10dp"
+                        android:onClick="@{clickHandler.onClick}"
                         android:id="@+id/cashbank_countdown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -343,13 +353,14 @@
           android:layout_height="@dimen/dp_1" />
 
         <TextView android:layout_width="match_parent"
-                  android:id="@+id/cashbank_comfirm"
+                  android:id="@+id/cashbank_confirm"
                   android:layout_marginLeft="@dimen/dp_25"
                   android:layout_marginRight="@dimen/dp_25"
                   android:layout_marginTop="@dimen/dp_20"
                   android:layout_marginBottom="@dimen/dp_20"
                   android:text="确定"
                   android:textSize="@dimen/dp_16"
+                  android:onClick="@{clickHandler.onClick}"
                   android:gravity="center"
                   android:padding="@dimen/dp_10"
                   android:textColor="@color/white"
@@ -360,6 +371,12 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-</LinearLayout>
+    <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+        android:layout_width="match_parent"
+        android:id="@+id/cashbank_progress"
+        android:visibility="@{userViewModel.loading?View.VISIBLE:View.GONE}"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
 
 </layout>

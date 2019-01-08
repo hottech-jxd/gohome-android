@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:clipToPadding="true"
+                android:background="#FFC300"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+             tools:context=".fragment.TutorialsFragment">
+
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:id="@+id/tutorials_header"
+            android:paddingRight="@dimen/dp_0"
+            android:paddingLeft="@dimen/dp_0"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/header_left_image"
+                android:layout_width="wrap_content"
+                android:paddingTop="@dimen/dp_12"
+                android:onClick="onClick"
+                android:paddingBottom="@dimen/dp_12"
+                android:paddingLeft="@dimen/dp_0"
+                android:paddingRight="@dimen/dp_16"
+                android:src="@mipmap/arrowleft"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/header_right_text"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_60"
+                android:paddingRight="@dimen/dp_30"
+                android:id="@+id/header_title"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="新手教程"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+            android:id="@+id/tutorials_scrollview"
+            android:layout_below="@id/tutorials_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+
+            <TextView android:layout_width="wrap_content"
+              android:text="一、新手视频指导"
+              android:paddingTop="@dimen/dp_16"
+              android:textColor="@color/white"
+              android:textSize="@dimen/sp_15"
+              android:textStyle="bold"
+              android:id="@+id/tutorials_label"
+              android:layout_height="wrap_content"/>
+
+            <com.jxd.android.gohomeapp.quanmodule.widget.SampleControlVideo
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="@dimen/dp_250"
+                android:background="@color/white"
+                android:layout_below="@id/tutorials_label"
+                android:id="@+id/tutorials_videoplay"/>
+
+            <!--<com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer-->
+                    <!--android:layout_below="@id/tutorials_label"-->
+                    <!--android:layout_height="@dimen/dp_250"-->
+                    <!--android:layout_marginTop="@dimen/dp_20"-->
+                    <!--android:id="@+id/tutorials_videoplay"-->
+                <!--android:layout_width="match_parent"/>-->
+
+            <TextView android:layout_width="wrap_content"
+                      android:text="二、新手小贴士"
+                      android:paddingTop="@dimen/dp_20"
+                      android:textColor="@color/white"
+                      android:textSize="@dimen/sp_15"
+                      android:textStyle="bold"
+                      android:id="@+id/tutorials_label2"
+                      android:layout_below="@id/tutorials_videoplay"
+                      android:layout_height="wrap_content"/>
+
+            <TextView android:layout_width="match_parent"
+                      android:layout_marginTop="@dimen/dp_16"
+                      android:id="@+id/tutorials_content"
+                      android:padding="@dimen/dp_20"
+                      android:layout_marginBottom="@dimen/dp_30"
+                      android:text="　新京报记者  陆一夫  编辑  徐超
+
+　　埃隆·马斯克几乎是一个没有秘密的人，不论是在推特上宣布特斯拉私有化，还是面对记者专访时坦言特斯拉在去年差点倒闭，他每一次的发言都像是一场表演。
+
+　　因此，在 2019 年 1 月 7 日特斯拉上海超级工厂（一期）的开工典礼上，马斯克在现场甚至跟随着音乐摇摆起舞，在这个非常隆重的典礼上显得格外活泼。
+
+　　作为中国放宽汽车行业外资股比限制后第一家在中国设立的独资车企，以及上海有史以来最大的外商投资制造项目，特斯拉的上海超级工厂被给予厚望。“目标在今年夏天完成上海工厂初步建设，在年底开始 Model 3 的生产，并在明年实现大规模生产。”马斯克表示。
+
+　　但他同时在推特上透露，上海超级工厂将为大中华区生产入门款 Model 3、Model Y，其他所有 Model S 和 Model X、以及高配款 Model 3、Model Y 仍将由美国工厂负责生产。
+
+　　虽然特斯拉表示，借鉴北美 Model 3 产能不断提升的经验，将加速建设上海超级工厂，但根据马斯克过往的表态来看，今年年底投产的可能性依然存疑。
+
+　　从去年 7 月 10 日签署协议，到如今正式动工，“特斯拉速度”在中国体现得淋漓尽致，这对于渴望拥有廉价 Model 3 的中国车主来说是巨大的好消息，但对于国内的造车新势力而言这将是一场硬仗，才开始陆续进行交付的蔚来、小鹏等互联网车企，最快将在年内与“老师”决一高下。
+
+　　Model 3 今年交付  国产版售价下降将冲击蔚来们"
+                      android:background="@drawable/shape_markerview_bg"
+                      android:layout_below="@id/tutorials_label2"
+                      android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
