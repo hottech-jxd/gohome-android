@@ -8,5 +8,5 @@ data class HeaderParameter(var appVersion: String? = null,
                            var mobileType: String? = null,
                            var osType :Int = Constants.OS_TYPE,
                            var osVersion: String? = "",
-                           var userId: Long = 0,
+                           var userId: String = "",
                            var userToken :String= "")

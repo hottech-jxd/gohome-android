@@ -1,11 +1,15 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.database.DatabaseUtils
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +18,19 @@ import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.libcommon.bean.MyBean
 import com.jxd.android.gohomeapp.libcommon.bean.OrderStatusEnum
 import com.jxd.android.gohomeapp.libcommon.bean.OrderTypeEnum
+import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.R.id.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentMeBinding
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_me_header.*
 import kotlinx.android.synthetic.main.quan_fragment_me.*
 import me.yokeyword.fragmentation.SupportActivity
+import java.math.BigDecimal
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,12 +44,17 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 @Route(path=ARouterPath.QuanFragmentMyPath)
-class MyFragment : BaseFragment() , View.OnClickListener , TabLayout.OnTabSelectedListener {
+class MyFragment : BaseFragment() , View.OnClickListener
+    , TabLayout.OnTabSelectedListener
+    , SwipeRefreshLayout.OnRefreshListener
+    , AppBarLayout.OnOffsetChangedListener{
 
     private var param1: String? = null
     var fragments=ArrayList<BaseFragment>()
     var titles =ArrayList<String>()
     var orderAdapter:AppFragmentAdapter?=null
+    var dataBinding:QuanFragmentMeBinding?=null
+    //var myBean:MyBean?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,24 +64,64 @@ class MyFragment : BaseFragment() , View.OnClickListener , TabLayout.OnTabSelect
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //return inflater.inflate(R.layout.quan_fragment_me , container , false)
-        var dataBinding:QuanFragmentMeBinding = DataBindingUtil.inflate(inflater , R.layout.quan_fragment_me , container, false)
-        dataBinding.clickHandler = this
-        return dataBinding.root
+        dataBinding = DataBindingUtil.inflate(inflater , R.layout.quan_fragment_me , container, false)
+        dataBinding!!.clickHandler = this
+        dataBinding!!.userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        dataBinding!!.myBean = MyBean(BigDecimal.ZERO,BigDecimal.ZERO , BigDecimal.ZERO)
+        return dataBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView()
+
+
+
+        quan_my_appbarLayout.addOnOffsetChangedListener (this)
+
+
+
+        dataBinding!!.userViewModel!!.liveDataMyResult.observe(this, Observer { it->
+            quan_my_refresview.isRefreshing=false
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            dataBinding!!.myBean = it.data
+            //this.myBean = it.data
+            //my_header_pre_week_momey.text = "￥${it.data!!.lastWeek.setScale(2,BigDecimal.ROUND_HALF_UP)}"
+            //my_header_this_week_momey.text = "￥${it.data!!.thisWeek.setScale(2, BigDecimal.ROUND_HALF_UP)}"
+            //my_header_all_momey.text = "￥${it.data!!.total.setScale(2,BigDecimal.ROUND_HALF_UP)}"
+        })
+
+        dataBinding!!.userViewModel!!.hasError.observe(this, Observer {
+            if(it==false) return@Observer
+            quan_my_refresview.isRefreshing=false
+            showToast( dataBinding!!.userViewModel!!.error.value!! )
+        } )
+    }
+
+    override fun onOffsetChanged(p0: AppBarLayout?, verticalOffset: Int) {
+        if(verticalOffset>=0){
+            quan_my_refresview.isEnabled=true
+        }else{
+            quan_my_refresview.isEnabled = false
+        }
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-
         if(!hidden) {
             ImmersionBar.with(this).statusBarColor(R.color.my_status_color).init()
         }
+    }
+
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
+        super.onLazyInitView(savedInstanceState)
+        initView()
+        fetchData()
     }
 
     override fun initView() {
@@ -78,6 +133,8 @@ class MyFragment : BaseFragment() , View.OnClickListener , TabLayout.OnTabSelect
 //        my_lay_zhuan.setOnClickListener(this)
 
         //my_header_cash.setOnClickListener(this)
+
+        quan_my_refresview.setOnRefreshListener(this)
 
         fragments.clear()
         titles.clear()
@@ -99,14 +156,16 @@ class MyFragment : BaseFragment() , View.OnClickListener , TabLayout.OnTabSelect
 
         quan_my_tab.addOnTabSelectedListener(this)
 
-
     }
 
     fun fetchData() {
-
+        dataBinding!!.userViewModel!!.getMyIndex()
     }
 
 
+    override fun onRefresh() {
+        fetchData()
+    }
 
     override fun onClick(v: View?) {
         when(v!!.id){

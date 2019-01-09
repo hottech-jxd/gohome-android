@@ -50,7 +50,7 @@ class HeaderIntercepter : Interceptor{
 
         headerParameter.appVersion = BuildConfig.VERSION_NAME
         headerParameter.userToken =userToken
-        headerParameter.userId = userId
+        headerParameter.userId = userId.toString()
         headerParameter.hwid =  Build.ID
         headerParameter.mobileType = Build.MODEL
         headerParameter.osVersion = Build.VERSION.SDK_INT.toString()

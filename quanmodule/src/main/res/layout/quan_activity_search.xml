@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel"/>
+    </data>
 
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +27,17 @@
           app:layout_constraintTop_toBottomOf="@id/search_header"
           android:background="@color/linecolor" />
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
+            android:id="@+id/search_scrollview"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/search_line"
+            android:layout_height="wrap_content">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:layout_height="wrap_content">
+
+            <LinearLayout
             android:paddingTop="@dimen/dp_16"
         app:layout_constraintTop_toBottomOf="@id/search_line"
         android:orientation="horizontal"
@@ -53,7 +67,7 @@
             android:layout_height="@dimen/dp_20" />
     </LinearLayout>
 
-    <me.gujun.android.taggroup.TagGroup
+            <me.gujun.android.taggroup.TagGroup
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:id="@+id/search_tags"
@@ -68,7 +82,7 @@
         app:atg_textColor="#5b5b5b"/>
 
 
-    <LinearLayout
+            <LinearLayout
         android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@id/search_tags"
         android:orientation="horizontal"
@@ -92,7 +106,7 @@
 
     </LinearLayout>
 
-    <me.gujun.android.taggroup.TagGroup
+            <me.gujun.android.taggroup.TagGroup
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         android:id="@+id/search_tags_hot"
@@ -105,6 +119,37 @@
         app:atg_verticalPadding="@dimen/dp_5"
         app:atg_textSize="14sp"
         app:atg_textColor="#5b5b5b"/>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <!--<FrameLayout android:layout_width="match_parent"-->
+                 <!--android:visibility="gone"-->
+                 <!--android:layout_height="0dp"-->
+        <!--android:id="@+id/search_container"-->
+                 <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/search_line"/>-->
+
+    <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_line"
+            android:id="@+id/search_recyclerView"
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/dp_0"
+            android:paddingRight="@dimen/dp_0"
+            android:layout_height="0dp"/>
+
+
+    <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+            app:layout_constraintTop_toBottomOf="@id/search_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/search_progress"
+            android:visibility="@{goodsViewModel.loading?View.VISIBLE : View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>
 

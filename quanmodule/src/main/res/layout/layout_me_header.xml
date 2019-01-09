@@ -3,7 +3,9 @@
 <layout>
     <data>
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
+        <variable name="myBean" type="com.jxd.android.gohomeapp.libcommon.bean.MyBean" />
     </data>
+
 
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -63,7 +65,7 @@
 
         <TextView
                 android:id="@+id/my_header_username"
-                android:text="asfsafsa"
+                android:text="138****1245"
                 android:paddingLeft="@dimen/dp_14"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/white"
@@ -88,9 +90,10 @@
                       android:layout_height="wrap_content">
             <TextView android:textSize="@dimen/sp_15"
                       android:textColor="@color/white"
-                      android:text="￥15"
+                      android:text='@{@string/rmbSymbol+myBean.thisWeek}'
                       android:id="@+id/my_header_this_week_momey"
                     android:layout_width="wrap_content"
+                      android:singleLine="true"
                       android:layout_height="wrap_content"/>
             <TextView android:layout_width="wrap_content"
                       android:layout_marginTop="@dimen/dp_12"
@@ -108,9 +111,10 @@
                       android:layout_height="wrap_content">
             <TextView android:textSize="@dimen/sp_15"
                       android:textColor="@color/white"
-                      android:text="￥1523"
+                      android:text='@{@string/rmbSymbol+myBean.lastWeek}'
                       android:id="@+id/my_header_pre_week_momey"
                       android:layout_width="wrap_content"
+                      android:singleLine="true"
                       android:layout_height="wrap_content"/>
             <TextView android:layout_width="wrap_content"
                       android:layout_marginTop="@dimen/dp_12"
@@ -129,7 +133,8 @@
                       android:layout_height="wrap_content">
             <TextView android:textSize="@dimen/sp_15"
                       android:textColor="@color/white"
-                      android:text="￥23415"
+                      android:singleLine="true"
+                      android:text='@{@string/rmbSymbol+myBean.total}'
                       android:id="@+id/my_header_all_momey"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"/>
@@ -149,9 +154,10 @@
                       android:onClick="@{clickHandler.onClick}"
                       android:orientation="vertical"
                       android:layout_height="wrap_content">
-            <ImageView android:textSize="@dimen/sp_15"
+            <ImageView
                       android:textColor="@color/white"
                       android:src="@mipmap/go"
+                      android:paddingTop="@dimen/dp_5"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"/>
             <TextView android:layout_width="wrap_content"
@@ -195,7 +201,7 @@
                   android:textColor="@color/black"
                   android:layout_below="@id/my_header_balance_label"
                   android:textSize="@dimen/sp_20"
-                  android:text="2342342元"
+                  android:text="0.00元"
                   android:textStyle="bold"
                   android:layout_marginTop="@dimen/dp_5"
                   android:layout_height="wrap_content"/>

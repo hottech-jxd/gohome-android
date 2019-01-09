@@ -76,6 +76,7 @@
                    android:layout_centerVertical="true"
                    android:src="@mipmap/enter"
                    android:paddingTop="@dimen/dp_10"
+                   android:onClick="@{clickHandler.onClick}"
                    android:paddingRight="@dimen/dp_5"
                    android:paddingBottom="@dimen/dp_10"
                    android:paddingLeft="@dimen/dp_24"

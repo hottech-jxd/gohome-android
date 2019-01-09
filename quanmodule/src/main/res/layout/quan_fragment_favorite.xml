@@ -2,6 +2,7 @@
 <layout>
     <data>
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
+        <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
     </data>
 
 <android.support.constraint.ConstraintLayout

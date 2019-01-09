@@ -1,9 +1,6 @@
 package com.jxd.android.gohomeapp.quanmodule.http
 
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
-import com.jxd.android.gohomeapp.libcommon.bean.Category
-import com.jxd.android.gohomeapp.libcommon.bean.CouponBean
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
+import com.jxd.android.gohomeapp.libcommon.bean.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -37,6 +34,12 @@ interface ApiService {
     @GET("goods/couponList")
     fun getCouponList():Observable<ApiResult<ArrayList<CouponBean>?>>
 
+    /**
+     * 搜索商品
+     */
+    @GET("goods/search")
+    fun search(@Query("keywords") keywords:String?,@Query("page") page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>
+
 
     /**
      * 提现申请
@@ -54,4 +57,36 @@ interface ApiService {
     @POST("user/sendCode")
     @FormUrlEncoded
     fun sendCode(@Field("mobile") mobile:String):Observable<ApiResult<Any?>>
+
+    /**
+     * 个人首页数据接口
+     */
+    @POST("user/index")
+    fun myIndex():Observable<ApiResult<MyBean?>>
+
+
+    /**
+     * 订单接口
+     */
+    @POST("user/orderList")
+    @FormUrlEncoded
+    fun getOrderList(@Field("userId") userId:String,
+                     @Field("orderStatus") orderStatus:Int ,
+                     @Field("pageIndex") pageIndex:Int=1,
+                     @Field("pageSize") pageSize:Int=20,
+                     @Field("startTime") startTime:String?="",
+                     @Field("endTime") endTime:String?=""):Observable<ApiResult<ArrayList<OrderBean>?>>
+
+    /**
+     *收益统计
+     */
+    @POST("user/profitStat")
+    fun getProfitStat():Observable<ApiResult<ProfitStatBean?>>
+
+    /**
+     * 我的收藏
+     */
+    @POST("user/myCollect")
+    @FormUrlEncoded
+    fun getMyCollect(@Field("page") page:Int):Observable<ApiResult<ArrayList<FavoriteBean>?>>
 }

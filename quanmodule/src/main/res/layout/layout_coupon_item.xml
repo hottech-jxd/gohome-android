@@ -72,6 +72,7 @@
             android:paddingRight="8dp"
             android:textSize="@dimen/sp_12"
             android:text="券￥2"
+            android:singleLine="true"
             android:background="@drawable/shape_quan_bg"
             android:textColor="#E02E24"
             android:layout_width="wrap_content"
@@ -85,8 +86,11 @@
             android:textColor="#acacac"
             android:textSize="@dimen/sp_12"
             android:id="@+id/coupon_item_count"
-            android:layout_width="wrap_content"
+            android:gravity="right"
+            android:singleLine="true"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/coupon_item_coupon"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/coupon_item_coupon"/>
 
@@ -125,6 +129,7 @@
             android:textColor="#ff0000"
             android:textStyle="bold"
             android:layout_marginTop="@dimen/dp_0"
+            android:singleLine="true"
             android:textSize="@dimen/sp_16"
             android:text="22.84"/>
 
@@ -136,6 +141,7 @@
                 android:paddingBottom="@dimen/dp_8"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_6"
                 android:text="立即抢"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@drawable/shape_coupon_buy_bg"

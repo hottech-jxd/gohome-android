@@ -1,6 +1,6 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
-data class UserBean (var UserId :Long ,
+data class UserBean (var UserId : String ,
                      var LoginName:String ,
                      var Token:String,
                      var InviteCode:String="" ,

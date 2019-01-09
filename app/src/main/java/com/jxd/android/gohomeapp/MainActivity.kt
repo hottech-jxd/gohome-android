@@ -9,9 +9,11 @@ import com.jxd.android.gohomeapp.databinding.ActivityMainBinding
 //import com.jxd.android.gohomeapp.databinding.ActivityMainBinding
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
+import com.jxd.android.gohomeapp.libcommon.bean.UserBean
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
 import com.jxd.android.gohomeapp.quanmodule.MainActivity
 import com.jxd.android.gohomeapp.quanmodule.MainActivity2
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.fragment.CouponFragment
 
 
@@ -32,6 +34,7 @@ class MainActivity : BaseActivity() , View.OnClickListener {
 
     override fun initView() {
 
+        QuanModule.userBean = UserBean("13815247899","jxd","sssss","","sss","ss")
 
         var couponFragment = CouponFragment.newInstance("","")
 

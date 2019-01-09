@@ -1,4 +1,12 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
-data class OrderBean (var orderId:Int,var OrderNo:String , var name:String,
-                      var image:String, var orderTime:String , var price:String , var benefit:String)
+import java.math.BigDecimal
+
+data class OrderBean (var orderId:String?,
+                      var title:String?,
+                      var orderTime:String?,
+                      var reward:BigDecimal,
+                      var finalMoney:BigDecimal,
+                      var grouped:Boolean,
+                      var groupTime:String?,
+                      var pictureUrl:String?)

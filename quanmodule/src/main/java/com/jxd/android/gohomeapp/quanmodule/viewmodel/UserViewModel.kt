@@ -2,7 +2,8 @@ package com.jxd.android.gohomeapp.quanmodule.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
+import com.jxd.android.gohomeapp.libcommon.bean.*
+import com.jxd.android.gohomeapp.libcommon.bean.Constants.userId
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.GoodsRepository
 import com.jxd.android.gohomeapp.quanmodule.repository.UserRepository
@@ -23,6 +24,10 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
 
     var liveDataCashApplyResult=MutableLiveData<ApiResult<Any?>>()
     var liveDataSendCodeResult = MutableLiveData<ApiResult<Any?>>()
+    var liveDataMyResult = MutableLiveData<ApiResult<MyBean?>>()
+    var liveDataOrderList= MutableLiveData<ApiResult<ArrayList<OrderBean>?>>()
+    var liveDataProfitStat=MutableLiveData<ApiResult<ProfitStatBean?>>()
+    var liveDataMyCollect=MutableLiveData<ApiResult<ArrayList<FavoriteBean>?>>()
 
     fun cashApply(bank:String,
                   branch:String,
@@ -41,13 +46,7 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             .doOnComplete {
                 loading.postValue(false)
             }
-            .doOnNext{
-                liveDataCashApplyResult.postValue(it)
-            }
-            .doOnError {
-                onError(it)
-            }
-            .subscribe()
+            .subscribe({liveDataCashApplyResult.postValue(it)},{onError(it)})
     }
 
 
@@ -62,12 +61,63 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             .doOnComplete {
                 loading.postValue(false)
             }
-            .doOnNext{
-                liveDataSendCodeResult.postValue(it)
-            }
-            .doOnError {
-                onError(it)
-            }
-            .subscribe()
+            .subscribe({ liveDataSendCodeResult.postValue(it)} , {onError(it)})
     }
+
+    fun getMyIndex(){
+        UserRepository.getMy()
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({  liveDataMyResult.postValue(it)},{  onError(it)})
+    }
+
+    fun getOrderList(userId:String,orderStatus:Int , pageIndex:Int=1){
+        UserRepository.getOrderList(userId , orderStatus , pageIndex)
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe( {liveDataOrderList.postValue(it)}, {onError(it)} )
+    }
+
+    fun getProfitStat(){
+        UserRepository.getProfitStat()
+            .wrapper()
+            .doOnSubscribe {
+                t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({liveDataProfitStat.postValue(it)}, {onError(it)} )
+    }
+
+    fun getMyCollect(page:Int){
+        UserRepository.getMyCollect(page)
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({liveDataMyCollect.postValue(it)}, {onError(it)} )
+    }
+
 }

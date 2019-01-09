@@ -1,9 +1,6 @@
 package com.jxd.android.gohomeapp.quanmodule.repository
 
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
-import com.jxd.android.gohomeapp.libcommon.bean.Category
-import com.jxd.android.gohomeapp.libcommon.bean.CouponBean
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
+import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.quanmodule.http.ApiService
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
 import io.reactivex.Observable
@@ -34,6 +31,10 @@ object GoodsRepository {
 
     fun getCouponList():Observable<ApiResult<ArrayList<CouponBean>?>>{
         return apiService!!.getCouponList()
+    }
+
+    fun search(keywords:String?, page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>{
+        return apiService!!.search(keywords,page)
     }
 
 }

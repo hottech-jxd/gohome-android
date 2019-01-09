@@ -1,35 +1,66 @@
 package com.jxd.android.gohomeapp.quanmodule
 
 
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
+import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.Constants
+import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
+import com.jxd.android.gohomeapp.libcommon.bean.SearchGoodsBean
 import com.jxd.android.gohomeapp.libcommon.util.KeybordUtils
 import com.jxd.android.gohomeapp.libcommon.util.SPUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
+import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider2
+import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandAdapter
+import com.jxd.android.gohomeapp.quanmodule.adapter.SearchResultAdapter
+import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivitySearchBinding
+import com.jxd.android.gohomeapp.quanmodule.fragment.SearchResultFragment
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import kotlinx.android.synthetic.main.layout_search_header.*
 import kotlinx.android.synthetic.main.quan_activity_search.*
+import kotlinx.android.synthetic.main.quan_fragment_tab.*
 import me.gujun.android.taggroup.TagGroup
 import java.util.*
 import kotlin.collections.ArrayList
 
 @Route(path=ARouterPath.QuanActivitySearch)
 class SearchActivity : BaseActivity()
-    , TextView.OnEditorActionListener, View.OnClickListener , TagGroup.OnTagClickListener {
+    , TextView.OnEditorActionListener
+    , BaseQuickAdapter.RequestLoadMoreListener
+    , BaseQuickAdapter.OnItemClickListener
+    , TextWatcher
+    , View.OnClickListener
+    , TagGroup.OnTagClickListener {
 
     var tags : ArrayList<String>?=null
     var hotTags =ArrayList<String>()
+    var dataBinding:QuanActivitySearchBinding?=null
+    var page:Int=0
+    var searchAdapter:SearchResultAdapter?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.quan_activity_search)
+        //setContentView(R.layout.quan_activity_search)
+
+        dataBinding = DataBindingUtil.setContentView(this,R.layout.quan_activity_search)
+        dataBinding!!.goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
+
 
         initView()
     }
@@ -50,14 +81,77 @@ class SearchActivity : BaseActivity()
         search_cancel.setOnClickListener(this)
 
         search_key.setOnEditorActionListener(this)
+        search_key.addTextChangedListener(this)
         KeybordUtils.openKeybord( this ,  search_key)
 
         tags = ArrayList( SPUtils.getInstance(this, Constants.PREF_SEARCH_FILENAME).readStringSet(Constants.PREF_KEY , Collections.emptySet() ))
         search_tags.setTags(tags)
+
+
+        searchAdapter= SearchResultAdapter(ArrayList())
+        searchAdapter!!.onItemClickListener=this
+        searchAdapter!!.setOnLoadMoreListener(this,search_recyclerView)
+
+        search_recyclerView.layoutManager= GridLayoutManager(this,2)
+        search_recyclerView.adapter=searchAdapter
+
+        search_recyclerView.addItemDecoration( ItemDevider2(this , 15f , R.color.white ) )
+
+//        if(findFragment(SearchResultFragment::class.java)==null){
+//            this.loadRootFragment(R.id.search_container , SearchResultFragment.newInstance("",""))
+//        }
+        search_recyclerView.visibility=View.GONE
+        search_scrollview.visibility=View.VISIBLE
+
+        dataBinding!!.goodsViewModel!!.liveDataSearchResult
+            .observe(this,android.arch.lifecycle.Observer { it->
+
+                if(search_recyclerView.visibility==View.GONE){
+                    search_recyclerView.visibility=View.VISIBLE
+                }
+                if(search_scrollview.visibility==View.VISIBLE){
+                    search_scrollview.visibility=View.GONE
+                }
+
+
+                if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
+                    showToast(it.resultMsg)
+                    return@Observer
+                }
+
+
+                search_key.requestFocus()
+                KeybordUtils.closeKeyboard(this, search_key)
+
+                var datas: ArrayList<SearchGoodsBean>? = null
+                if (it.list == null) {
+                    searchAdapter!!.loadMoreEnd(false)
+                } else {
+                    datas = it.list!!
+                    if (  datas.size < 1) {
+                        searchAdapter!!.loadMoreEnd(false)
+                    } else {
+                        searchAdapter!!.loadMoreComplete()
+                        page++
+                    }
+                    searchAdapter!!.addData(datas)
+                }
+
+            })
+
+    }
+
+
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        var goodsid = searchAdapter!!.getItem(position)!!.goodsId
+        ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId",goodsid).navigation()
     }
 
     override fun onTagClick(tag: String?) {
-        showToast(tag!!)
+        page=0
+        searchAdapter!!.setNewData(ArrayList())
+        dataBinding!!.goodsViewModel!!.search(tag, page+1)
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -77,8 +171,17 @@ class SearchActivity : BaseActivity()
             search_tags.setTags(tags)
         }
 
-        //todo
+        page=0
+        searchAdapter!!.setNewData(ArrayList())
+        dataBinding!!.goodsViewModel!!.search(key, page+1)
     }
+
+//    private fun goSsearch(key){
+//
+//        page=0
+//        searchAdapter!!.setNewData(ArrayList())
+//        dataBinding!!.goodsViewModel!!.search(key, page+1)
+//    }
 
     override fun onClick(v: View?) {
         when(v!!.id){
@@ -103,5 +206,29 @@ class SearchActivity : BaseActivity()
     override fun onDestroy() {
         super.onDestroy()
         KeybordUtils.closeKeyboard(this)
+    }
+
+    override fun onLoadMoreRequested() {
+        var key = search_key.text.toString()
+        dataBinding!!.goodsViewModel!!.search(key, page+1)
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        var key  = search_key.text.trim()
+        if(TextUtils.isEmpty(key)){
+            page=0
+            searchAdapter!!.setNewData(ArrayList())
+            search_recyclerView.visibility=View.GONE
+            search_scrollview.visibility=View.VISIBLE
+        }
+
     }
 }

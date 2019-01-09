@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.graphics.Color
@@ -8,6 +9,8 @@ import android.os.Bundle
 import android.provider.CalendarContract
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,14 +26,22 @@ import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Utils
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatBean
+import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatDataBean
+import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.R.id.income_lineChart
 import com.jxd.android.gohomeapp.quanmodule.R.mipmap.x
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIncomeBinding
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_income.*
 import kotlinx.android.synthetic.main.quan_fragment_income.view.*
+import java.math.BigDecimal
 import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,10 +54,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  * 收益
  */
-class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueSelectedListener {
+class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueSelectedListener , SwipeRefreshLayout.OnRefreshListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var dataBinding:QuanFragmentIncomeBinding?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,46 +68,73 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.quan_fragment_income, container, false)
-
-        var dataBinding :QuanFragmentIncomeBinding = DataBindingUtil.inflate(inflater, R.layout.quan_fragment_income , container ,false )
-        dataBinding.clickHandler = this
-        return  dataBinding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.quan_fragment_income , container ,false )
+        dataBinding!!.clickHandler = this
+        dataBinding!!.userViewModel=ViewModelProviders.of(this).get(UserViewModel::class.java)
+        dataBinding!!.statsData = ProfitStatBean(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+            BigDecimal.ZERO, BigDecimal.ZERO,null, BigDecimal.ZERO)
+        return  dataBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         header_title.text="收益中心"
+
+        income_refreshview.setOnRefreshListener(this)
+
+        initLineChart()
+
+        dataBinding!!.userViewModel!!.liveDataProfitStat.observe(this,android.arch.lifecycle.Observer { it->
+
+            income_refreshview.isRefreshing=false
+
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            setChart(it.data)
+
+        })
+
+        dataBinding!!.userViewModel!!.hasError.observe(this, android.arch.lifecycle.Observer { it->
+            if(it==false) return@Observer
+            income_refreshview.isRefreshing=false
+        })
+
+        dataBinding!!.userViewModel!!.error.observe(this, android.arch.lifecycle.Observer { it->
+            if(TextUtils.isEmpty(it))return@Observer
+            income_refreshview.isRefreshing=false
+            showToast(it!!)
+        })
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
 
-        initLineChart()
+
+
+        dataBinding!!.userViewModel!!.getProfitStat()
     }
 
+    override fun onRefresh() {
 
-    fun initLineChart(){
-        income_lineChart.setNoDataText("")
+        dataBinding!!.userViewModel!!.getProfitStat()
+    }
+
+    private fun initLineChart(){
+
+        income_lineChart.setNoDataText("暂无统计数据")
         income_lineChart.description.isEnabled=false
         income_lineChart.axisRight.isEnabled=false
         income_lineChart.setOnChartValueSelectedListener(this)
-        income_lineChart.animateXY(1500,1500)
+        //income_lineChart.animateXY(1500,1500)
         income_lineChart.axisRight.isEnabled=false
-
         var myMarkerView = MyMarkerView(context , R.layout.layout_markerview)
         income_lineChart.marker = myMarkerView
         myMarkerView.chartView = income_lineChart
-
-
         var xAxis = income_lineChart.xAxis
-
         xAxis.setLabelCount(8 , false)
         xAxis.textSize = 10f
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -126,21 +165,24 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         //legend.mNeededHeight = 80f
 
 
+    }
+
+    fun setChart(data: ProfitStatBean?){
+        if(data==null )return
+
+        dataBinding!!.statsData = data
 
 
-
-
+        var stats = data.trends
+        if(stats==null) return
         var list = ArrayList<Entry>()
-        var entry = Entry1("02/01","￥12", 1f,200f)
-        list.add(entry)
-        entry = Entry1("03/01", "￥13", 2f, 180f)
-        list.add(entry)
-        entry = Entry1("04/01", "￥14", 3f, 380f)
-        list.add(entry)
-        entry = Entry1("05/01", "￥15", 4f, 580f)
-        list.add(entry)
-        entry = Entry1("06/01", "￥16", 5f, 180f)
-        list.add(entry)
+        var x = 0f
+        for(item in stats) {
+            x++
+            var entry = Entry1( item  , x, item.money.toFloat() )
+            list.add(entry)
+        }
+
         var dataSet = LineDataSet(list, "本周期")
         dataSet.setDrawValues(false)
         dataSet.setCircleColor(Color.BLACK)
@@ -154,32 +196,29 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         lineData.addDataSet(dataSet)
 
 
-        var list2 = ArrayList<Entry>()
-        var entry2 = Entry2("02/01", "￥112", 1f,20f)
-        list2.add(entry2)
-        entry2 = Entry2("03/01", "￥113", 2f, 18f)
-        list2.add(entry2)
-        entry2 = Entry2("04/01","￥114", 3f, 38f)
-        list2.add(entry2)
-        entry2 = Entry2("05/01","￥115", 4f, 58f)
-        list2.add(entry2)
-        entry2 = Entry2("06/01","￥116", 5f, 18f)
-        list2.add(entry2)
-        var dataSet2 = LineDataSet(list2, "上周期")
-        dataSet2.setColor(Color.GREEN)
-        dataSet2.setDrawCircles(false)
-        dataSet2.setDrawCircleHole(false)
-        dataSet2.setCircleColor(Color.BLACK)
-        dataSet2.setDrawValues(false)
-        dataSet2.axisDependency = YAxis.AxisDependency.LEFT
-
-
-        lineData.addDataSet(dataSet2)
+//        var list2 = ArrayList<Entry>()
+//        var entry2 = Entry2("02/01", "￥112", 1f,20f)
+//        list2.add(entry2)
+//        entry2 = Entry2("03/01", "￥113", 2f, 18f)
+//        list2.add(entry2)
+//        entry2 = Entry2("04/01","￥114", 3f, 38f)
+//        list2.add(entry2)
+//        entry2 = Entry2("05/01","￥115", 4f, 58f)
+//        list2.add(entry2)
+//        entry2 = Entry2("06/01","￥116", 5f, 18f)
+//        list2.add(entry2)
+//        var dataSet2 = LineDataSet(list2, "上周期")
+//        dataSet2.setColor(Color.GREEN)
+//        dataSet2.setDrawCircles(false)
+//        dataSet2.setDrawCircleHole(false)
+//        dataSet2.setCircleColor(Color.BLACK)
+//        dataSet2.setDrawValues(false)
+//        dataSet2.axisDependency = YAxis.AxisDependency.LEFT
+//        lineData.addDataSet(dataSet2)
 
 
         income_lineChart.data = lineData
         income_lineChart.invalidate()
-
     }
 
     override fun onClick(v: View?) {
@@ -244,14 +283,15 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 var eee = en[0]
                     if (eee is Entry1) {
                         var e1 = eee as Entry1
-                        tvDate1!!.text = e1.date
-                        tvContent1!!.text = e1.amount //Utils.formatNumber(e.x , 0, true)
+                        tvDate1!!.text = e1.data.date
+                        tvContent1!!.text = e1.data.money.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
 
-                    } else if( eee is Entry2 ) {
-                        var e2 = eee as Entry2
-                        tvDate2!!.text = e2.date
-                        tvContent2!!.text = e2.amount //Utils.formatNumber(e.getY(), 0, true)
                     }
+//                    else if( eee is Entry2 ) {
+//                        var e2 = eee as Entry2
+//                        tvDate2!!.text = e2.date
+//                        tvContent2!!.text = e2.amount //Utils.formatNumber(e.getY(), 0, true)
+//                    }
                 }
 
 
@@ -259,11 +299,11 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         }
     }
 
-    class Entry1(var date:String , var amount:String , x:Float,  y:Float): Entry( x,  y) {
+    class Entry1(var data :ProfitStatDataBean , x:Float,  y:Float): Entry( x,  y) {
 
     }
 
-    class Entry2(var date:String , var amount:String , x:Float,  y:Float): Entry( x,  y){
+    class Entry2(var date:String , var amount:BigDecimal , x:Float,  y:Float): Entry( x,  y){
 
     }
 

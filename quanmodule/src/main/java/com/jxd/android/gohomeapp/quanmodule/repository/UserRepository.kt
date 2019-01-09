@@ -1,7 +1,6 @@
 package com.jxd.android.gohomeapp.quanmodule.repository
 
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
-import com.jxd.android.gohomeapp.libcommon.bean.Category
+import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.quanmodule.http.ApiService
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
 import io.reactivex.Observable
@@ -34,6 +33,23 @@ object  UserRepository {
 
     fun sendCode(mobile: String): Observable<ApiResult<Any?>> {
         return apiService!!.sendCode(mobile)
+    }
+
+
+    fun getMy():Observable<ApiResult<MyBean?>>{
+        return apiService!!.myIndex()
+    }
+
+    fun getOrderList(userId :String, orderStatus:Int , pageIndex:Int=1):Observable<ApiResult<ArrayList<OrderBean>?>>{
+        return apiService!!.getOrderList(userId , orderStatus , pageIndex)
+    }
+
+    fun getProfitStat():Observable<ApiResult<ProfitStatBean?>>{
+        return apiService!!.getProfitStat()
+    }
+
+    fun getMyCollect(page:Int):Observable<ApiResult<ArrayList<FavoriteBean>?>>{
+        return apiService!!.getMyCollect(page)
     }
 
 }

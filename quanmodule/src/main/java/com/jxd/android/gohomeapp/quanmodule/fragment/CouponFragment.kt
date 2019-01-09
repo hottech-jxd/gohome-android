@@ -16,6 +16,7 @@ import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.util.showToast
+import com.jxd.android.gohomeapp.quanmodule.MainActivity2
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.TutorialsActivity
@@ -126,6 +127,9 @@ class CouponFragment : BaseFragment() , View.OnClickListener , BaseQuickAdapter.
         when(v!!.id){
             R.id.coupon_cause->{
                 this.startActivity(Intent(this.context, TutorialsActivity::class.java))
+            }
+            R.id.coupon_go-> {
+                startActivity(Intent(context, MainActivity2::class.java))
             }
         }
     }

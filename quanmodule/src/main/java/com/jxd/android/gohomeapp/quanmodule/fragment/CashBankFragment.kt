@@ -63,7 +63,7 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownVi
 
         var dataBinding : QuanFragmentCashBankBinding = DataBindingUtil.inflate( inflater , R.layout.quan_fragment_cash_bank , container , false)
         dataBinding.clickHandler = this
-       
+
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         dataBinding.userViewModel = userViewModel

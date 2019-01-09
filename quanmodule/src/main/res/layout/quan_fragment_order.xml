@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
+    </data>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,4 +22,12 @@
           android:layout_height="match_parent"/>
     </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
 
+    <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+            android:id="@+id/order_progress"
+            android:visibility="@{userViewModel.loading?View.VISIBLE:View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 </FrameLayout>
+
+</layout>

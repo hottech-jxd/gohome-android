@@ -1,24 +1,30 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
+import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.FavoriteBean
+import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.FavoriteAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentFavoriteBinding
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_favorite.*
 
@@ -42,7 +48,8 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     var favoriteAdapter: FavoriteAdapter?=null
     var data= ArrayList<FavoriteBean>()
     var selectedAll=false
-
+    var dataBinding:QuanFragmentFavoriteBinding?=null
+    var page:Int=0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,18 +60,13 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.quan_fragment_favorite, container, false)
-        var dataBinding:QuanFragmentFavoriteBinding =DataBindingUtil.inflate(inflater , R.layout.quan_fragment_favorite, container , false)
-        dataBinding.clickHandler = this
-        return dataBinding.root
+    override fun onCreateView(   inflater: LayoutInflater, container: ViewGroup?,   savedInstanceState: Bundle? ): View? {
+
+        dataBinding =DataBindingUtil.inflate(inflater , R.layout.quan_fragment_favorite, container , false)
+        dataBinding!!.userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        dataBinding!!.clickHandler = this
+        return dataBinding!!.root
     }
-
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,13 +93,50 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         favorite_recyclerview.adapter = favoriteAdapter
         favorite_refreshview.setOnRefreshListener(this)
 
-        for(i in 0..10){
-            data.add(FavoriteBean(1, false , 0 ,"测试" ,"", "","", "http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,null,"","","","","",""))
-        }
-        favoriteAdapter!!.notifyDataSetChanged()
+//        for(i in 0..10){
+//            data.add(FavoriteBean(1, false , 0 ,"测试" ,"", "","", "http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,null,"","","","","",""))
+//        }
+//        favoriteAdapter!!.notifyDataSetChanged()
 
         //presenter=FavoritePresenter(this)
         //presenter!!.favoriteList(pageIndex)
+
+
+        dataBinding!!.userViewModel!!.liveDataMyCollect.observe(this, Observer { it->
+
+            favorite_refreshview.isRefreshing=false
+
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            var datas: ArrayList<FavoriteBean>? = null
+            if (it.list == null) {
+                favoriteAdapter!!.loadMoreEnd(false)
+            } else {
+                datas = it.list!!
+                if (  datas.size < 1) {
+                    favoriteAdapter!!.loadMoreEnd(false)
+                } else {
+                    favoriteAdapter!!.loadMoreComplete()
+                    page++
+                }
+                favoriteAdapter!!.addData(datas)
+            }
+        })
+
+
+        dataBinding!!.userViewModel!!.error.observe(this, Observer { it->
+
+            if(TextUtils.isEmpty(it))return@Observer
+
+            favorite_refreshview.isRefreshing=false
+            showToast( it!! )
+        })
+
+
+        dataBinding!!.userViewModel!!.getMyCollect(page+1)
     }
 
     override fun onClick(v: View?) {
@@ -108,7 +147,37 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             R.id.header_right_text -> {
                 batchDelete()
             }
+            R.id.favorite_select->{
+                select()
+            }
         }
+    }
+
+    fun select(){
+        if(favoriteAdapter==null)return
+        var data =favoriteAdapter!!.data
+        var count=0
+        selectedAll=true
+        for(bean in data){
+            if(!bean.selected){
+                selectedAll=false
+            }
+        }
+
+        var drawa = if(selectedAll) ContextCompat.getDrawable(this.context!! , R.mipmap.unselected) else ContextCompat.getDrawable(this.context!! , R.mipmap.selected)
+        drawa!!.setBounds( 0 , 0 , drawa.intrinsicWidth , drawa.intrinsicHeight )
+        favorite_select.setCompoundDrawables( drawa , null,null,null )
+
+        for(bean in data){
+            bean.selected = !selectedAll
+        }
+
+        favoriteAdapter!!.notifyDataSetChanged()
+
+        count = if( selectedAll) 0 else data.size
+
+        favorite_select.text =  "已选(${count})"
+
     }
 
     private fun batchDelete(){
@@ -116,26 +185,44 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     }
 
     override fun onRefresh() {
+        page=0
+        favoriteAdapter!!.setNewData(ArrayList())
 
+        var drawa =ContextCompat.getDrawable(this.context!! , R.mipmap.unselected)
+        drawa!!.setBounds(0,0,drawa.intrinsicWidth, drawa.intrinsicHeight)
+        favorite_select.setCompoundDrawables(drawa,null,null,null)
+        favorite_select.text="已选(0)"
+
+        dataBinding!!.userViewModel!!.getMyCollect(page+1)
     }
 
     override fun onLoadMoreRequested() {
-
+        favorite_refreshview.isRefreshing=false
+        dataBinding!!.userViewModel!!.getMyCollect(page+1)
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         (adapter!!.getItem(position) as FavoriteBean).selected=  !(adapter!!.getItem(position) as FavoriteBean).selected
-        adapter.notifyItemChanged(position)
 
+
+        var count=0
         selectedAll=true
         for(bean in data){
             if(!bean.selected){
                 selectedAll=false
-                break
             }
+
+            if(bean.selected) count++
         }
 
-        favorite_select.setCompoundDrawables( if(selectedAll) ContextCompat.getDrawable(this.context!! , R.mipmap.selected) else ContextCompat.getDrawable(this.context!! , R.mipmap.unselected) , null,null,null )
+
+        var drawa = if(selectedAll) ContextCompat.getDrawable(this.context!! , R.mipmap.selected) else ContextCompat.getDrawable(this.context!! , R.mipmap.unselected)
+        drawa!!.setBounds( 0 , 0 , drawa.intrinsicWidth , drawa.intrinsicHeight )
+        favorite_select.setCompoundDrawables( drawa , null,null,null )
+
+        adapter.notifyItemChanged(position)
+
+        favorite_select.text = "已选(${count})"
 
     }
 

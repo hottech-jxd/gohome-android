@@ -89,7 +89,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/order_item_benefit_"
+            android:id="@+id/order_item_spend"
             android:textSize="@dimen/sp_12"
             android:textColor="#8d8d8d"
             android:text="消费￥13.90"
