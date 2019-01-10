@@ -37,4 +37,7 @@ object GoodsRepository {
         return apiService!!.search(keywords,page)
     }
 
+    fun getShareInfo(goodsId: String):Observable<ApiResult<GoodsShareBean?>>{
+        return apiService!!.share(goodsId)
+    }
 }

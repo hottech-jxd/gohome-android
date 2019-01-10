@@ -48,9 +48,11 @@
                         <android.support.v7.widget.Toolbar
                                 app:layout_collapseMode="pin"
                                 android:layout_width="match_parent"
+                                android:background="@color/white"
                                 android:layout_height="?attr/actionBarSize">
 
-                            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <FrameLayout android:layout_width="match_parent"
+                                         android:layout_height="wrap_content">
 
                                 <ImageView
                                         android:id="@+id/header_left_image"
@@ -60,7 +62,7 @@
                                         android:paddingRight="10dp"
                                         android:paddingBottom="8dp"
                                         android:src="@mipmap/quan_back"
-                                        android:onClick="onClick"
+                                        android:onClick="@{clickHandler.onClick}"
                                         android:layout_height="wrap_content"
                                         app:layout_constraintLeft_toLeftOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
@@ -79,6 +81,7 @@
                                            android:paddingLeft="10dp"
                                            android:paddingTop="8dp"
                                            android:paddingRight="10dp"
+                                           android:onClick="@{clickHandler.onClick}"
                                            android:paddingBottom="8dp"
                                            android:layout_width="wrap_content"
                                            android:layout_height="wrap_content"/>

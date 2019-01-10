@@ -1,6 +1,8 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.CashBean
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 
@@ -17,6 +20,7 @@ import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.*
 import com.jxd.android.gohomeapp.quanmodule.adapter.CashRecordAdapter
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCashBinding
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_cash.*
 import java.math.BigDecimal
@@ -47,14 +51,11 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle? ): View? {
-
-        //return inflater.inflate(R.layout.quan_fragment_cash, container, false)
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
         var dataBinding = DataBindingUtil.inflate<QuanFragmentCashBinding>(inflater , R.layout.quan_fragment_cash , container , false)
         dataBinding.clickHandler = this
+        dataBinding.userViewModel=ViewModelProviders.of(this).get(UserViewModel::class.java)
         return dataBinding.root
     }
 
@@ -63,6 +64,15 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
 
         header_title.text = title
         //header_left_image.setOnClickListener(this)
+
+        UserViewModel.liveDataUserInfo.observe(this, Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+            cash_balance.text = it!!.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+        })
+
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {

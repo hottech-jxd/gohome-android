@@ -29,6 +29,10 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     var liveDataProfitStat=MutableLiveData<ApiResult<ProfitStatBean?>>()
     var liveDataMyCollect=MutableLiveData<ApiResult<ArrayList<FavoriteBean>?>>()
 
+    companion object {
+        var liveDataUserInfo = MutableLiveData<ApiResult<UserBean?>>()
+    }
+
     fun cashApply(bank:String,
                   branch:String,
                   card:String,
@@ -120,4 +124,22 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             .subscribe({liveDataMyCollect.postValue(it)}, {onError(it)} )
     }
 
+    fun getUserInfo(showProgress: Boolean) {
+        UserRepository.getUserInfo()
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                if(showProgress) {
+                    loading.postValue(true)
+                }
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                if(showProgress) {
+                    loading.postValue(false)
+                }
+            }
+            .subscribe(
+                {  UserViewModel.liveDataUserInfo.postValue(it) }, { onError(it) })
+    }
 }

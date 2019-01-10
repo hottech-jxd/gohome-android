@@ -27,7 +27,7 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     var liveDataGoodsCategories = MutableLiveData<ApiResult<ArrayList<Category>?>>()
     var liveDataCouponList = MutableLiveData<ApiResult<ArrayList<CouponBean>?>>()
     var liveDataSearchResult=MutableLiveData<ApiResult<ArrayList<SearchGoodsBean>?>>()
-
+    var liveDataGoodsShareBean = MutableLiveData<ApiResult<GoodsShareBean?>>()
 
     fun getGoodsDetail(goodsId:String){
 
@@ -91,6 +91,20 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
                 loading.postValue(false)
             }
             .subscribe({liveDataSearchResult.postValue(it)},{onError(it)})
+    }
+
+    fun getShareInfo(goodsId:String ){
+        GoodsRepository.getShareInfo( goodsId )
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({liveDataGoodsShareBean.postValue(it)},{onError(it)})
     }
 
 }

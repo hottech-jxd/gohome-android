@@ -5,7 +5,8 @@ data class ApiResult<T> (
     var resultMsg:String="",
     var list:T?=null,
     var detail:T?=null,
-    var data:T?=null
+    var data:T?=null,
+    var share:T?=null
     )
 
 

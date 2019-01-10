@@ -1,36 +1,17 @@
 package com.jxd.android.gohomeapp.quanmodule
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
-import com.jxd.android.gohomeapp.libcommon.bean.PictureBean
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
-import com.jxd.android.gohomeapp.quanmodule.R.mipmap.share
-import com.jxd.android.gohomeapp.quanmodule.adapter.DetailAdapter
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityDetailBinding
 import com.jxd.android.gohomeapp.quanmodule.fragment.GoodsDetailFragment
-import com.jxd.android.gohomeapp.quanmodule.fragment.ShareTipFragment
-import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
-import com.youth.banner.BannerConfig
 import com.youth.banner.listener.OnBannerListener
-import kotlinx.android.synthetic.main.quan_activity_detail.*
-
 
 @Route(path = ARouterPath.QuanActivityGoodsDetailPath)
 class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
@@ -42,9 +23,7 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         initView()
-
     }
 
 //    private fun setBanner(goodsDetail: GoodsDetailBean? ){
@@ -170,7 +149,13 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
 
 
 
+
     override fun OnBannerClick(position: Int) {
         showToast("position"+ position )
+    }
+
+
+    override fun onBackPressedSupport() {
+        super.onBackPressedSupport()
     }
 }

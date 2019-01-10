@@ -12,4 +12,5 @@
     <color name="my_status_color">#F2AB00</color>
     <color name="default_status_color">#ffffff</color>
     <color name="coupon_status_color">#FFC000</color>
+    <color name="scroll_text_color">#FF7A09</color>
 </resources>

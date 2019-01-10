@@ -52,4 +52,7 @@ object  UserRepository {
         return apiService!!.getMyCollect(page)
     }
 
+    fun getUserInfo():Observable<ApiResult<UserBean?>>{
+        return apiService!!.getUserInfo()
+    }
 }

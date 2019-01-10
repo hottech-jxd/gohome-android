@@ -40,7 +40,11 @@ interface ApiService {
     @GET("goods/search")
     fun search(@Query("keywords") keywords:String?,@Query("page") page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>
 
-
+    /**
+     * 获取商品分享信息
+     */
+    @GET("goods/share")
+    fun share(@Query("goodsId") goodsId:String):Observable<ApiResult<GoodsShareBean?>>
     /**
      * 提现申请
      */
@@ -89,4 +93,10 @@ interface ApiService {
     @POST("user/myCollect")
     @FormUrlEncoded
     fun getMyCollect(@Field("page") page:Int):Observable<ApiResult<ArrayList<FavoriteBean>?>>
+
+    /**
+     * 用户信息
+     */
+    @POST("user/userInfo")
+    fun getUserInfo():Observable<ApiResult<UserBean?>>
 }

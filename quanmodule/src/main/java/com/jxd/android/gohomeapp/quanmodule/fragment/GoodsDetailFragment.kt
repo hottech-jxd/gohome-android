@@ -31,7 +31,13 @@ import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import com.youth.banner.BannerConfig
 import com.youth.banner.listener.OnBannerListener
 import android.arch.lifecycle.Observer
+import android.text.TextPaint
+import android.text.TextUtils
+import android.widget.TextView
 import com.jxd.android.gohomeapp.quanmodule.R.mipmap.share
+import com.jxd.android.gohomeapp.quanmodule.databinding.LayoutDetailTopBinding
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
+import kotlinx.android.synthetic.main.layout_detail_top.*
 import kotlinx.android.synthetic.main.quan_activity_detail.*
 import kotlinx.android.synthetic.main.quan_fragment_goods_detail.*
 
@@ -52,6 +58,8 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
     private var data=ArrayList<PictureBean>()
     @Autowired  @JvmField var goodsId:String=""
     var quanFragmentDetailBinding : QuanFragmentGoodsDetailBinding?=null
+    var detailTopBinding:LayoutDetailTopBinding?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -59,24 +67,17 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.quan_fragment_goods_detail, container, false)
-
-        quanFragmentDetailBinding = DataBindingUtil.inflate(inflater , R.layout.quan_fragment_goods_detail , container , false)
+    override fun onCreateView(  inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+        quanFragmentDetailBinding =
+                DataBindingUtil.inflate(inflater, R.layout.quan_fragment_goods_detail, container, false)
         var goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
         quanFragmentDetailBinding!!.goodsViewModel = goodsViewModel
-       quanFragmentDetailBinding!!.clickHandler=this
+        quanFragmentDetailBinding!!.clickHandler = this
         return quanFragmentDetailBinding!!.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
     }
 
@@ -108,6 +109,10 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
     private fun setDetail( goodsDetail:GoodsDetailBean? ){
         if(goodsDetail==null) return
         if(goodsDetail.detail==null) return
+
+        if(detailTopBinding!=null){
+        detailTopBinding!!.goodsBean = goodsDetail
+        }
 
 
         data.clear()
@@ -144,8 +149,8 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
                 return@Observer
             }
 
-            setBanner( it.detail )
-            setDetail(it.detail )
+            setBanner( it.detail!! )
+            setDetail(it.detail!! )
         })
 
 
@@ -153,13 +158,29 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
 
 
 
-        var top = LayoutInflater.from(this.context ).inflate(R.layout.layout_detail_top, null)
+        detailTopBinding = DataBindingUtil.inflate( layoutInflater , R.layout.layout_detail_top , null , false )
+        detailTopBinding!!.goodsBean = null
+
+
+        //var top = LayoutInflater.from(this.context ).inflate(R.layout.layout_detail_top, null)
+
+        var top = detailTopBinding!!.root
+
+        var detail_item_price1 = top.findViewById<TextView>(R.id.detail_item_price1)
+        detail_item_price1.paintFlags = TextPaint.STRIKE_THRU_TEXT_FLAG
+
         detailAdapter!!.removeAllHeaderView()
         detailAdapter!!.addHeaderView(top)
 
         detail_recyclerView.adapter = detailAdapter
 
 
+        quanFragmentDetailBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
+            if(TextUtils.isEmpty(it)){
+                return@Observer
+            }
+            showToast(it!!)
+         })
 
     }
 
@@ -176,14 +197,43 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
                 share()
             }
             R.id.detail_lay_buy->{
-
-                start(ShareFragment.newInstance("",""))
+                //start(ShareFragment.newInstance("",""))
+                showToast("todo")
             }
         }
     }
 
     fun share(){
-        start( ShareTipFragment.newInstance("","") )
+
+        if(UserViewModel.liveDataUserInfo.value ==null ){
+            showToast("请先登录")
+            return
+        }
+        if(UserViewModel.liveDataUserInfo.value!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
+            showToast( UserViewModel!!.liveDataUserInfo.value!!.resultMsg)
+            return
+        }
+
+        if(!UserViewModel!!.liveDataUserInfo.value!!.data!!.unlocked) {
+            start(ShareTipFragment.newInstance("", ""))
+        }else {
+            //start(ShareFragment.newInstance("",""))
+
+            if(quanFragmentDetailBinding==null || quanFragmentDetailBinding!!.goodsViewModel==null ) return
+            var goods = quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value
+            if(goods ==null || goods.detail== null  ) return
+            if(goods.resultCode != ApiResultCodeEnum.SUCCESS.code ) return
+
+            var shareFragment=ARouter.getInstance().build(ARouterPath.QuanFragmentGoodsSharePath)
+                .withObject("goods" , goods!!.detail )
+                .navigation() as ShareFragment
+
+
+
+
+            start(shareFragment)
+
+        }
     }
 
     companion object {

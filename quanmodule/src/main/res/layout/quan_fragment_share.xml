@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
+        <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
+        <variable name="clickHandler" type="android.view.View.OnClickListener" />
     </data>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,11 +17,55 @@
              android:layout_width="match_parent"
              android:id="@+id/share_header"
              android:background="#f2f2f2"
+             app:clickHandler="@{clickHandler}"
              android:paddingBottom="@dimen/dp_1"
              android:layout_height="wrap_content"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
+            android:id="@+id/share_lay_scroll"
             android:layout_below="@id/share_header"
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_12"
+            android:background="#FFF99F"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_12"
+            android:layout_height="wrap_content"
+    android:orientation="horizontal">
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:src="@mipmap/speaker"
+                   android:layout_height="wrap_content"/>
+
+        <com.maning.library.SwitcherView
+                android:id="@+id/share_scrollTextInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:switcherRollingTime="3000"
+                android:layout_marginLeft="@dimen/dp_16"
+                app:switcherTextColor="#FF7A09"
+                app:switcherTextSize="@dimen/sp_12" />
+
+    <!--<com.gongwen.marqueen.SimpleMarqueeView-->
+            <!--android:id="@+id/share_scrollTextInfo"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:flipInterval="2500"-->
+            <!--android:inAnimation="@anim/in_bottom"-->
+            <!--android:outAnimation="@anim/out_top"-->
+            <!--app:marqueeAnimDuration="2000"-->
+            <!--app:smvTextColor="@color/scroll_text_color"-->
+            <!--app:smvTextEllipsize="end"-->
+            <!--app:smvTextGravity="left"-->
+            <!--app:smvTextSingleLine="true"-->
+            <!--app:smvTextSize="@dimen/sp_12"/>-->
+
+    </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_below="@id/share_lay_scroll"
             android:layout_above="@id/share_lay_2"
             android:background="@color/white"
             android:layout_width="match_parent"
@@ -55,7 +101,7 @@
                         android:singleLine="true"
                         android:textColor="#333333"
                         android:textStyle="bold"
-                        android:text="asfasfasfsafasfsafasf"
+                        android:text="@{goodsBean.name}"
                         android:textSize="@dimen/sp_16"
                         android:ellipsize="end"
                         android:id="@+id/share_title"
@@ -65,7 +111,7 @@
                           android:layout_below="@id/share_title"
                           android:textSize="@dimen/sp_12"
                           android:textColor="#8F8F8F"
-                          android:text="5455人已买"
+                          android:text='@{goodsBean.saleAmount+@string/buyed }'
                           android:paddingTop="@dimen/dp_14"
                         android:layout_width="wrap_content"
                           android:layout_height="wrap_content"/>
@@ -75,7 +121,7 @@
                           android:textColor="#EA4D46"
                           android:layout_marginTop="@dimen/dp_10"
                           android:layout_below="@id/share_count"
-                          android:text="￥34"
+                          android:text='@{@string/rmbSymbol+goodsBean.finalPrice}'
                           android:paddingTop="@dimen/dp_14"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"/>
@@ -87,7 +133,7 @@
                           android:textSize="@dimen/sp_12"
                           android:textColor="#8F8F8F"
                           android:paddingBottom="@dimen/dp_1"
-                          android:text="￥44"
+                          android:text='@{@string/rmbSymbol +goodsBean.price}'
                           android:paddingTop="@dimen/dp_14"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"/>
@@ -98,7 +144,7 @@
                           android:padding="@dimen/dp_5"
                           android:layout_marginTop="@dimen/dp_10"
                           android:layout_below="@id/share_final_price"
-                          android:text="10元优惠券"
+                          android:text="@{goodsBean.couponPrice+@string/coupon}"
                           android:background="@drawable/shape_cash_circle_grad_bg"
                           android:paddingTop="@dimen/sp_14"
                           android:layout_width="wrap_content"
@@ -110,7 +156,7 @@
                           android:padding="@dimen/dp_5"
                           android:layout_alignParentRight="true"
                           android:layout_alignBottom="@id/share_coupon"
-                          android:text="预计赚￥5.9"
+                          android:text="@{@string/reword+goodsBean.reward}"
                           android:paddingTop="@dimen/sp_13"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"/>

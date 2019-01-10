@@ -1,8 +1,10 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
-data class UserBean (var UserId : String ,
-                     var LoginName:String ,
-                     var Token:String,
-                     var InviteCode:String="" ,
+import java.math.BigDecimal
+
+data class UserBean (var userId : String ,
+                     var nickName:String? ,
+                     var money:BigDecimal,
+                     var unlocked:Boolean=false ,
                      var UserToken:String="",
-                     var WxHeadImg : String )
+                     var head : String? )

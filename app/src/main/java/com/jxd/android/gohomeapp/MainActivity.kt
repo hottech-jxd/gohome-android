@@ -15,6 +15,7 @@ import com.jxd.android.gohomeapp.quanmodule.MainActivity
 import com.jxd.android.gohomeapp.quanmodule.MainActivity2
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.fragment.CouponFragment
+import java.math.BigDecimal
 
 
 class MainActivity : BaseActivity() , View.OnClickListener {
@@ -34,7 +35,7 @@ class MainActivity : BaseActivity() , View.OnClickListener {
 
     override fun initView() {
 
-        QuanModule.userBean = UserBean("13815247899","jxd","sssss","","sss","ss")
+        QuanModule.userBean = UserBean("13815247899","jxd", BigDecimal(0),true,"ss","")
 
         var couponFragment = CouponFragment.newInstance("","")
 

@@ -75,10 +75,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         quan_my_appbarLayout.addOnOffsetChangedListener (this)
-
 
 
         dataBinding!!.userViewModel!!.liveDataMyResult.observe(this, Observer { it->
@@ -101,6 +98,20 @@ class MyFragment : BaseFragment() , View.OnClickListener
             quan_my_refresview.isRefreshing=false
             showToast( dataBinding!!.userViewModel!!.error.value!! )
         } )
+
+
+        UserViewModel.liveDataUserInfo.observe(this, Observer {it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            my_header_logo.setImageURI(it.data!!.head)
+            my_header_username.text = it.data!!.userId
+            my_header_balance.text = it.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+
+        })
+
     }
 
     override fun onOffsetChanged(p0: AppBarLayout?, verticalOffset: Int) {
@@ -160,8 +171,8 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
     fun fetchData() {
         dataBinding!!.userViewModel!!.getMyIndex()
+        dataBinding!!.userViewModel!!.getUserInfo(false)
     }
-
 
     override fun onRefresh() {
         fetchData()

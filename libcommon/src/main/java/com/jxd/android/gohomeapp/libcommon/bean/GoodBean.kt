@@ -14,47 +14,48 @@ data class GoodBean (var goodsId :Long,
                      var time:String ,
                      var goodsIntro:String)
 
-data class GoodsDetailBean(var goodsId: String ,
+data class GoodsDetailBean(var goodsId: String= "" ,
                       /**
                        * 商品名称
                        */
-                      var name:String?,
+                      var name:String?="",
                       /**
                        * 商品多张图片
                        */
-                      var pictureUrls:ArrayList<String>?,
+                      var pictureUrls:ArrayList<String>?=null,
                       /**
                        * 价格
                        */
-                      var price:String?,
+                      var price:String?="0.00",
                       /**
                        * 赏金
                        */
-                      var reward:String?,
+                      var reward:String?="0.00",
                       /**
                        * 销量
                        */
-                      var saleAmount:Long,
+                      var saleAmount:Long=0,
                       /**
                        * 来源
                        */
-                      var source:String?,
+                      var source:String?="",
                       /**
                        * 优惠劵有效期
                        */
-                      var couponExpiryDate:String? ,
+                      var couponExpiryDate:String?="" ,
                       /**
                        * 劵价格
                        */
-                      var couponPrice:String?,
+                      var couponPrice:String?="0.00",
                       /**
                        * 商品详情【图片】
                        */
-                      var detail:String?,
+                      var detail:String?="",
                       /**
                        * 劵后价格
                        */
-                      var finalPrice:String?)
+                      var finalPrice:String?=""){
+}
 
 
 data class PictureBean(var url:String?)

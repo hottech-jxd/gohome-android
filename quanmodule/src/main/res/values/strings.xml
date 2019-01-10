@@ -11,4 +11,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="rmbSymbol">￥</string>
+    <string name="buyed">人已买</string>
+    <string name="coupon">元优惠券</string>
+    <string name="reword">预计赚￥</string>
+    <string name="expiredate">有期限:</string>
 </resources>

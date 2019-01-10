@@ -42,7 +42,7 @@ class HeaderIntercepter : Interceptor{
 
 
 
-        val userId = if ( QuanModule.userBean == null) 0 else QuanModule.userBean!!.UserId
+        val userId = if ( QuanModule.userBean == null) 0 else QuanModule.userBean!!.userId
         var userToken: String? = if (QuanModule.userBean == null) "" else QuanModule.userBean!!.UserToken
         userToken = if (userToken == null) "" else userToken
 

@@ -39,9 +39,9 @@ object RetrofitManager {
             }
 
 
-            if(BuildConfig.DEBUG){
+            //if(BuildConfig.DEBUG){
                 builder.addInterceptor(provideHttpLogIntercepter())
-            }
+            //}
 
             okHttpClient =builder.build()
         }

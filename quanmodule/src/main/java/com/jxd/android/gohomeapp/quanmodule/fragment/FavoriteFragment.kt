@@ -13,7 +13,9 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.FavoriteBean
@@ -202,27 +204,38 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        (adapter!!.getItem(position) as FavoriteBean).selected=  !(adapter!!.getItem(position) as FavoriteBean).selected
+
+        if(view!!.id == R.id.favorite_item_circle) {
+
+            (adapter!!.getItem(position) as FavoriteBean).selected =
+                    !(adapter!!.getItem(position) as FavoriteBean).selected
 
 
-        var count=0
-        selectedAll=true
-        for(bean in data){
-            if(!bean.selected){
-                selectedAll=false
+            var count = 0
+            selectedAll = true
+            for (bean in data) {
+                if (!bean.selected) {
+                    selectedAll = false
+                }
+
+                if (bean.selected) count++
             }
 
-            if(bean.selected) count++
+
+            var drawa = if (selectedAll) ContextCompat.getDrawable(
+                this.context!!,
+                R.mipmap.selected
+            ) else ContextCompat.getDrawable(this.context!!, R.mipmap.unselected)
+            drawa!!.setBounds(0, 0, drawa.intrinsicWidth, drawa.intrinsicHeight)
+            favorite_select.setCompoundDrawables(drawa, null, null, null)
+
+            adapter.notifyItemChanged(position)
+
+            favorite_select.text = "已选(${count})"
+        }else if(view!!.id==R.id.favorite_item_container){
+            var goodsid = favoriteAdapter!!.getItem(position)!!.goodsId
+            ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId",goodsid).navigation()
         }
-
-
-        var drawa = if(selectedAll) ContextCompat.getDrawable(this.context!! , R.mipmap.selected) else ContextCompat.getDrawable(this.context!! , R.mipmap.unselected)
-        drawa!!.setBounds( 0 , 0 , drawa.intrinsicWidth , drawa.intrinsicHeight )
-        favorite_select.setCompoundDrawables( drawa , null,null,null )
-
-        adapter.notifyItemChanged(position)
-
-        favorite_select.text = "已选(${count})"
 
     }
 

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
+    </data>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -10,12 +16,13 @@
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/detail_item_title"
-        android:text="asdfasd阿萨德法师法师打算发放阿是打发撒"
+        android:text="@{goodsBean.name}"
         android:layout_width="match_parent"
         android:textSize="@dimen/sp_16"
         android:textColor="#333333"
         android:textStyle="bold"
         android:maxLines="2"
+        android:paddingLeft="@dimen/dp_3"
         android:ellipsize="end"
         android:lineSpacingExtra="@dimen/dp_3"
         android:layout_height="wrap_content" />
@@ -32,7 +39,7 @@
             android:layout_toRightOf="@id/detail_item_rmb_symbol"
         android:layout_below="@id/detail_item_title"
         android:id="@+id/detail_item_price"
-        android:text="30.25"
+        android:text="@{goodsBean.finalPrice}"
             android:drawableRight="@mipmap/qhj"
             android:drawablePadding="@dimen/dp_4"
         android:textSize="@dimen/sp_18"
@@ -57,7 +64,7 @@
                   android:layout_height="wrap_content">
         <TextView
             android:layout_below="@id/detail_item_price"
-            android:text="￥55.23"
+            android:text='@{@string/rmbSymbol+goodsBean.price}'
             android:layout_marginLeft="@dimen/dp_5"
             android:textColor="#8f8f8f"
             android:textSize="@dimen/sp_12"
@@ -67,7 +74,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-                android:text="1222人已购买"
+                android:text='@{goodsBean.saleAmount+@string/buyed}'
                 android:gravity="center"
                 android:textColor="#8f8f8f"
                 android:textSize="@dimen/sp_12"
@@ -75,7 +82,7 @@
                 android:layout_width="0dp"
                   android:layout_height="wrap_content"/>
         <TextView
-                android:text="预估赚￥5.5"
+                android:text='@{@string/reword+goodsBean.reward}'
                 android:gravity="right"
                 android:textColor="#8f8f8f"
                 android:textSize="@dimen/sp_12"
@@ -125,7 +132,7 @@
             android:id="@+id/detail_quan"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:text="5"
+            android:text="@{goodsBean.couponPrice}"
             android:paddingBottom="@dimen/dp_2"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_24"
@@ -137,7 +144,7 @@
             android:id="@+id/detail_label2"
             android:text="元优惠券"
             android:paddingBottom="@dimen/dp_0"
-            android:textSize="@dimen/sp_17"
+            android:textSize="@dimen/sp_15"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -146,10 +153,13 @@
         <TextView
             android:layout_below="@id/detail_item_lay_1"
             android:id="@+id/detail_item_time"
-            android:text="有期限:2015.06.02-2018.06.18"
+            android:text='@{@string/expiredate+goodsBean.couponExpiryDate}'
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_toLeftOf="@id/detail_item_line"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
             android:textSize="@dimen/sp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -157,10 +167,9 @@
         <ImageView android:layout_width="@dimen/dp_7"
                    android:src="@mipmap/qunaline"
                    android:id="@+id/detail_item_line"
-                   android:layout_marginLeft="@dimen/dp_20"
-                   android:layout_toRightOf="@id/detail_item_time"
+                   android:layout_marginLeft="@dimen/dp_10"
                    android:layout_toLeftOf="@id/detail_item_get"
-                   android:layout_marginRight="@dimen/dp_20"
+                   android:layout_marginRight="@dimen/dp_10"
                    android:layout_height="wrap_content"/>
 
         <TextView android:layout_width="wrap_content"
@@ -168,7 +177,8 @@
                   android:textColor="@color/white"
                   android:id="@+id/detail_item_get"
                   android:text="立即领取"
-                  android:layout_marginRight="@dimen/dp_25"
+                  android:layout_marginLeft="@dimen/dp_20"
+                  android:layout_marginRight="@dimen/dp_20"
                   android:layout_centerVertical="true"
                   android:layout_alignParentRight="true"
                   android:textStyle="bold"
@@ -188,3 +198,5 @@
     </FrameLayout>
 
 </RelativeLayout>
+
+</layout>

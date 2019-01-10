@@ -124,7 +124,7 @@ class OrderFragment : BaseFragment() , SwipeRefreshLayout.OnRefreshListener , Ba
 
     fun fetchData() {
 
-        dataBinding!!.userViewModel!!.getOrderList(QuanModule.userBean!!.UserId , orderStatus , pageIndex+1)
+        dataBinding!!.userViewModel!!.getOrderList(QuanModule.userBean!!.userId , orderStatus , pageIndex+1)
 
     }
 
@@ -136,7 +136,7 @@ class OrderFragment : BaseFragment() , SwipeRefreshLayout.OnRefreshListener , Ba
     override fun onLoadMoreRequested() {
 
         order_refreshview.isRefreshing=false
-        dataBinding!!.userViewModel!!.getOrderList(QuanModule.userBean!!.UserId , orderStatus , pageIndex+1)
+        dataBinding!!.userViewModel!!.getOrderList(QuanModule.userBean!!.userId , orderStatus , pageIndex+1)
     }
 
     //    override fun getLayoutResourceId(): Int {
