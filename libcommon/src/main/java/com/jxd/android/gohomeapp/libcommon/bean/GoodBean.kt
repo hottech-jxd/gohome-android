@@ -1,18 +1,23 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
-data class GoodBean (var goodsId :Long,
-                     var title :String ,
-                     var platform : String ,
-                     var goodsPrice : String ,
-                     var salesVolume :String ,
-                     var imgSrc :String ,
-                     var images:ArrayList<String>?,
-                     var couponPrice :String ,
-                     var finalPrice :String,
-                     var isFav :String,
-                     var earnMoney :String ,
-                     var time:String ,
-                     var goodsIntro:String)
+data class GoodBean (
+   /** 劵价格*/
+    var couponPrice :String? ,
+
+    var  	finalPrice :String?,
+
+   var 	goodsId :String?,
+   var	name  :String?,
+
+    var	pictureUrl  :String?,
+
+   var	price :String?,
+
+    var	reward :String?,
+
+  var	saleAmount :Long,
+
+   var	source :String? )
 
 data class GoodsDetailBean(var goodsId: String= "" ,
                       /**

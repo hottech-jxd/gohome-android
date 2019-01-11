@@ -2,7 +2,9 @@ package com.jxd.android.gohomeapp.quanmodule.adapter
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextPaint
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import cn.iwgang.countdownview.CountdownView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
@@ -13,13 +15,13 @@ import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.R.id.good_item_title
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnBannerListener
 
 
 class RecommandAdapter(data : ArrayList<MultiItemEntity>)
-    : BaseMultiItemQuickAdapter<MultiItemEntity , BaseViewHolder>(data)
-     {
+    : BaseMultiItemQuickAdapter<MultiItemEntity , BaseViewHolder>(data){
 
     var onBannerItemClickListener:BannerItemClickListener?=null
 
@@ -37,7 +39,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
     override fun convert(helper: BaseViewHolder?, item: MultiItemEntity?) {
         when(helper!!.itemViewType){
             ItemTypeEnum.BANNER.type->{
-                set_1(helper , item)
+                set_Banner(helper , item)
             }
             ItemTypeEnum.ONE_COLLOMN_SIMPLE.type->{
                 set_2(helper,item)
@@ -60,12 +62,20 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         }
     }
 
-    private fun set_1(helper: BaseViewHolder?,item: MultiItemEntity? ){
-        var urls = (item as RecommandItem1).data
+    private fun set_Banner(helper: BaseViewHolder?,item: MultiItemEntity? ){
+        var data = (item as RecommandItem1).data
+
+        var picList = ArrayList<String>()
+
+        for(item in data){
+            picList.add(item.pictureUrl!!)
+        }
+
+
         var banner = helper!!.getView<Banner>(R.id.recommand_banner)
 
         banner.setImageLoader(FrescoImageLoader(banner , DensityUtils.getScreenWidth(mContext) ))
-        banner.setImages(urls)
+        banner.setImages(picList)
         banner.setOnBannerListener(BannerListener( helper.adapterPosition , banner , onBannerItemClickListener ))
         banner.setTag(item)
         banner.start()
@@ -75,21 +85,41 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
     }
 
     private fun set_2(helper: BaseViewHolder?,item: MultiItemEntity?){
+        var data = item as RecommandItem2
+        var imageUrl = data.data.pictureUrl
         var image = helper!!.getView<SimpleDraweeView>(R.id.recommand_image_1)
-        image.setImageURI("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
+        image.setImageURI( imageUrl )
 
         helper.addOnClickListener(R.id.recommand_image_1)
     }
 
     private fun set_3(helper: BaseViewHolder?,item: MultiItemEntity?){
         var countDown = helper!!.getView<CountdownView>(R.id.recommand_countdown)
-        countDown.start(15454545)
+
+        var time = (item as RecommandItem3).data
+
+        countDown.start( time )
     }
 
     private fun set_4(helper: BaseViewHolder?,item: MultiItemEntity?){
-        var bean = item as RecommandItem4
-        helper!!.getView<SimpleDraweeView>(R.id.good_item_image)
-                .setImageURI(bean.data.imgSrc)
+        var bean = (item as RecommandItem4).data
+
+        var picUrl = bean.pictureUrl
+
+        helper!!.getView<SimpleDraweeView>(R.id.good_item_image).setImageURI(picUrl)
+
+        helper!!.setText(R.id.good_item_title , bean.name)
+
+        helper.setText(R.id.good_item_price , bean.price)
+        helper.getView<TextView>(R.id.good_item_price).paintFlags=TextPaint.STRIKE_THRU_TEXT_FLAG
+
+        helper.setText(R.id.good_item_coupon , bean.couponPrice+"元券")
+
+        helper.setText(R.id.good_item_count, "销量"+bean.saleAmount+"件")
+
+        helper.setText(R.id.good_item_final_price, "￥"+ bean.finalPrice)
+
+        helper.setText(R.id.good_item_reword, bean.reward)
     }
 
     private fun set_5(helper: BaseViewHolder?,item: MultiItemEntity?){
@@ -110,8 +140,20 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
     }
 
     private fun set_7(helper: BaseViewHolder?,item: MultiItemEntity?){
-        var bean = item as RecommandItem7
-        helper!!.getView<SimpleDraweeView>(R.id.good_item_1_logo).setImageURI(bean.data.imgSrc)
+        var bean = (item as RecommandItem7).data
+
+        var picUrl =   bean.pictureUrl
+
+
+        helper!!.getView<SimpleDraweeView>(R.id.good_item_1_logo).setImageURI(picUrl)
+
+        helper.setText(R.id.good_item_1_title, bean.name)
+        helper.setText(R.id.good_item_1_price,bean.price)
+        helper.getView<TextView>(R.id.good_item_1_price).paintFlags=TextPaint.STRIKE_THRU_TEXT_FLAG
+        helper.setText(R.id.good_item_1_count, "销售量"+bean.saleAmount+"件")
+        helper.setText(R.id.good_item_1_final_price, "￥"+ bean.finalPrice)
+        helper.setText(R.id.good_item_1_coupon, "卷￥"+bean.couponPrice+"元")
+        helper.setText(R.id.good_item_1_reword, bean.reward)
     }
 
 

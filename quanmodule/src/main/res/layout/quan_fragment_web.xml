@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="clickHandler" type="android.view.View.OnClickListener"/>
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.WebFragment">
+
+    <include layout="@layout/layout_common_header"
+             android:layout_width="match_parent"
+             app:clickHandler="@{clickHandler}"
+             android:id="@+id/web_header"
+             android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/web_progressBar"
+        android:layout_width="match_parent"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/progress_bar_states"
+        android:layout_height="1dp"/>
+
+    <WebView
+        android:id="@+id/web_webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+</layout>

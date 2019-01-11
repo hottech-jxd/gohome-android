@@ -2,6 +2,7 @@ package com.jxd.android.gohomeapp.quanmodule.http
 
 import com.jxd.android.gohomeapp.libcommon.bean.*
 import io.reactivex.Observable
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**
@@ -45,6 +46,21 @@ interface ApiService {
      */
     @GET("goods/share")
     fun share(@Query("goodsId") goodsId:String):Observable<ApiResult<GoodsShareBean?>>
+
+
+    /**
+     * 推荐首页
+     */
+    @GET("goods/index")
+    fun index():Observable<ApiResult<ArrayList<IndexBean>?>>
+
+    /**
+     * 获得分类下的商品数据
+     */
+    @Headers("Content-type:application/json;charset=UTF-8")
+    @POST("goods/category")
+    fun getGoodsOfCategories(@Body requestBody: RequestBody):Observable<ApiResult<ArrayList<GoodBean>?>>
+
     /**
      * 提现申请
      */

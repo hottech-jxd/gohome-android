@@ -3,7 +3,7 @@ package com.jxd.android.gohomeapp.libcommon.bean
 import com.chad.library.adapter.base.entity.MultiItemEntity
 
 
-data class RecommandItem1(var data :ArrayList<String>)
+data class RecommandItem1( var data:ArrayList<IndexBean> )
     : MultiItemEntity {
 
     override fun getItemType(): Int {
@@ -11,7 +11,7 @@ data class RecommandItem1(var data :ArrayList<String>)
     }
 }
 
-data class RecommandItem2(var data :GoodBean) :MultiItemEntity{
+data class RecommandItem2(var data : IndexBean ) :MultiItemEntity{
     override fun getItemType(): Int {
         return ItemTypeEnum.ONE_COLLOMN_SIMPLE.type
     }
@@ -24,14 +24,14 @@ data class RecommandItem3(var data: Long):MultiItemEntity{
     }
 }
 
-data class RecommandItem4(var data : GoodBean):MultiItemEntity{
+data class RecommandItem4(var data : GoodBean ):MultiItemEntity{
 
     override fun getItemType(): Int {
         return ItemTypeEnum.ONE_ROW_GOODS.type
     }
 }
 
-data class RecommandItem5(var title:String):MultiItemEntity{
+data class RecommandItem5(var title:String?):MultiItemEntity{
     override fun getItemType(): Int {
         return ItemTypeEnum.ONE_ROW_TITLE.type
     }

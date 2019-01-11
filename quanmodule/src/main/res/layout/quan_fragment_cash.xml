@@ -54,7 +54,7 @@
             android:id="@+id/cash_lay_bank"
             android:background="@color/white"
             android:layout_width="match_parent"
-            android:onClick="@{clickHandler.onClick}"
+            android:onClick="@{clickHandler::onClick}"
             android:layout_height="wrap_content">
         <TextView android:layout_width="match_parent"
                   android:textColor="@color/black"
@@ -79,7 +79,7 @@
     <LinearLayout
             android:layout_below="@id/cash_line1"
             android:orientation="horizontal"
-            android:onClick="@{clickHandler.onClick}"
+            android:onClick="@{clickHandler::onClick}"
             android:id="@+id/cash_lay_cash"
             android:background="@color/white"
             android:layout_width="match_parent"

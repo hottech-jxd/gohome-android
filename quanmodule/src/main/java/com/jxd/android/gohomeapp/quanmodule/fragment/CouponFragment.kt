@@ -5,9 +5,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +23,7 @@ import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.MainActivity2
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.R.id.coupon_recyclerview
 import com.jxd.android.gohomeapp.quanmodule.TutorialsActivity
 import com.jxd.android.gohomeapp.quanmodule.adapter.CouponAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
@@ -37,7 +42,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  * 优惠券列表
  */
-class CouponFragment : BaseFragment() , View.OnClickListener , BaseQuickAdapter.OnItemChildClickListener {
+class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayout.OnRefreshListener , BaseQuickAdapter.OnItemChildClickListener {
 
     private var param1: String? = null
     private var param2: String? = null
@@ -61,20 +66,26 @@ class CouponFragment : BaseFragment() , View.OnClickListener , BaseQuickAdapter.
 
         dataBinding!!.goodsViewModel!!.liveDataCouponList
             .observe(this , Observer { it->
+                coupon_swipeRefreshView.isRefreshing=false
                 if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
                     showToast(it.resultMsg)
                     return@Observer
                 }
                 if(it.list==null) return@Observer
 
-
                 couponAdapter!!.setNewData(it.list)
+        })
 
-            })
+        dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
+            if(TextUtils.isEmpty(it)){
+                return@Observer
+            }
+            coupon_swipeRefreshView.isRefreshing=false
+            showToast(it!!)
+        })
 
 
         return dataBinding!!.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,6 +98,8 @@ class CouponFragment : BaseFragment() , View.OnClickListener , BaseQuickAdapter.
         coupon_recyclerview.adapter = couponAdapter
         coupon_recyclerview.addItemDecoration( ItemDevider3(context!!, 1f , R.color.linecolor , 15f ) )
         couponAdapter!!.onItemChildClickListener=this
+
+        coupon_swipeRefreshView.setOnRefreshListener(this)
     }
 
 
@@ -121,7 +134,9 @@ class CouponFragment : BaseFragment() , View.OnClickListener , BaseQuickAdapter.
         }
     }
 
-
+    override fun onRefresh() {
+        dataBinding!!.goodsViewModel!!.getCouponList()
+    }
 
     override fun onClick(v: View?) {
         when(v!!.id){

@@ -71,7 +71,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="@dimen/sp_12"
-            android:text="券￥2"
+            android:text="券￥0"
             android:singleLine="true"
             android:background="@drawable/shape_quan_bg"
             android:textColor="#E02E24"

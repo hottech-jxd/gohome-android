@@ -19,7 +19,6 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <com.facebook.drawee.view.SimpleDraweeView
-
         android:id="@+id/good_item_logo"
         android:layout_width="10dp"
         android:layout_height="10dp"
@@ -154,6 +153,7 @@
         <TextView
             android:text="2.98"
             android:textColor="#fe4c55"
+            android:id="@+id/good_item_reword"
             android:textSize="@dimen/sp_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

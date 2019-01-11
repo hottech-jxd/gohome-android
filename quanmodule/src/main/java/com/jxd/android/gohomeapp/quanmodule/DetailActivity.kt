@@ -19,7 +19,7 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
     //private var data=ArrayList<PictureBean>()
 
     var quanActivityDetailBinding :QuanActivityDetailBinding?=null
-    @Autowired @JvmField var goodsId:String=""
+    @Autowired @JvmField var goodsId:String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

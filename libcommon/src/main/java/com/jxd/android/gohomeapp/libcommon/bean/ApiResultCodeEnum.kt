@@ -25,3 +25,25 @@ enum class ApiResultCodeEnum (var code :Int,var desc :String ){
     //AUTH_ERROR(4123 ,"未完成认证,前往认证"),
     //EXIST_RECYCLE_ERROR(4502,"存在回收中的记录，请完成后再次申请!")
 }
+
+
+enum class ThemeCategoryEnum(var code: Int,var desc:String){
+    GoodsList(0,"商品列表"),
+    Link(1,"外链"),
+    Single(2,"单品")
+}
+
+enum class ThemeIndexRecommendModeEnum(var code: Int,var desc:String){
+    LimitedTheme(0,"限时购主题 [商品列表形式展示，同时显示倒计时]"),
+    ListTheme(1,"列表主题 [商品列表形式展示，可设置显示条数或分页获取]"),
+    SingleTheme(2,"单图主题 [单图展示]"),
+    Slide(3,"幻灯")
+}
+
+enum class GoodsSortEnum(var code: Int , var desc: String){
+    Newed(1,"最新"),
+    PriceAsc(2,"价格升序"),
+    PriceDes(3,"价格降序"),
+    RewardDes(4,"佣金"),
+    SaleDes(5,"销量")
+}

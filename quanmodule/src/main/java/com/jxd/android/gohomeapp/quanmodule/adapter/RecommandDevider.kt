@@ -34,9 +34,10 @@ class RecommandDevider(var recommandAdapter: RecommandAdapter , context:Context)
          if(position%2==0)
              return Y_DividerBuilder()
                     .setLeftSideLine(true,0xffffff,8f,0f,0f)
-                    .setRightSideLine(true,0xffffff,8f,0f,0f)
+                    .setRightSideLine(true,0xffffff,4f,0f,0f)
                     .create() else
              return Y_DividerBuilder()
+                    .setLeftSideLine(true,0xffffff,4f,0f,0f)
                     .setRightSideLine(true,0xffffff,8f,0f,0f)
                     .create()
     }

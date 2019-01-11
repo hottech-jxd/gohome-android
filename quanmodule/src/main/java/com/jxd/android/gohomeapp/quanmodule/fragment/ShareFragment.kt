@@ -131,6 +131,8 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         initShareMessage()
 
+        dataBinding!!.goodsViewModel!!.getShareInfo( goodsDetailBean!!.goodsId )
+
     }
 
     private fun initShareMessage(){

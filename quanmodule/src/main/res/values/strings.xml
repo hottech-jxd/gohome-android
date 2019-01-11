@@ -15,4 +15,6 @@
     <string name="coupon">元优惠券</string>
     <string name="reword">预计赚￥</string>
     <string name="expiredate">有期限:</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
 </resources>

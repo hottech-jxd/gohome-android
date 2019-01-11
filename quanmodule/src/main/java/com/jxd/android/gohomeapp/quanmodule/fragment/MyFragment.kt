@@ -51,7 +51,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
     private var param1: String? = null
     var fragments=ArrayList<BaseFragment>()
-    var titles =ArrayList<String>()
+    var titles =ArrayList<String?>()
     var orderAdapter:AppFragmentAdapter?=null
     var dataBinding:QuanFragmentMeBinding?=null
     //var myBean:MyBean?=null

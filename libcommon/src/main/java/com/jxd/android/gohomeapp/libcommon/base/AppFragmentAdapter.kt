@@ -16,7 +16,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-class AppFragmentAdapter( fragmentManager: FragmentManager ,var  fragments:ArrayList<BaseFragment>? , var titles:ArrayList<String>?)
+class AppFragmentAdapter( fragmentManager: FragmentManager ,var  fragments:ArrayList<BaseFragment>? , var titles:ArrayList<String?>?)
     : FragmentStatePagerAdapter(fragmentManager) {
 
 

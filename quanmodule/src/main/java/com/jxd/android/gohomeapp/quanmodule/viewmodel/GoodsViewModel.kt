@@ -28,6 +28,8 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     var liveDataCouponList = MutableLiveData<ApiResult<ArrayList<CouponBean>?>>()
     var liveDataSearchResult=MutableLiveData<ApiResult<ArrayList<SearchGoodsBean>?>>()
     var liveDataGoodsShareBean = MutableLiveData<ApiResult<GoodsShareBean?>>()
+    var liveDataIndexResult = MutableLiveData<ApiResult<ArrayList<IndexBean>?>>()
+    var liveDataGoodsOfCategory=MutableLiveData<ApiResult<ArrayList<GoodBean>?>>()
 
     fun getGoodsDetail(goodsId:String){
 
@@ -105,6 +107,34 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
                 loading.postValue(false)
             }
             .subscribe({liveDataGoodsShareBean.postValue(it)},{onError(it)})
+    }
+
+    fun index(){
+        GoodsRepository.index()
+            .wrapper()
+            .doOnSubscribe {
+                t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({liveDataIndexResult.postValue(it)},{onError(it)})
+    }
+
+    fun getGoodsOfCategory(categoryId:String, sortEnum: GoodsSortEnum , page:Int){
+        GoodsRepository.getGoodsOfCategory(categoryId , sortEnum , page )
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({liveDataGoodsOfCategory.postValue(it)},{onError(it)})
     }
 
 }

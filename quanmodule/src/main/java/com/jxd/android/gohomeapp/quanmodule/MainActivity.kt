@@ -94,7 +94,7 @@ class MainActivity : BaseActivity() ,View.OnClickListener ,ViewPager.OnPageChang
         var myFragment = ARouter.getInstance().build(ARouterPath.QuanFragmentMyPath).navigation() as MyFragment
         fragments.add( myFragment )
 //
-        var titles = ArrayList<String>()
+        var titles = ArrayList<String?>()
         titles.add(getString(R.string.bottom_menu_index))
         titles.add(getString(R.string.bottom_menu_my))
         fragmentAdapter = AppFragmentAdapter( supportFragmentManager , fragments , titles)

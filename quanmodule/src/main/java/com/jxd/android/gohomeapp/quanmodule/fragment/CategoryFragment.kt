@@ -1,20 +1,31 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.facebook.drawee.view.SimpleDraweeView
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
+import com.jxd.android.gohomeapp.libcommon.bean.Category
+import com.jxd.android.gohomeapp.libcommon.bean.IndexBean
+import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
+import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
+import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
+import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCategoryBinding
-import com.jxd.android.gohomeapp.quanmodule.generated.callback.OnClickListener
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
+import kotlinx.android.synthetic.main.quan_fragment_category.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,15 +39,18 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 @Route(path = ARouterPath.QuanFragmentCategoryPath)
-class CategoryFragment : BaseBackFragment() , View.OnClickListener{
+class CategoryFragment : BaseBackFragment() , FrescoDraweeListener.ImageCallback , View.OnClickListener{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    @Autowired
-    @JvmField var categoryId:Long=0
+    @Autowired(name = "indexbean") @JvmField var indexBean:IndexBean?=null
+
+    private var dataBinding:QuanFragmentCategoryBinding?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ARouter.getInstance().inject(this)
+
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -44,20 +58,13 @@ class CategoryFragment : BaseBackFragment() , View.OnClickListener{
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.quan_fragment_category, container, false)
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
-        var dataBinding : QuanFragmentCategoryBinding = DataBindingUtil
-            .inflate(inflater , R.layout.quan_fragment_category , container , false)
+        dataBinding  = DataBindingUtil.inflate(inflater , R.layout.quan_fragment_category , container , false)
+        dataBinding!!.goodsViewModel=ViewModelProviders.of(this).get(GoodsViewModel::class.java)
+        dataBinding!!.clickHandler = this
 
-        dataBinding.clickHandler = this
-
-        return dataBinding.root
-
+        return dataBinding!!.root
     }
 
 
@@ -76,11 +83,26 @@ class CategoryFragment : BaseBackFragment() , View.OnClickListener{
     override fun initView() {
         super.initView()
 
-        var fragment = RecommandFragment.newInstance(categoryId.toString())
-        this.loadRootFragment(R.id.category_container , fragment, false, true)
+//        var fragment = RecommandFragment.newInstance(categoryId.toString())
+//        this.loadRootFragment(R.id.category_container , fragment, false, true)
+        if(indexBean==null) return
+
+
+        //todo banner图片 需要后端开发 确认
+        FrescoDraweeController.loadImage(category_Banner , DensityUtils.getScreenWidth(context!!), 100,"http://image.tkcm888.com/adSet_2018-06-01_f406f8550f0f4b21b41fca881bbcb11415278577614883710.png",this)
+
+        var category=Category( indexBean!!.goodsId , "" )
+        var fragment = ARouter.getInstance().build(ARouterPath.QuanFragmentTabPath)
+            .withObject("category",category).navigation() as TabFragment
+
+        this.loadRootFragment(R.id.category_container , fragment , false,true)
+
     }
 
-
+    override fun imageCallback(width: Int, height: Int, simpleDraweeView: SimpleDraweeView?) {
+        if(simpleDraweeView==null) return
+        simpleDraweeView.layoutParams = ConstraintLayout.LayoutParams(width , height)
+    }
 
     override fun onClick(v: View?) {
 

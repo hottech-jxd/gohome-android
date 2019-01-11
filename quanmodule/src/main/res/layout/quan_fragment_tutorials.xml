@@ -22,7 +22,6 @@
                 android:id="@+id/header_left_image"
                 android:layout_width="wrap_content"
                 android:paddingTop="@dimen/dp_12"
-                android:onClick="onClick"
                 android:paddingBottom="@dimen/dp_12"
                 android:paddingLeft="@dimen/dp_0"
                 android:paddingRight="@dimen/dp_16"

@@ -31,8 +31,8 @@
             app:isShowMinute="true"
             app:isShowSecond="true"
             app:timeTextColor="@color/white"
-            app:timeTextSize="14sp"
+            app:timeTextSize="@dimen/sp_12"
             app:isHideTimeBackground="false"
-            app:timeBgRadius="15dp"
+            app:timeBgRadius="@dimen/dp_14"
             app:timeBgColor="#434343"/>
 </LinearLayout>

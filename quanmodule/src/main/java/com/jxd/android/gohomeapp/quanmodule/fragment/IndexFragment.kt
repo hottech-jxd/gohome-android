@@ -9,7 +9,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -48,14 +50,12 @@ import kotlin.collections.ArrayList
  */
 @Route(path = ARouterPath.QuanFragmentIndexPath)
 class IndexFragment : BaseFragment()
-        , SwipeRefreshLayout.OnRefreshListener
         , View.OnClickListener {
 
     var categories = ArrayList<Category>()
     var fragments = ArrayList<BaseFragment>()
-    var fragmentAdapter : AppFragmentAdapter?=null
-    var indexBinding: QuanFragmentIndexBinding?=null
-
+    var fragmentAdapter: AppFragmentAdapter? = null
+    var indexBinding: QuanFragmentIndexBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,35 +64,37 @@ class IndexFragment : BaseFragment()
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if(!hidden){
+        if (!hidden) {
             ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //return super.onCreateView(inflater, container, savedInstanceState)
         ARouter.getInstance().inject(IndexFragment::class)
 
-        indexBinding = DataBindingUtil.inflate(inflater ,  R.layout.quan_fragment_index , container , false )
+        indexBinding = DataBindingUtil.inflate(inflater, R.layout.quan_fragment_index, container, false)
         indexBinding!!.clickHandler = this
-        //return inflater.inflate(R.layout.quan_fragment_index , container,false)
-
-        var goodsViewModel:GoodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
+        var goodsViewModel: GoodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
         indexBinding!!.goodsViewModel = goodsViewModel
 
-
         indexBinding!!.goodsViewModel!!.liveDataGoodsCategories
-            .observe(this , Observer { it->
-                if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
+            .observe(this, Observer { it ->
+                if (it!!.resultCode != ApiResultCodeEnum.SUCCESS.code) {
                     showToast(it.resultMsg)
                     return@Observer
                 }
-                if(it.list==null) return@Observer
+                if (it.list == null) return@Observer
                 categories.clear()
-                categories.addAll( it.list!!)
-                initFragments()
-
+                categories.addAll(it.list!!)
+                initTabFragments()
             })
+
+        indexBinding!!.goodsViewModel!!.error.observe(this, Observer { it ->
+            if (TextUtils.isEmpty(it)) {
+                return@Observer
+            }
+            showToast(it!!)
+        })
 
 
         return indexBinding!!.root
@@ -101,38 +103,18 @@ class IndexFragment : BaseFragment()
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
 
-        initView()
+        fetchData()
     }
 
     override fun initView() {
-//        header_search.setOnClickListener(this)
-//        header_right_image.setOnClickListener(this)
-//        header_left_lay.setOnClickListener(this)
-//        index_more.setOnClickListener(this)
 
-        //header_search_lay.setOnClickListener(this)
+    }
 
-
+    private fun fetchData() {
         indexBinding!!.goodsViewModel!!.getGoodsCategorys()
-
-        //initFragments()
-
-
     }
 
-//    override fun fetchData() {
-//
-//    }
-
-
-
-
-    override fun onRefresh() {
-
-    }
-
-
-    private fun initFragments(){
+    private fun initTabFragments() {
 //        category.clear()
 //        category.add("推荐")
 //        category.add("男装")
@@ -151,61 +133,56 @@ class IndexFragment : BaseFragment()
 //        category.add("手机")
 
         fragments.clear()
-        fragments.add(RecommandFragment.newInstance("推荐"))
-        for(i in 0 until categories.size){
-            var tabFragment =  ARouter.getInstance()
+        //fragments.add(RecommandFragment.newInstance("推荐"))
+        fragments.add(ARouter.getInstance().build(ARouterPath.QuanFragmentRecommandPath).navigation() as RecommandFragment)
+        for (i in 0 until categories.size) {
+            var tabFragment = ARouter.getInstance()
                 .build(ARouterPath.QuanFragmentTabPath)
-                //.withObject("category", categories[i])
+                .withObject("category", categories[i])
                 .navigation() as TabFragment
-            //fragments.add( TabFragment.newInstance( category[i] ) )
             fragments.add(tabFragment)
         }
+        var titles = ArrayList(categories.map { it -> it.name })
+        titles.add(0, "推荐")
 
-        var titles = ArrayList( categories.map { it->it.name })
-        titles.add(0 , "推荐")
-
-        fragmentAdapter = AppFragmentAdapter(this.childFragmentManager , fragments , titles )
+        fragmentAdapter = AppFragmentAdapter(this.childFragmentManager, fragments, titles)
         indexBinding!!.fragmentadapter = fragmentAdapter
-        //index_viewPager.adapter = fragmentAdapter
-        index_viewPager.offscreenPageLimit=3
-        index_tab.setupWithViewPager(index_viewPager,true)
-
+        index_viewPager.offscreenPageLimit = 3
+        index_tab.setupWithViewPager(index_viewPager, true)
     }
 
 
     override fun onClick(v: View?) {
-        when(v!!.id){
-            R.id.header_search_lay->{
+        when (v!!.id) {
+            R.id.header_search_lay -> {
                 search()
             }
-            R.id.header_right_image->{
-                //newIntentForLogin<FavoriteActivity>()
-                (parentFragment as MainFragment)
-                    .start(FavoriteFragment.newInstance("",""))
+            R.id.header_right_image -> {
+                (parentFragment as MainFragment).start(FavoriteFragment.newInstance("", ""))
             }
-            R.id.header_left_lay->{
+            R.id.header_left_lay -> {
                 selectPlat()
             }
-            R.id.index_more->{
-                showCategorys()
+            R.id.index_more -> {
+                showCategories()
+            }
+            R.id.header_x -> {
+                _mActivity.onBackPressed()
             }
         }
     }
 
-    fun search(){
+    fun search() {
         ARouter.getInstance().build(ARouterPath.QuanActivitySearch).navigation()
-
     }
 
-     fun showCategorys(){
-        index_category.visibility = if( index_category.visibility == View.VISIBLE ) View.GONE else View.VISIBLE
-         
-         ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
-             .withString("goodsId", "88")
-             .navigation()
+    private fun showCategories() {
+        index_category.visibility = if (index_category.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+
+        (parentFragment as MainFragment).start(WebFragment.newInstance("http://www.baidu.com"))
     }
 
-    private fun selectPlat(){
+    private fun selectPlat() {
 //        var dialog = SelectDialog(context!!)
 //        var data = ArrayList<KeyValue>()
 //        data.add(KeyValue(1,"拼多多"))
@@ -231,8 +208,8 @@ class IndexFragment : BaseFragment()
          */
         @JvmStatic
         fun newInstance() =
-                IndexFragment().apply {
+            IndexFragment().apply {
 
-                }
+            }
     }
 }

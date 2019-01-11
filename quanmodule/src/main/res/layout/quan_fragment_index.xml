@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
         <variable name="fragmentadapter" type="com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter" />
-        <variable name="clickHandler" type="com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment" />
+        <variable name="clickHandler" type="android.view.View.OnClickListener" />
     </data>
 
 <android.support.constraint.ConstraintLayout
@@ -18,7 +18,7 @@
     tools:context=".fragment.IndexFragment">
 
     <include layout="@layout/layout_header"
-             app:clickHandler="@{clickHandler}"
+        app:clickHandler="@{clickHandler}"
         android:id="@+id/index_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:tabTextColor="#8b8b8b"
             app:tabMode="scrollable" />
         <ImageView
-                android:onClick="@{()->clickHandler.showCategorys()}"
+            android:onClick="@{clickHandler.onClick}"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:id="@+id/index_more"
@@ -119,7 +119,6 @@
             android:id="@+id/index_progress"
             android:visibility="@{goodsViewModel.loading ? View.VISIBLE : View.GONE}"
             android:layout_height="match_parent"/>
-
 
 </android.support.constraint.ConstraintLayout>
 

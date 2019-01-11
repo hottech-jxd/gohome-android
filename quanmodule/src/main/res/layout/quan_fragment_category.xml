@@ -3,6 +3,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
     </data>
 
@@ -21,8 +22,16 @@
              app:layout_constraintLeft_toLeftOf="parent"
              app:layout_constraintRight_toRightOf="parent"/>
 
+    <com.facebook.drawee.view.SimpleDraweeView android:layout_width="match_parent"
+                                               app:actualImageScaleType="centerCrop"
+                                               app:failureImageScaleType="centerCrop"
+                                               app:placeholderImageScaleType="centerCrop"
+                                               android:id="@+id/category_Banner"
+                                               android:layout_below="@id/category_header"
+                                               android:layout_height="wrap_content"/>
+
     <FrameLayout
-            android:layout_below="@id/category_header"
+            android:layout_below="@id/category_Banner"
             android:id="@+id/category_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
