@@ -55,4 +55,8 @@ object  UserRepository {
     fun getUserInfo():Observable<ApiResult<UserBean?>>{
         return apiService!!.getUserInfo()
     }
+
+    fun collect(goodsId:String):Observable<ApiResult<Any?>>{
+        return apiService!!.collect(goodsId )
+    }
 }

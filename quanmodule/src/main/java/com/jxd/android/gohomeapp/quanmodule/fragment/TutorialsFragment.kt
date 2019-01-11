@@ -122,7 +122,6 @@ class TutorialsFragment : BaseBackFragment() , View.OnClickListener {
         when(v!!.id){
             R.id.header_left_image->{
                 _mActivity.onBackPressed()
-                //_mActivity.finish()
             }
         }
     }

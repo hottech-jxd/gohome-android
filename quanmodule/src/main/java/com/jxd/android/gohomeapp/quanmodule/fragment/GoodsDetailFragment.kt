@@ -34,9 +34,11 @@ import android.arch.lifecycle.Observer
 import android.text.TextPaint
 import android.text.TextUtils
 import android.widget.TextView
+import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
 import com.jxd.android.gohomeapp.quanmodule.R.mipmap.share
 import com.jxd.android.gohomeapp.quanmodule.databinding.LayoutDetailTopBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
+import com.wx.goodview.GoodView
 import kotlinx.android.synthetic.main.layout_detail_top.*
 import kotlinx.android.synthetic.main.quan_activity_detail.*
 import kotlinx.android.synthetic.main.quan_fragment_goods_detail.*
@@ -72,6 +74,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
                 DataBindingUtil.inflate(inflater, R.layout.quan_fragment_goods_detail, container, false)
         var goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
         quanFragmentDetailBinding!!.goodsViewModel = goodsViewModel
+        quanFragmentDetailBinding!!.userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         quanFragmentDetailBinding!!.clickHandler = this
         return quanFragmentDetailBinding!!.root
     }
@@ -182,6 +185,22 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
             showToast(it!!)
          })
 
+
+        quanFragmentDetailBinding!!.userViewModel!!.liveDataCollectResult.observe(this, Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            detail_favorite_image.setImageResource(R.mipmap.favorite_red)
+            var goodView= GoodView(context)
+            goodView.setImage(R.mipmap.favorite_red)
+            goodView.setDistance(100)
+            goodView.setDuration(800)
+            goodView.show(detail_favorite)
+
+
+        })
     }
 
     override fun OnBannerClick(position: Int) {
@@ -200,7 +219,14 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
                 //start(ShareFragment.newInstance("",""))
                 showToast("todo")
             }
+            R.id.detail_collect_lay->{
+                collect()
+            }
         }
+    }
+
+    fun collect(){
+        quanFragmentDetailBinding!!.userViewModel!!.collect(goodsId)
     }
 
     fun share(){

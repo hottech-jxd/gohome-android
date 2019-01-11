@@ -15,8 +15,10 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.gyf.barlibrary.ImmersionBar
+import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.util.showToast
@@ -130,7 +132,10 @@ class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayou
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         if(view!!.id==R.id.coupon_item_buy){
-            showToast("todo")
+            var bean = couponAdapter!!.getItem(position)
+            ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
+                .withString("goodsId",bean!!.goodsId)
+                .navigation()
         }
     }
 

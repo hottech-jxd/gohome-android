@@ -57,7 +57,7 @@
 
             <TextView android:layout_width="wrap_content"
               android:text="一、新手视频指导"
-              android:paddingTop="@dimen/dp_16"
+              android:paddingTop="@dimen/dp_10"
               android:textColor="@color/white"
               android:textSize="@dimen/sp_15"
               android:textStyle="bold"
@@ -68,7 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_height="@dimen/dp_250"
-                android:background="@color/white"
                 android:layout_below="@id/tutorials_label"
                 android:id="@+id/tutorials_videoplay"/>
 

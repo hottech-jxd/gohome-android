@@ -115,4 +115,7 @@ interface ApiService {
      */
     @POST("user/userInfo")
     fun getUserInfo():Observable<ApiResult<UserBean?>>
+
+    @GET("user/collect")
+    fun collect(@Query("goodsId") goodsId:String):Observable<ApiResult<Any?>>
 }

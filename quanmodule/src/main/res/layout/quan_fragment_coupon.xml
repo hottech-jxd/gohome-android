@@ -116,12 +116,19 @@
 
     </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
 
-    <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
-            android:id="@+id/coupon_progress"
-            android:layout_below="@id/coupon_swipeRefreshView"
-            android:visibility="@{goodsViewModel.loading? View.VISIBLE:View.GONE}"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+    <!--<com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget-->
+            <!--android:id="@+id/coupon_progress"-->
+            <!--android:layout_below="@id/coupon_lay_2"-->
+            <!--android:visibility="visible"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
+
+    <include layout="@layout/quan_layout_progress"
+             android:layout_below="@id/coupon_lay_2"
+             android:id="@+id/coupon_progress"
+             android:visibility="@{goodsViewModel.loading?View.VISIBLE:View.GONE}"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" />
 
 </RelativeLayout>
 

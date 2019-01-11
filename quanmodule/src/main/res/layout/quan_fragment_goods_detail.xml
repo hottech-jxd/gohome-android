@@ -7,6 +7,7 @@
             <import type="android.view.View" />
             <variable name="clickHandler" type="android.view.View.OnClickListener" />
             <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
+            <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
         </data>
 
         <FrameLayout android:layout_width="match_parent"
@@ -48,7 +49,6 @@
                         <android.support.v7.widget.Toolbar
                                 app:layout_collapseMode="pin"
                                 android:layout_width="match_parent"
-                                android:background="@color/white"
                                 android:layout_height="?attr/actionBarSize">
 
                             <FrameLayout android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                                 <ImageView
                                         android:id="@+id/header_left_image"
                                         android:layout_width="wrap_content"
-                                        android:paddingLeft="10dp"
+                                        android:paddingLeft="0dp"
                                         android:paddingTop="8dp"
                                         android:paddingRight="10dp"
                                         android:paddingBottom="8dp"
@@ -119,6 +119,8 @@
                             android:orientation="vertical"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
+                            android:id="@+id/detail_collect_lay"
+                            android:onClick="@{clickHandler.onClick}"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent">
                         <ImageView

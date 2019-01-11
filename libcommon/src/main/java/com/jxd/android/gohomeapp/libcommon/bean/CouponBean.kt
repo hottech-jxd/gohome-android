@@ -12,5 +12,11 @@ package com.jxd.android.gohomeapp.libcommon.bean
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-data class CouponBean (var couponPrice:String? , var finalPrice:String? , var name:String? , var pictureUrl:String?,var price:String?,var remain:String?){
+data class CouponBean (var couponPrice:String?
+                       , var goodsId :String?
+                       , var finalPrice:String?
+                       , var name:String?
+                       , var pictureUrl:String?
+                       ,var price:String?
+                       ,var remain:String?){
 }

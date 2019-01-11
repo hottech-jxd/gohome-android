@@ -112,5 +112,6 @@ dependencies {
     implementation 'com.shuyu:gsyVideoPlayer-x86:6.0.2'
     //跑马灯效果的library
     implementation 'com.github.maning0303:SwitcherView:V1.0.5'
-
+    //点赞效果
+    implementation 'com.wx.goodview:goodview:1.0.0'
 }

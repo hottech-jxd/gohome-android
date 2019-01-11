@@ -19,15 +19,20 @@ import me.yokeyword.fragmentation.SupportActivity
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-open abstract class BaseActivity : SupportActivity() {
+open abstract class BaseActivity : SupportActivity() , ISetStatusColor{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //initView()
 
-        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true).init()
+        setStatusColor()
 
+    }
+
+
+     override fun setStatusColor(){
+        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true).init()
     }
 
     override fun onDestroy() {
@@ -37,4 +42,8 @@ open abstract class BaseActivity : SupportActivity() {
     }
 
     abstract fun initView()
+}
+
+interface ISetStatusColor{
+    fun setStatusColor()
 }
