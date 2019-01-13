@@ -372,6 +372,30 @@ class RecommandFragment : BaseFragment()
 
         var item = data[bannerIndex]
 
+       goto(item)
+    }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        if(view!!.id == R.id.recommand_banner){
+            showToast("todo")
+        }else if(view!!.id==R.id.recommand_image_1){
+            var item = (recommandAdapter!!.getItem(position) as RecommandItem2).data
+
+            goto(item)
+        }
+        else if(view.id == R.id.good_item_container){
+
+            var item  =(recommandAdapter!!.getItem(position) as RecommandItem4).data
+            ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId", item.goodsId).navigation()
+
+        }
+        else if(view.id==R.id.good_item_1_container){
+            var item  =(recommandAdapter!!.getItem(position) as RecommandItem7).data
+            ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId", item.goodsId).navigation()
+        }
+    }
+
+    private fun goto(item :IndexBean){
         if(item.category == ThemeCategoryEnum.GoodsList.code ) {
 
             var fragment = ARouter.getInstance().build(ARouterPath.QuanFragmentCategoryPath)
@@ -381,17 +405,11 @@ class RecommandFragment : BaseFragment()
         }else if(item.category==ThemeCategoryEnum.Link.code){
 
             //ARouter.getInstance().build(ARouterPath.Quanf)
+            var url = item.linkUrl
+            ((parentFragment!!.parentFragment)as MainFragment).start( WebFragment.newInstance(url))
 
         }else if(item.category==ThemeCategoryEnum.Single.code){
-
-        }
-    }
-
-    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        if(view!!.id == R.id.recommand_banner){
-            showToast("todo")
-        }else if(view!!.id==R.id.recommand_image_1){
-            (parentFragment!!.parentFragment as MainFragment).start(CategoryFragment.newInstance("",""))
+            ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId", item.goodsId).navigation()
         }
     }
 

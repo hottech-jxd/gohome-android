@@ -291,7 +291,7 @@ class WebFragment : BaseFragment() , View.OnClickListener {
          * @return A new instance of fragment WebFragment.
          */
         @JvmStatic
-        fun newInstance( url : String ) =
+        fun newInstance( url : String? ) =
                 WebFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_URL , url)

@@ -37,6 +37,7 @@ import com.jxd.android.gohomeapp.quanmodule.R.mipmap.x
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIncomeBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_common_header.*
+import kotlinx.android.synthetic.main.quan_fragment_cash.*
 import kotlinx.android.synthetic.main.quan_fragment_income.*
 import kotlinx.android.synthetic.main.quan_fragment_income.view.*
 import java.math.BigDecimal
@@ -94,8 +95,19 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 return@Observer
             }
 
+
+
             setChart(it.data)
 
+        })
+
+
+        UserViewModel.liveDataUserInfo.observe(this, android.arch.lifecycle.Observer {  it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+            income_balance.text = it!!.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 
         dataBinding!!.userViewModel!!.hasError.observe(this, android.arch.lifecycle.Observer { it->
@@ -284,7 +296,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                     if (eee is Entry1) {
                         var e1 = eee as Entry1
                         tvDate1!!.text = e1.data.date
-                        tvContent1!!.text = e1.data.money.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
+                        tvContent1!!.text = "￥"+ e1.data.money.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
 
                     }
 //                    else if( eee is Entry2 ) {

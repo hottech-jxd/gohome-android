@@ -11,6 +11,8 @@ import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -47,7 +49,10 @@ const val ARG_CATEGORY = "category"
  *
  */
 @Route(path = ARouterPath.QuanFragmentTabPath )
-class TabFragment : BaseFragment() ,View.OnClickListener , BaseQuickAdapter.OnItemClickListener{
+class TabFragment : BaseFragment() ,View.OnClickListener
+    , SwipeRefreshLayout.OnRefreshListener
+    , BaseQuickAdapter.RequestLoadMoreListener
+    , BaseQuickAdapter.OnItemClickListener{
 
     @Autowired(name = "category") @JvmField var category: Category? = null
 
@@ -55,7 +60,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener , BaseQuickAdapter.OnIt
     private var categoryAdapter: CategoryAdapter?=null
     private var dataList =ArrayList<GoodBean>()
     private var dataAdapter: DataAdapter?=null
-    private var column_price_sort :GoodsSortEnum = GoodsSortEnum.SaleDes
+    private var column_price_sort :GoodsSortEnum = GoodsSortEnum.RewardDes
     private var page=0
     private var dataBinding:QuanFragmentTabBinding?=null
 
@@ -71,9 +76,16 @@ class TabFragment : BaseFragment() ,View.OnClickListener , BaseQuickAdapter.OnIt
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dataBinding = DataBindingUtil.inflate(inflater,R.layout.quan_fragment_tab , container,false)
+        dataBinding!!.clickHandler = this
         dataBinding!!.goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
 
         return dataBinding!!.root
+    }
+
+    override fun onRefresh() {
+        page=0
+        dataAdapter!!.setNewData(ArrayList())
+        fetchData()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,18 +103,21 @@ class TabFragment : BaseFragment() ,View.OnClickListener , BaseQuickAdapter.OnIt
     override fun initView() {
         column_lay_price.setOnClickListener(this)
 
+        tab_refreshview.setOnRefreshListener (this)
+
         categoryAdapter = CategoryAdapter(categoryList)
-        tab_recyclerview_class.layoutManager = GridLayoutManager(context , 4)
-        tab_recyclerview_class.adapter = categoryAdapter
+//        tab_recyclerview_class.layoutManager = GridLayoutManager(context , 4)
+//        tab_recyclerview_class.adapter = categoryAdapter
         dataAdapter=DataAdapter(dataList)
         dataAdapter!!.onItemClickListener =this
         tab_recyclerview_list.layoutManager=GridLayoutManager(context,2)
         tab_recyclerview_list.adapter=dataAdapter
-        tab_recyclerview_list.addItemDecoration( ItemDevider2(context!! , 15f , R.color.white ) )
+        tab_recyclerview_list.addItemDecoration( ItemDevider2(context!! , 14f , R.color.white ) )
 
 
         dataBinding!!.goodsViewModel!!.liveDataGoodsOfCategory.observe(this,
             Observer { it->
+                tab_refreshview.isRefreshing=false
                 if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
                     showToast(it.resultMsg)
                     return@Observer
@@ -129,7 +144,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener , BaseQuickAdapter.OnIt
                 return@Observer
             }
 
-            //recommand_refreshLayout.isRefreshing=false
+            tab_refreshview.isRefreshing=false
             showToast(it!!)
 
         })
@@ -158,6 +173,14 @@ class TabFragment : BaseFragment() ,View.OnClickListener , BaseQuickAdapter.OnIt
         dataBinding!!.goodsViewModel!!.getGoodsOfCategory(category!!.categoryId!! , column_price_sort , page+1)
     }
 
+    override fun onLoadMoreRequested() {
+        if(category==null) return
+
+        tab_refreshview.isRefreshing=false
+        dataBinding!!.goodsViewModel!!.getGoodsOfCategory(category!!.categoryId!! , column_price_sort , page+1)
+
+    }
+
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         var bean = dataAdapter!!.getItem(position)
 
@@ -165,17 +188,59 @@ class TabFragment : BaseFragment() ,View.OnClickListener , BaseQuickAdapter.OnIt
     }
 
     override fun onClick(v: View?) {
-//        when(v!!.id){
-//            R.id.column_lay_price->{
-//                if(column_price_sort==0) {
-//                    column_price_icon.setImageResource(R.mipmap.up1)
-//                    column_price_sort=1
-//                }else{
-//                    column_price_icon.setImageResource(R.mipmap.down1)
-//                    column_price_sort=0
-//                }
-//            }
-//        }
+        when(v!!.id){
+            R.id.column_lay_price->{
+                if(column_price_sort==GoodsSortEnum.PriceDes) {
+                    column_price_icon.setImageResource(R.mipmap.up1)
+                    column_price.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color_selected))
+                    column_price_sort=GoodsSortEnum.PriceAsc
+                }else{
+                    column_price_icon.setImageResource(R.mipmap.down1)
+                    column_price_sort=GoodsSortEnum.PriceDes
+                    column_price.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color_selected))
+                }
+
+                column_commission.setTextColor( ContextCompat.getColor(context!! , R.color.column_text_color) )
+                column_news.setTextColor(ContextCompat.getColor(context!!, R.color.column_text_color))
+                column_sales.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color))
+
+
+                onRefresh()
+            }
+            R.id.column_commission->{
+                column_price_sort = GoodsSortEnum.RewardDes
+                column_commission.setTextColor( ContextCompat.getColor(context!! , R.color.column_text_color_selected) )
+
+                column_news.setTextColor(ContextCompat.getColor(context!!, R.color.column_text_color))
+                column_price_icon.setImageResource(R.mipmap.updown)
+                column_price.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color))
+                column_sales.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color))
+
+                onRefresh()
+            }
+            R.id.column_news->{
+                column_price_sort = GoodsSortEnum.Newed
+                column_commission.setTextColor( ContextCompat.getColor(context!! , R.color.column_text_color) )
+
+                column_news.setTextColor(ContextCompat.getColor(context!!, R.color.column_text_color_selected))
+                column_price_icon.setImageResource(R.mipmap.updown)
+                column_price.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color))
+                column_sales.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color))
+
+                onRefresh()
+            }
+            R.id.column_sales->{
+                column_price_sort = GoodsSortEnum.SaleDes
+                column_commission.setTextColor( ContextCompat.getColor(context!! , R.color.column_text_color) )
+
+                column_news.setTextColor(ContextCompat.getColor(context!!, R.color.column_text_color))
+                column_price_icon.setImageResource(R.mipmap.updown)
+                column_price.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color))
+                column_sales.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color_selected))
+
+                onRefresh()
+            }
+        }
     }
 
     companion object {

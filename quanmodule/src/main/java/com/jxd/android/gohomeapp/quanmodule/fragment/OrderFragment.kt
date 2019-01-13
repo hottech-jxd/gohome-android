@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -20,9 +21,11 @@ import com.jxd.android.gohomeapp.libcommon.bean.OrderTypeEnum
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
 import com.jxd.android.gohomeapp.quanmodule.adapter.OrderAdapter
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentOrderBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
+import io.reactivex.internal.util.ArrayListSupplier
 import kotlinx.android.synthetic.main.quan_fragment_order.*
 
 private const val ARG_ORDERTYPE = "ordertype"
@@ -73,6 +76,7 @@ class OrderFragment : BaseFragment() , SwipeRefreshLayout.OnRefreshListener , Ba
         orderAdapter!!.setOnLoadMoreListener(this , order_recyclerview)
         order_recyclerview.adapter = orderAdapter
         order_refreshview.setOnRefreshListener(this)
+        order_recyclerview.addItemDecoration(ItemDevider3(context!!, 10f ,R.color.linecolor, 0f))
 
 
         dataBinding!!.userViewModel!!.liveDataOrderList.observe(this , Observer { it->
@@ -130,6 +134,7 @@ class OrderFragment : BaseFragment() , SwipeRefreshLayout.OnRefreshListener , Ba
 
     override fun onRefresh() {
         pageIndex=0
+        orderAdapter!!.setNewData(ArrayList())
         fetchData()
     }
 

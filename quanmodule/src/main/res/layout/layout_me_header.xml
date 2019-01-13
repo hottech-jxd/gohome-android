@@ -32,15 +32,25 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TextView android:layout_width="match_parent"
+        <ImageView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:id="@+id/my_header_message"
                   android:singleLine="true"
-                  android:text="asdfsafsafsafsdfa"
-                  android:drawableLeft="@mipmap/notice"
+                  android:src="@mipmap/notice"
+                  android:layout_gravity="center_vertical"
                   android:textSize="@dimen/dp_12"
-                  android:drawablePadding="@dimen/dp_6"
-                  android:textColor="@color/white"/>
+                  android:drawablePadding="@dimen/dp_6"/>
+
+        <com.maning.library.SwitcherView
+                android:id="@+id/my_header_scrollTextInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:switcherRollingTime="3000"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                app:switcherTextColor="#ffffff"
+                app:switcherTextSize="@dimen/sp_12" />
+
     </LinearLayout>
 
     <LinearLayout

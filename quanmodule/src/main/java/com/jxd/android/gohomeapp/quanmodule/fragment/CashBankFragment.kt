@@ -24,9 +24,11 @@ import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCashBankBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_cash_bank.*
 import kotlinx.android.synthetic.main.quan_fragment_cash_bank.view.*
+import kotlinx.android.synthetic.main.quan_fragment_income.*
 import java.lang.Exception
 import java.math.BigDecimal
 
@@ -89,6 +91,15 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownVi
             cashbank_getcode.visibility = View.GONE
             cashbank_countdown.visibility=View.VISIBLE
             cashbank_countdown.start(60000)
+        })
+
+
+        UserViewModel.liveDataUserInfo.observe(this, Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+            cash_balance.text = it!!.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 
         return dataBinding.root

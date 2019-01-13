@@ -114,4 +114,6 @@ dependencies {
     implementation 'com.github.maning0303:SwitcherView:V1.0.5'
     //点赞效果
     implementation 'com.wx.goodview:goodview:1.0.0'
+    //下载库
+    implementation 'com.liulishuo.filedownloader:library:1.7.5'
 }

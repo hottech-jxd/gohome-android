@@ -29,6 +29,7 @@ import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentMeBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_me_header.*
 import kotlinx.android.synthetic.main.quan_fragment_me.*
+import kotlinx.android.synthetic.main.quan_fragment_share.*
 import me.yokeyword.fragmentation.SupportActivity
 import java.math.BigDecimal
 
@@ -145,6 +146,8 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
         //my_header_cash.setOnClickListener(this)
 
+        quan_my_refresview.setProgressViewOffset(true , -20 , 100)
+
         quan_my_refresview.setOnRefreshListener(this)
 
         fragments.clear()
@@ -172,6 +175,26 @@ class MyFragment : BaseFragment() , View.OnClickListener
     fun fetchData() {
         dataBinding!!.userViewModel!!.getMyIndex()
         dataBinding!!.userViewModel!!.getUserInfo(false)
+
+        initMessages()
+    }
+
+    private fun initMessages(){
+        var messages = ArrayList<String>()
+        messages.add("asdfsafassfaeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        messages.add("23232333333333333333333333333333333333333333333")
+        messages.add("打发斯蒂芬爱的发声发顺丰阿法士大夫撒飞洒发啊所发生的")
+        messages.add("sdfs3w423sfs23eeeeeeeeee42342342342423srsfsf")
+
+        my_header_scrollTextInfo.setResource(messages)
+
+        //提供四个方向动画；默认从下往上
+        my_header_scrollTextInfo.setAnimationTop2Bottom()
+        //share_scrollTextInfo.setAnimationBottom2Top()
+        //share_scrollTextInfo.setAnimationLeft2Right()
+        //share_scrollTextInfo.setAnimationRight2Left()
+
+        my_header_scrollTextInfo.startRolling()
     }
 
     override fun onRefresh() {

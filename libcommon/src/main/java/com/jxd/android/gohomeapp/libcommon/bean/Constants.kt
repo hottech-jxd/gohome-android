@@ -1,5 +1,7 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
+import android.os.Environment
+
 /**
  *
  * @Package:        com.jxd.android.gohomeapp.libcommon.bean
@@ -38,4 +40,6 @@ object Constants {
     const val CONNECT_TIMEOUT :Long= 15
     const val WRITE_TIMEOUT :Long= 15
 
+
+    val ImageDirPath= Environment.getExternalStorageDirectory().toString()+"/quan/images/"
 }

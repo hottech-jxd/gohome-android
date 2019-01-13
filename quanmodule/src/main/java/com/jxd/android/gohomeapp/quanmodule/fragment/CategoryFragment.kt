@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -101,11 +103,21 @@ class CategoryFragment : BaseBackFragment() , FrescoDraweeListener.ImageCallback
 
     override fun imageCallback(width: Int, height: Int, simpleDraweeView: SimpleDraweeView?) {
         if(simpleDraweeView==null) return
-        simpleDraweeView.layoutParams = ConstraintLayout.LayoutParams(width , height)
+        simpleDraweeView.layoutParams = LinearLayout.LayoutParams(width , height)
     }
 
     override fun onClick(v: View?) {
-
+        when(v!!.id){
+            R.id.header_x->{
+                _mActivity.onBackPressed()
+            }
+            R.id.header_search_lay->{
+                ARouter.getInstance().build(ARouterPath.QuanActivitySearch).navigation()
+            }
+            R.id.header_right_image->{
+                (parentFragment!!.parentFragment as MainFragment).start(FavoriteFragment.newInstance("", ""))
+            }
+        }
     }
 
     companion object {

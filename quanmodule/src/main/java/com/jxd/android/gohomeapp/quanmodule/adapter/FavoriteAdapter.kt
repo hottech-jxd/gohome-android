@@ -24,7 +24,7 @@ class FavoriteAdapter(data :ArrayList<FavoriteBean>) :BaseQuickAdapter<FavoriteB
         helper.getView<TextView>(R.id.good_item_price).paintFlags = STRIKE_THRU_TEXT_FLAG
 
         helper.setText(R.id.good_item_final_price , item.finalPrice)
-        helper.setText(R.id.good_item_coupon , item.couponPrice)
+        helper.setText(R.id.good_item_coupon , "销量" + item.couponPrice+"件")
         helper.setText(R.id.good_item_count , item.saleAmount.toString())
         helper.setText(R.id.good_item_title, item.name )
         helper.setText(R.id.good_item_reword , item.reward)

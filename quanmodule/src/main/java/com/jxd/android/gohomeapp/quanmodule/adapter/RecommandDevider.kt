@@ -73,6 +73,7 @@ class ItemDevider2(var context: Context , var space:Float , var colorRes: Int  )
         if(itemPosition%2 ==0 ){
             return Y_DividerBuilder()
                 .setLeftSideLine(true , ContextCompat.getColor( context , colorRes) , space , 0f ,0f )
+                .setRightSideLine(true , ContextCompat.getColor(context, colorRes), space/2 ,0f,0f)
                 .create()
         }else{
             return Y_DividerBuilder()

@@ -30,7 +30,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         addItemType(ItemTypeEnum.BANNER.type , R.layout.layout_recommand_item_1 )
         addItemType(ItemTypeEnum.ONE_COLLOMN_SIMPLE.type , R.layout.layout_recommand_item_2)
         addItemType(ItemTypeEnum.ONE_ROW_COUNTDOWN.type , R.layout.layout_recommand_item_3)
-        addItemType(ItemTypeEnum.ONE_ROW_GOODS.type , R.layout.layout_recommand_item_4)
+        addItemType(ItemTypeEnum.ONE_ROW_GOODS.type , R.layout.layout_goods_item)
         addItemType(ItemTypeEnum.ONE_ROW_TITLE.type , R.layout.layout_recommand_item_5)
         addItemType(ItemTypeEnum.ONE_ROW_CAN_SCROLL_BANNER.type,R.layout.layout_recommand_item_6)
         addItemType(ItemTypeEnum.ONE_COLLOMN_GOODS.type,R.layout.layout_recommand_item_7)
@@ -39,16 +39,16 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
     override fun convert(helper: BaseViewHolder?, item: MultiItemEntity?) {
         when(helper!!.itemViewType){
             ItemTypeEnum.BANNER.type->{
-                set_Banner(helper , item)
+                setBanner(helper , item)
             }
             ItemTypeEnum.ONE_COLLOMN_SIMPLE.type->{
                 set_2(helper,item)
             }
             ItemTypeEnum.ONE_ROW_COUNTDOWN.type->{
-                set_3(helper,item)
+                setCountdown(helper,item)
             }
             ItemTypeEnum.ONE_ROW_GOODS.type->{
-                set_4(helper,item)
+                setGoodsOfRow(helper,item)
             }
             ItemTypeEnum.ONE_ROW_TITLE.type->{
                 set_5(helper,item)
@@ -57,12 +57,12 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
                 set_6(helper,item)
             }
             ItemTypeEnum.ONE_COLLOMN_GOODS.type->{
-                set_7(helper,item)
+                setGoodsOfColumn(helper,item)
             }
         }
     }
 
-    private fun set_Banner(helper: BaseViewHolder?,item: MultiItemEntity? ){
+    private fun setBanner(helper: BaseViewHolder?,item: MultiItemEntity? ){
         var data = (item as RecommandItem1).data
 
         var picList = ArrayList<String>()
@@ -93,7 +93,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         helper.addOnClickListener(R.id.recommand_image_1)
     }
 
-    private fun set_3(helper: BaseViewHolder?,item: MultiItemEntity?){
+    private fun setCountdown(helper: BaseViewHolder?,item: MultiItemEntity?){
         var countDown = helper!!.getView<CountdownView>(R.id.recommand_countdown)
 
         var time = (item as RecommandItem3).data
@@ -101,7 +101,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         countDown.start( time )
     }
 
-    private fun set_4(helper: BaseViewHolder?,item: MultiItemEntity?){
+    private fun setGoodsOfRow(helper: BaseViewHolder?,item: MultiItemEntity?){
         var bean = (item as RecommandItem4).data
 
         var picUrl = bean.pictureUrl
@@ -120,6 +120,8 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         helper.setText(R.id.good_item_final_price, "￥"+ bean.finalPrice)
 
         helper.setText(R.id.good_item_reword, bean.reward)
+
+        helper.addOnClickListener(R.id.good_item_container)
     }
 
     private fun set_5(helper: BaseViewHolder?,item: MultiItemEntity?){
@@ -139,7 +141,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         horizontalBanner.adapter=horizontalBannerAdapter
     }
 
-    private fun set_7(helper: BaseViewHolder?,item: MultiItemEntity?){
+    private fun setGoodsOfColumn(helper: BaseViewHolder?,item: MultiItemEntity?){
         var bean = (item as RecommandItem7).data
 
         var picUrl =   bean.pictureUrl
@@ -154,6 +156,8 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         helper.setText(R.id.good_item_1_final_price, "￥"+ bean.finalPrice)
         helper.setText(R.id.good_item_1_coupon, "卷￥"+bean.couponPrice+"元")
         helper.setText(R.id.good_item_1_reword, bean.reward)
+
+        helper.addOnClickListener(R.id.good_item_1_container )
     }
 
 

@@ -13,4 +13,6 @@
     <color name="default_status_color">#ffffff</color>
     <color name="coupon_status_color">#FFC000</color>
     <color name="scroll_text_color">#FF7A09</color>
+    <color name="column_text_color_selected">#FE2120</color>
+    <color name="column_text_color">#848484</color>
 </resources>
