@@ -212,7 +212,8 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
             R.id.header_left_image->{
                 _mActivity.onBackPressed()
             }
-            R.id.detail_share_lay->{
+            R.id.detail_share_lay,
+            R.id.header_share->{
                 share()
             }
             R.id.detail_lay_buy->{

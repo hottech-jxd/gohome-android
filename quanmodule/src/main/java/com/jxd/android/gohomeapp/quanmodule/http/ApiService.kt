@@ -62,6 +62,15 @@ interface ApiService {
     fun getGoodsOfCategories(@Body requestBody: RequestBody):Observable<ApiResult<ArrayList<GoodBean>?>>
 
     /**
+     * 获得分类下的商品数据
+     */
+    @POST("goods/category")
+    @FormUrlEncoded
+    fun getGoodsOfCategories(@Field("categoryId") categoryId:String ,
+                             @Field("sort") sort:Int ,
+                             @Field("page") page:Int=1):Observable<ApiResult<ArrayList<GoodBean>?>>
+
+    /**
      * 提现申请
      */
     @POST("user/cashApply")

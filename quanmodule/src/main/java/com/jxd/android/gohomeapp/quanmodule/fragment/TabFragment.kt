@@ -52,6 +52,7 @@ const val ARG_CATEGORY = "category"
 class TabFragment : BaseFragment() ,View.OnClickListener
     , SwipeRefreshLayout.OnRefreshListener
     , BaseQuickAdapter.RequestLoadMoreListener
+    , BaseQuickAdapter.OnItemChildClickListener
     , BaseQuickAdapter.OnItemClickListener{
 
     @Autowired(name = "category") @JvmField var category: Category? = null
@@ -112,7 +113,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
         dataAdapter!!.onItemClickListener =this
         tab_recyclerview_list.layoutManager=GridLayoutManager(context,2)
         tab_recyclerview_list.adapter=dataAdapter
-        tab_recyclerview_list.addItemDecoration( ItemDevider2(context!! , 14f , R.color.white ) )
+        tab_recyclerview_list.addItemDecoration( ItemDevider2(context!! , 12f , R.color.white ) )
 
 
         dataBinding!!.goodsViewModel!!.liveDataGoodsOfCategory.observe(this,
@@ -146,7 +147,10 @@ class TabFragment : BaseFragment() ,View.OnClickListener
 
             tab_refreshview.isRefreshing=false
             showToast(it!!)
+        })
 
+        dataBinding!!.goodsViewModel!!.loading.observe(this, Observer { it->
+            tab_progress.visibility = if(it==null|| !it) View.GONE else View.VISIBLE
         })
     }
 
@@ -186,6 +190,17 @@ class TabFragment : BaseFragment() ,View.OnClickListener
 
         ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString( "goodsId", bean!!.goodsId ).navigation()
     }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        when(view!!.id){
+            R.id.good_item_1_favorite->{
+                showToast("todo")
+            }
+        }
+    }
+
+
+
 
     override fun onClick(v: View?) {
         when(v!!.id){

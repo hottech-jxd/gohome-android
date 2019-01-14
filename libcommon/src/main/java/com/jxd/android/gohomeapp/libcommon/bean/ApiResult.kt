@@ -6,7 +6,8 @@ data class ApiResult<T> (
     var list:T?=null,
     var detail:T?=null,
     var data:T?=null,
-    var share:T?=null
+    var share:T?=null,
+    var resultData:T?=null
     )
 
 

@@ -22,14 +22,30 @@ android {
         }
     }
 
+
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
     }
 
+    signingConfigs {
+        app {
+            keyAlias 'jinxiangdong'
+            keyPassword 'jinxiangdong'
+            storeFile file('../keystore/key.jks')
+            storePassword 'jinxiangdong'
+        }
+    }
+
     buildTypes {
+        debug{
+            signingConfig signingConfigs.app
+        }
+
         release {
+            signingConfig signingConfigs.app
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

@@ -85,7 +85,6 @@
                    android:layout_height="wrap_content"/>
     </RelativeLayout>
 
-
     <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
             android:id="@+id/coupon_swipeRefreshView"
             android:layout_below="@id/coupon_lay_2"
@@ -126,7 +125,7 @@
     <include layout="@layout/quan_layout_progress"
              android:layout_below="@id/coupon_lay_2"
              android:id="@+id/coupon_progress"
-             android:visibility="@{goodsViewModel.loading?View.VISIBLE:View.GONE}"
+             android:visibility="@{goodsViewModel.loading? View.VISIBLE : View.GONE}"
              android:layout_width="match_parent"
              android:layout_height="match_parent" />
 

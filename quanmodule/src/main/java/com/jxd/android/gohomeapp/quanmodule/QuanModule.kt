@@ -4,6 +4,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.jxd.android.gohomeapp.libcommon.base.BaseApplication
 import com.jxd.android.gohomeapp.libcommon.bean.UserBean
+import com.liulishuo.filedownloader.FileDownloader
 import me.yokeyword.fragmentation.Fragmentation
 
 /**
@@ -36,6 +37,8 @@ object QuanModule {
         Fragmentation.builder().stackViewMode(Fragmentation.NONE).debug(BuildConfig.DEBUG).install()
 
         Fresco.initialize(app)
+
+        FileDownloader.setup(app)
     }
 
 

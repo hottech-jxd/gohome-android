@@ -24,6 +24,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Utils
+import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
@@ -80,6 +81,10 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
+
+
         header_title.text="收益中心"
 
         income_refreshview.setOnRefreshListener(this)

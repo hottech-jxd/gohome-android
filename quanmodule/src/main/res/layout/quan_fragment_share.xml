@@ -2,6 +2,7 @@
 
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View" />
         <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
         <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
@@ -28,8 +29,8 @@
             android:paddingLeft="@dimen/dp_12"
             android:paddingRight="@dimen/dp_12"
             android:background="#FFF99F"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_8"
             android:layout_height="wrap_content"
     android:orientation="horizontal">
         <ImageView android:layout_width="wrap_content"
@@ -258,6 +259,13 @@
                   android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+
+    <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+            android:layout_width="match_parent"
+            android:id="@+id/share_progress"
+            android:visibility="@{goodsViewModel.loading?View.VISIBLE:View.GONE}"
+            android:layout_height="match_parent"/>
 
 </RelativeLayout>
 

@@ -11,7 +11,7 @@ data class RecommandItem1( var data:ArrayList<IndexBean> )
     }
 }
 
-data class RecommandItem2(var data : IndexBean ) :MultiItemEntity{
+data class RecommandItem2(var data : IndexBean , var paddingLeft: Int, var paddingRight:Int ) :MultiItemEntity{
     override fun getItemType(): Int {
         return ItemTypeEnum.ONE_COLLOMN_SIMPLE.type
     }
@@ -43,7 +43,7 @@ data class RecommandItem6(var data : ArrayList<GoodBean>):MultiItemEntity{
     }
 }
 
-data class RecommandItem7(var data : GoodBean ):MultiItemEntity{
+data class RecommandItem7(var data : GoodBean ,var  paddingLeft :Int ,var paddingRight: Int):MultiItemEntity{
     override fun getItemType(): Int {
         return ItemTypeEnum.ONE_COLLOMN_GOODS.type
     }

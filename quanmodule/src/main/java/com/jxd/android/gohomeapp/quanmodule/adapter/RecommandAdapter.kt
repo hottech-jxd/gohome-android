@@ -1,8 +1,16 @@
 package com.jxd.android.gohomeapp.quanmodule.adapter
 
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannedString
 import android.text.TextPaint
+import android.text.style.ImageSpan
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -18,6 +26,11 @@ import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.good_item_title
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnBannerListener
+import kotlin.math.log
+import android.support.constraint.solver.widgets.WidgetContainer.getBounds
+import android.graphics.Paint.FontMetricsInt
+import android.graphics.drawable.Drawable
+import android.support.annotation.NonNull
 
 
 class RecommandAdapter(data : ArrayList<MultiItemEntity>)
@@ -33,7 +46,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         addItemType(ItemTypeEnum.ONE_ROW_GOODS.type , R.layout.layout_goods_item)
         addItemType(ItemTypeEnum.ONE_ROW_TITLE.type , R.layout.layout_recommand_item_5)
         addItemType(ItemTypeEnum.ONE_ROW_CAN_SCROLL_BANNER.type,R.layout.layout_recommand_item_6)
-        addItemType(ItemTypeEnum.ONE_COLLOMN_GOODS.type,R.layout.layout_recommand_item_7)
+        addItemType(ItemTypeEnum.ONE_COLLOMN_GOODS.type,R.layout.layout_goods_item_1 )
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultiItemEntity?) {
@@ -80,7 +93,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         banner.setTag(item)
         banner.start()
 
-        helper.addOnClickListener(R.id.recommand_banner)
+        //helper.addOnClickListener(R.id.recommand_banner)
 
     }
 
@@ -108,20 +121,28 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
 
         helper!!.getView<SimpleDraweeView>(R.id.good_item_image).setImageURI(picUrl)
 
-        helper!!.setText(R.id.good_item_title , bean.name)
+        var spannableString = SpannableString("^&&^ "+bean.name)
+        //var logoDraw = ContextCompat.getDrawable( mContext , R.mipmap.pinduoduo)
+        //logoDraw!!.setBounds(0,0,logoDraw.minimumWidth,logoDraw.minimumHeight)
+        var imageSpan = CenteredImageSpan (mContext, R.mipmap.pinduoduo) //ImageSpan(logoDraw)
+        spannableString.setSpan(imageSpan , 0,4, ImageSpan.ALIGN_BASELINE)
 
-        helper.setText(R.id.good_item_price , bean.price)
+        helper!!.setText(R.id.good_item_title , spannableString )
+
+        helper.setText(R.id.good_item_price , "￥"+bean.price)
         helper.getView<TextView>(R.id.good_item_price).paintFlags=TextPaint.STRIKE_THRU_TEXT_FLAG
 
         helper.setText(R.id.good_item_coupon , bean.couponPrice+"元券")
 
         helper.setText(R.id.good_item_count, "销量"+bean.saleAmount+"件")
 
-        helper.setText(R.id.good_item_final_price, "￥"+ bean.finalPrice)
+        helper.setText(R.id.good_item_final_price, bean.finalPrice)
 
         helper.setText(R.id.good_item_reword, bean.reward)
 
         helper.addOnClickListener(R.id.good_item_container)
+
+        helper.addOnClickListener(R.id.good_item_favorite)
     }
 
     private fun set_5(helper: BaseViewHolder?,item: MultiItemEntity?){
@@ -149,15 +170,23 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
 
         helper!!.getView<SimpleDraweeView>(R.id.good_item_1_logo).setImageURI(picUrl)
 
-        helper.setText(R.id.good_item_1_title, bean.name)
+
+        var spannableString = SpannableString("^&&^ "+bean.name)
+        //var logoDraw = ContextCompat.getDrawable( mContext , R.mipmap.pinduoduo)
+        //logoDraw!!.setBounds(0,0 ,logoDraw.minimumWidth,logoDraw.minimumHeight+2)
+        var imageSpan = CenteredImageSpan(mContext , R.mipmap.pinduoduo) //ImageSpan(logoDraw)
+        spannableString.setSpan(imageSpan , 0,4, ImageSpan.ALIGN_BASELINE )
+
+        helper.setText(R.id.good_item_1_title, spannableString )
         helper.setText(R.id.good_item_1_price,bean.price)
         helper.getView<TextView>(R.id.good_item_1_price).paintFlags=TextPaint.STRIKE_THRU_TEXT_FLAG
-        helper.setText(R.id.good_item_1_count, "销售量"+bean.saleAmount+"件")
-        helper.setText(R.id.good_item_1_final_price, "￥"+ bean.finalPrice)
-        helper.setText(R.id.good_item_1_coupon, "卷￥"+bean.couponPrice+"元")
+        helper.setText(R.id.good_item_1_count, "销售"+bean.saleAmount+"件")
+        helper.setText(R.id.good_item_1_final_price, bean.finalPrice)
+        helper.setText(R.id.good_item_1_coupon, "券￥"+bean.couponPrice+"元")
         helper.setText(R.id.good_item_1_reword, bean.reward)
 
         helper.addOnClickListener(R.id.good_item_1_container )
+        helper.addOnClickListener(R.id.good_item_1_favorite)
     }
 
 
@@ -174,4 +203,23 @@ class BannerListener(var position: Int , var banner : Banner, var bannerItemClic
 
 interface BannerItemClickListener{
     fun onBannerItemClicked( position: Int , bannerIndex :Int )
+}
+
+class CenteredImageSpan(context: Context, drawableRes: Int) : ImageSpan(context, drawableRes) {
+
+    override
+    fun draw(@NonNull canvas: Canvas, text: CharSequence,
+             start: Int, end: Int, x: Float,
+             top: Int, y: Int, bottom: Int, @NonNull paint: Paint  ) {
+        // image to draw
+        val b = drawable
+        // font metrics of text to be replaced
+        val fm = paint.fontMetrics
+        val transY = (y + fm.descent + y + fm.ascent) / 2 - b.bounds.bottom / 2
+
+        canvas.save()
+        canvas.translate(x, transY)
+        b.draw(canvas)
+        canvas.restore()
+    }
 }

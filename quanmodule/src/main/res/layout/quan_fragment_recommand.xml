@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <import type="android.view.View" />
         <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
     </data>
 
-    <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recommand_refreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
+            android:id="@+id/recommand_refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recommand_recyclerView"
@@ -16,4 +20,12 @@
             android:layout_height="match_parent"/>
 
     </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
+
+        <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+            android:id="@+id/recommand_progress"
+            android:visibility="@{goodsViewModel.loading?View.VISIBLE:View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
 </layout>

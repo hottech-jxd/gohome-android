@@ -26,6 +26,7 @@ import com.jxd.android.gohomeapp.quanmodule.MainActivity2
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.coupon_recyclerview
+import com.jxd.android.gohomeapp.quanmodule.R.id.coupon_swipeRefreshView
 import com.jxd.android.gohomeapp.quanmodule.TutorialsActivity
 import com.jxd.android.gohomeapp.quanmodule.adapter.CouponAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
@@ -66,25 +67,6 @@ class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayou
         var goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
         dataBinding!!.goodsViewModel = goodsViewModel
 
-        dataBinding!!.goodsViewModel!!.liveDataCouponList
-            .observe(this , Observer { it->
-                coupon_swipeRefreshView.isRefreshing=false
-                if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
-                    showToast(it.resultMsg)
-                    return@Observer
-                }
-                if(it.list==null) return@Observer
-
-                couponAdapter!!.setNewData(it.list)
-        })
-
-        dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
-            if(TextUtils.isEmpty(it)){
-                return@Observer
-            }
-            coupon_swipeRefreshView.isRefreshing=false
-            showToast(it!!)
-        })
 
 
         return dataBinding!!.root
@@ -102,6 +84,32 @@ class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayou
         couponAdapter!!.onItemChildClickListener=this
 
         coupon_swipeRefreshView.setOnRefreshListener(this)
+
+
+        dataBinding!!.goodsViewModel!!.liveDataCouponList
+            .observe(this , Observer { it->
+                coupon_swipeRefreshView.isRefreshing=false
+                if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
+                    showToast(it.resultMsg)
+                    return@Observer
+                }
+                if(it.list==null) return@Observer
+
+                couponAdapter!!.setNewData(it.list)
+            })
+
+        dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
+            if(TextUtils.isEmpty(it)){
+                return@Observer
+            }
+            coupon_swipeRefreshView.isRefreshing=false
+            showToast(it!!)
+        })
+
+        dataBinding!!.goodsViewModel!!.loading.observe(this, Observer {   it->
+            coupon_progress.visibility = if(it==null || !it) View.GONE else View.VISIBLE
+        })
+
     }
 
 

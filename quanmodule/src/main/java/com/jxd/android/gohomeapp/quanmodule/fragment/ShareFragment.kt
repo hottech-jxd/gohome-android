@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.ClipboardManager
 import android.text.TextPaint
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -101,17 +102,6 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         if(sharePictureAdapter==null){
             sharePictureAdapter= SharePictureAdapter(ArrayList())
-
-
-
-//            sharePictureAdapter!!.addData(ShareBean("https://img2018.cnblogs.com/news_topic/20181019115720199-66310872.png",false))
-//            sharePictureAdapter!!.addData(ShareBean("https://img2018.cnblogs.com/news_topic/20181019115720199-66310872.png",false))
-//            sharePictureAdapter!!.addData(ShareBean("https://img2018.cnblogs.com/news_topic/20181019115720199-66310872.png",false))
-//            sharePictureAdapter!!.addData(ShareBean("https://img2018.cnblogs.com/news_topic/20181019115720199-66310872.png",false))
-//            sharePictureAdapter!!.addData(ShareBean("https://img2018.cnblogs.com/news_topic/20181019115720199-66310872.png",false))
-//            sharePictureAdapter!!.addData(ShareBean("https://img2018.cnblogs.com/news_topic/20181019115720199-66310872.png",false))
-//            sharePictureAdapter!!.addData(ShareBean("https://img2018.cnblogs.com/news_topic/20181019115720199-66310872.png",false))
-
         }
 
 
@@ -130,6 +120,17 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             if(it!!.share==null) return@Observer
 
             share_content.text = it.share!!.share
+        })
+
+
+        dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
+            if(TextUtils.isEmpty(it)) return@Observer
+
+            showToast(it!!)
+        })
+
+        dataBinding!!.goodsViewModel!!.loading.observe(this, Observer { it->
+            share_progress.visibility = if( it==null || !it ) View.GONE else View.VISIBLE
         })
     }
 
@@ -225,6 +226,8 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
      */
     private fun saveImage( needShare:Boolean=false) {
 
+
+
         if(goodsDetailBean==null || goodsDetailBean!!.pictureUrls ==null || goodsDetailBean!!.pictureUrls!!.size<1){
             showToast("没有图像需要下载！")
             return
@@ -234,11 +237,13 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         var downLoadQueueSet = FileDownloadQueueSet(object : FileDownloadListener() {
             override fun warn(task: BaseDownloadTask?) {
                 //hideProgress()
+                dataBinding!!.goodsViewModel!!.loading.postValue(false)
                 //showToast("warn")
             }
 
             override fun completed(task: BaseDownloadTask?) {
                 //hideProgress()
+                dataBinding!!.goodsViewModel!!.loading.postValue(false )
                 if ((task!!.tag as IdId).id == (task!!.tag as IdId).total) {
                     showToast("图片已经保存在"+dir)
 
@@ -251,20 +256,24 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
             override fun pending(task: BaseDownloadTask?, soFarBytes: Int, totalBytes: Int) {
                 //hideProgress()
+                dataBinding!!.goodsViewModel!!.loading.postValue(false)
             }
 
             override fun error(task: BaseDownloadTask?, e: Throwable?) {
                 //hideProgress()
+                dataBinding!!.goodsViewModel!!.loading.postValue(false)
                 showToast("error")
                 e!!.printStackTrace()
             }
 
             override fun progress(task: BaseDownloadTask?, soFarBytes: Int, totalBytes: Int) {
                 //showProgress("")
+                dataBinding!!.goodsViewModel!!.loading.postValue(true)
             }
 
             override fun paused(task: BaseDownloadTask?, soFarBytes: Int, totalBytes: Int) {
                 //hideProgress()
+                dataBinding!!.goodsViewModel!!.loading.postValue(false)
             }
         })
         var tasks = ArrayList<BaseDownloadTask>()
@@ -288,7 +297,7 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         downLoadQueueSet.downloadSequentially(tasks)//串行下载
         downLoadQueueSet.start()
         //showProgress("")
-
+        dataBinding!!.goodsViewModel!!.loading.postValue(true)
     }
 
     private fun isDownPicture( dirPath : String ):Boolean{

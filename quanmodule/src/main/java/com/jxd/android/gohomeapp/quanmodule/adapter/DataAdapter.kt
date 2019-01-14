@@ -13,5 +13,7 @@ class DataAdapter(data: List<GoodBean>) : BaseQuickAdapter<GoodBean, BaseViewHol
 
     override fun convert(helper: BaseViewHolder?, item: GoodBean) {
         helper!!.getView<SimpleDraweeView>(R.id.good_item_1_logo).setImageURI(item.pictureUrl)
+
+        helper!!.addOnClickListener(R.id.good_item_1_favorite)
     }
 }

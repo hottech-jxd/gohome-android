@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
@@ -51,7 +52,22 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
         }
     }
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) {
+            ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
+        }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if(isVisibleToUser){
+            ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
         var dataBinding = DataBindingUtil.inflate<QuanFragmentCashBinding>(inflater , R.layout.quan_fragment_cash , container , false)
         dataBinding.clickHandler = this
@@ -62,8 +78,9 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
+
         header_title.text = title
-        //header_left_image.setOnClickListener(this)
 
         UserViewModel.liveDataUserInfo.observe(this, Observer { it->
             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
@@ -72,6 +89,7 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
             }
             cash_balance.text = it!!.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
+
 
     }
 

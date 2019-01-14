@@ -175,10 +175,6 @@ class RecommandFragment : BaseFragment()
 
 
     override fun initView() {
-//        data.add("sss")
-//        data.add("dddd")
-//        dataAdapter = DataAdapter(data)
-
 //        mockData()
 
         recommandAdapter= RecommandAdapter(recommands)
@@ -268,6 +264,10 @@ class RecommandFragment : BaseFragment()
             showToast(it!!)
 
         })
+
+        dataBinding!!.goodsViewModel!!.loading.observe(this, Observer { it->
+            recommand_progress.visibility = if(it==null|| !it) View.GONE else View.VISIBLE
+        })
     }
 
     private fun transferData(list:ArrayList<IndexBean>?){
@@ -294,8 +294,12 @@ class RecommandFragment : BaseFragment()
     /**
      * 单张图片显示样式
      */
-    private fun showSingleThemeUI(bean:IndexBean){
-        var item= RecommandItem2( bean )
+    private fun showSingleThemeUI(bean:IndexBean ){
+        var count = recommands.count { it-> it.itemType == ItemTypeEnum.ONE_COLLOMN_SIMPLE.type }
+        var padingLeft = if( count%2 == 0 ) 10 else 5
+        var paddingRight = if(count%2 ==0 ) 5 else 10
+
+        var item= RecommandItem2( bean , padingLeft , paddingRight )
         recommands.add(item)
     }
 
@@ -327,7 +331,9 @@ class RecommandFragment : BaseFragment()
         var itemCountDown = RecommandItem3(bean.limitedTime)
         recommands.add(itemCountDown)
 
+
         for(item in bean.goodsList!!) {
+
             var item4 = RecommandItem4(item)
             recommands.add(item4)
         }
@@ -344,15 +350,19 @@ class RecommandFragment : BaseFragment()
         recommands.add(itemTitle)
 
 
+        var index = 0
         for(item in bean.goodsList!!) {
-            var itemItem = RecommandItem7(item)
+            var paddingLeft = if( index %2 ==0) 10 else 5
+            var paddingRight = if(index%2 == 0 ) 5 else 10
+            var itemItem = RecommandItem7(item , paddingLeft , paddingRight )
             recommands.add(itemItem)
+
+            index++
         }
 
     }
 
     fun fetchData() {
-        //initView()
 
         dataBinding!!.goodsViewModel!!.index()
     }
@@ -392,6 +402,8 @@ class RecommandFragment : BaseFragment()
         else if(view.id==R.id.good_item_1_container){
             var item  =(recommandAdapter!!.getItem(position) as RecommandItem7).data
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId", item.goodsId).navigation()
+        }else if(view.id==R.id.good_item_favorite || view.id==R.id.good_item_1_favorite){
+            showToast("todo 收藏")
         }
     }
 

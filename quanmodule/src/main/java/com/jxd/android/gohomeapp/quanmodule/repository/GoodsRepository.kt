@@ -49,9 +49,10 @@ object GoodsRepository {
     }
 
     fun getGoodsOfCategory( categoryId:String,sortEnum: GoodsSortEnum, page:Int=1):Observable<ApiResult<ArrayList<GoodBean>?>>{
-        var json ="{\"categoryId\":\"$categoryId\",\"sort\": ${sortEnum.code},\"page\":$page}"
-        var requestBody = RequestBody.create(MediaType.parse("application/json"),json )
-        return apiService!!.getGoodsOfCategories(requestBody)
+//        var json ="{\"categoryId\":\"$categoryId\",\"sort\": ${sortEnum.code},\"page\":$page}"
+//        var requestBody = RequestBody.create(MediaType.parse("application/json"),json )
+//        return apiService!!.getGoodsOfCategories(requestBody)
+        return apiService!!.getGoodsOfCategories(categoryId , sortEnum.code , page)
     }
 
 }

@@ -30,12 +30,11 @@
 
                     <android.support.design.widget.CollapsingToolbarLayout
                             android:layout_width="match_parent"
-                            android:layout_height="300dp"
+                            android:layout_height="wrap_content"
                             app:contentScrim="@color/white"
                             app:title=""
                             app:titleEnabled="false"
                             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
 
                         <com.youth.banner.Banner
                                 android:id="@+id/goodsdetail_banner"
