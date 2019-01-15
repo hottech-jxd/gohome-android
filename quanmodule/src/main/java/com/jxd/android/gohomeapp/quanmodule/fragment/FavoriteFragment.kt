@@ -113,7 +113,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
                 return@Observer
             }
 
-            var datas: ArrayList<FavoriteBean>? = null
+            var datas: ArrayList<FavoriteBean>?
             if (it.list == null) {
                 favoriteAdapter!!.loadMoreEnd(false)
             } else {

@@ -112,7 +112,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 showToast(it.resultMsg)
                 return@Observer
             }
-            income_balance.text = it!!.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+            income_balance.text = it.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 
         dataBinding!!.userViewModel!!.hasError.observe(this, android.arch.lifecycle.Observer { it->

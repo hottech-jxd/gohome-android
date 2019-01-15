@@ -83,9 +83,9 @@ class IndexFragment : BaseFragment()
                     showToast(it.resultMsg)
                     return@Observer
                 }
-                if (it.list == null) return@Observer
+                if ( it.resultData==null || it.resultData!!.list == null) return@Observer
                 categories.clear()
-                categories.addAll(it.list!!)
+                categories.addAll(it.resultData!!.list!!)
                 initTabFragments()
             })
 

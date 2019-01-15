@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.TextUtils
 import android.view.Gravity
 import android.widget.Toast
 import com.jxd.android.gohomeapp.libcommon.base.BaseApplication
@@ -18,8 +19,9 @@ fun Context.showToast(message:String): Toast {
         return toast
     }
 
-fun Fragment.showToast(message:String):Toast{
+fun Fragment.showToast(message:String?):Toast{
     var toast : Toast = Toast.makeText(this.context , message, Toast.LENGTH_LONG)
+    if(TextUtils.isEmpty(message)) return  toast
     toast.setGravity(Gravity.CENTER,0,0)
     toast.show()
     return toast

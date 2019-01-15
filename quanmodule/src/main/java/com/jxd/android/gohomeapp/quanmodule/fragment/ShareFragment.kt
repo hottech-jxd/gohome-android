@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.ClipData
@@ -33,6 +34,7 @@ import com.jxd.android.gohomeapp.libcommon.bean.Constants
 import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
 import com.jxd.android.gohomeapp.libcommon.bean.ShareBean
 import com.jxd.android.gohomeapp.libcommon.util.AppUtil
+import com.jxd.android.gohomeapp.libcommon.util.PermissionsUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
@@ -103,8 +105,6 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         if(sharePictureAdapter==null){
             sharePictureAdapter= SharePictureAdapter(ArrayList())
         }
-
-
 
         share_images.layoutManager=LinearLayoutManager(context , RecyclerView.HORIZONTAL, false)
         share_images.adapter = sharePictureAdapter
@@ -220,12 +220,20 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         }
     }
 
+    private fun checkPermission():Boolean{
+        if(activity==null) return false
+        var list = PermissionsUtils.Builder(activity!!).addPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .initPermission()
+
+        return list.isEmpty()
+    }
 
     /**
      * 将图片存到本地
      */
     private fun saveImage( needShare:Boolean=false) {
 
+        if(!checkPermission()) return
 
 
         if(goodsDetailBean==null || goodsDetailBean!!.pictureUrls ==null || goodsDetailBean!!.pictureUrls!!.size<1){

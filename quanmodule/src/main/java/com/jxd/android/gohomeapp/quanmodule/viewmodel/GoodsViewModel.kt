@@ -23,12 +23,12 @@ import io.reactivex.disposables.CompositeDisposable
  */
 class GoodsViewModel(application: Application) :  BaseViewModel(application) {
 
-    var liveDataGoodsDetail = MutableLiveData<ApiResult<GoodsDetailBean?>>()
-    var liveDataGoodsCategories = MutableLiveData<ApiResult<ArrayList<Category>?>>()
+    var liveDataGoodsDetail = MutableLiveData<ApiResult<GoodsDetailModel?>>()
+    var liveDataGoodsCategories = MutableLiveData<ApiResult<CategoryModel?>>()
     var liveDataCouponList = MutableLiveData<ApiResult<ArrayList<CouponBean>?>>()
     var liveDataSearchResult=MutableLiveData<ApiResult<ArrayList<SearchGoodsBean>?>>()
     var liveDataGoodsShareBean = MutableLiveData<ApiResult<GoodsShareBean?>>()
-    var liveDataIndexResult = MutableLiveData<ApiResult<ArrayList<IndexBean>?>>()
+    var liveDataIndexResult = MutableLiveData<ApiResult<IndexModel?>>()
     var liveDataGoodsOfCategory=MutableLiveData<ApiResult<ArrayList<GoodBean>?>>()
 
     fun getGoodsDetail(goodsId:String){
@@ -81,8 +81,8 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
             .subscribe({liveDataCouponList.postValue(it)},{onError(it)})
     }
 
-    fun search(keywords:String?,page:Int){
-        GoodsRepository.search(keywords ,page )
+    fun search(keywords:String? ,page:Int , goodsSource :Int= 0 ){
+        GoodsRepository.search(keywords , goodsSource ,page )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)

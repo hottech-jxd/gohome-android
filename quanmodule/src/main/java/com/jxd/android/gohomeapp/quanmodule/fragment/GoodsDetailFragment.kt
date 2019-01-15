@@ -13,9 +13,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
-import com.jxd.android.gohomeapp.libcommon.bean.PictureBean
 import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
@@ -34,7 +31,7 @@ import android.arch.lifecycle.Observer
 import android.text.TextPaint
 import android.text.TextUtils
 import android.widget.TextView
-import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
+import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.quanmodule.R.mipmap.share
 import com.jxd.android.gohomeapp.quanmodule.databinding.LayoutDetailTopBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
@@ -89,9 +86,9 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
         quanFragmentDetailBinding!!.goodsViewModel!!.getGoodsDetail(goodsId)
     }
 
-    private fun setBanner(goodsDetail: GoodsDetailBean? ){
-        if(goodsDetail==null) return
-        if(goodsDetail.pictureUrls==null) return
+    private fun setBanner(goodsDetailModel: GoodsDetailModel? ){
+        if(goodsDetailModel==null || goodsDetailModel.detail==null ) return
+        if(goodsDetailModel!!.detail!!.pictureUrls==null) return
 
 //        var images = ArrayList<String>()
 //        images.add("http://t04img.yangkeduo.com/images/2018-05-26/3308bf00afb37922ceef70b9991e0dfd.jpeg")
@@ -100,7 +97,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
 
 
 
-//
+        var goodsDetail = goodsDetailModel.detail!!
         goodsdetail_banner.setImages( goodsDetail.pictureUrls )
         goodsdetail_banner.setBannerStyle(BannerConfig.NUM_INDICATOR)
         goodsdetail_banner.setIndicatorGravity(BannerConfig.RIGHT )
@@ -109,18 +106,20 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
         goodsdetail_banner.start()
     }
 
-    private fun setDetail( goodsDetail:GoodsDetailBean? ){
-        if(goodsDetail==null) return
-        if(goodsDetail.detail==null) return
+    private fun setDetail( goodsDetailModel :GoodsDetailModel? ){
+        if(goodsDetailModel==null ||goodsDetailModel.detail==null ) return
+        if(goodsDetailModel!!.detail!!.detail==null) return
+
+
 
         if(detailTopBinding!=null){
-        detailTopBinding!!.goodsBean = goodsDetail
+        detailTopBinding!!.goodsBean = goodsDetailModel.detail
         }
 
 
         data.clear()
 
-        data.add( PictureBean( goodsDetail.detail!! ) )
+        data.add( PictureBean( goodsDetailModel.detail!!.detail!! ) )
 
 //        for(i in 0 .. 10){
 //            data.add(DetailBean(i,0,"http://t00img.yangkeduo.com/t09img/images/2018-05-28/4ac0853e1a7a898315f5155bdb733dff.jpeg"))
@@ -134,6 +133,10 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
 
         //detail_recyclerView.layoutManager=LinearLayoutManager(this)
         detailAdapter!!.setNewData(data)//= DetailAdapter(data)
+
+
+        detail_share_reword.text = "￥${goodsDetailModel.detail!!.reward}"
+        detail_sheng.text ="￥${goodsDetailModel.detail!!.reward}"
     }
 
 
@@ -152,8 +155,8 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
                 return@Observer
             }
 
-            setBanner( it.detail!! )
-            setDetail(it.detail!! )
+            setBanner( it.resultData!! )
+            setDetail(it.resultData!! )
         })
 
 
@@ -163,6 +166,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
 
         detailTopBinding = DataBindingUtil.inflate( layoutInflater , R.layout.layout_detail_top , null , false )
         detailTopBinding!!.goodsBean = null
+
 
 
         //var top = LayoutInflater.from(this.context ).inflate(R.layout.layout_detail_top, null)

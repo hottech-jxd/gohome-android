@@ -2,7 +2,7 @@ package com.jxd.android.gohomeapp.libcommon.bean
 
 enum class ApiResultCodeEnum (var code :Int,var desc :String ){
 
-    SUCCESS(20000 , "请求成功"),
+    SUCCESS(1 , "请求成功"),
     TOKEN_ERROR(40003,"交互会话已过期，请重新登录"),
     REQUEST_NOT_EXIST(2,"无法执行的请求或请求交互不存在"),
     PARAMETER_ERROR(3,"参数错误"),
@@ -28,16 +28,17 @@ enum class ApiResultCodeEnum (var code :Int,var desc :String ){
 
 
 enum class ThemeCategoryEnum(var code: Int,var desc:String){
-    GoodsList(0,"商品列表"),
-    Link(1,"外链"),
-    Single(2,"单品")
+
+    link(0,"外链"),
+    single(1,"单品"),
+    goodsList(2,"商品列表")
 }
 
 enum class ThemeIndexRecommendModeEnum(var code: Int,var desc:String){
-    LimitedTheme(0,"限时购主题 [商品列表形式展示，同时显示倒计时]"),
-    ListTheme(1,"列表主题 [商品列表形式展示，可设置显示条数或分页获取]"),
-    SingleTheme(2,"单图主题 [单图展示]"),
-    Slide(3,"幻灯")
+    limitedTheme(3,"限时购主题 [商品列表形式展示，同时显示倒计时]"),
+    listTheme(2,"列表主题 [商品列表形式展示，可设置显示条数或分页获取]"),
+    singleTheme(1,"单图主题 [单图展示]"),
+    slide(0,"幻灯")
 }
 
 enum class GoodsSortEnum(var code: Int , var desc: String){
@@ -46,4 +47,15 @@ enum class GoodsSortEnum(var code: Int , var desc: String){
     PriceDes(3,"价格降序"),
     RewardDes(4,"佣金"),
     SaleDes(5,"销量")
+}
+
+enum class GoodsSourceEnum(var code:Int , var desc:String?){
+    /**
+     * 拼多多
+     */
+    PingDuoDuo(0, "拼多多"),
+    /**
+     * 淘宝
+     */
+    TaoBao(1, "淘宝");
 }

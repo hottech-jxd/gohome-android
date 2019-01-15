@@ -45,7 +45,7 @@
                 android:id="@+id/my_header_scrollTextInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:switcherRollingTime="3000"
+                app:switcherRollingTime="4000"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
                 app:switcherTextColor="#ffffff"

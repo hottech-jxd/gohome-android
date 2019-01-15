@@ -80,8 +80,8 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
 
         var picList = ArrayList<String>()
 
-        for(item in data){
-            picList.add(item.pictureUrl!!)
+        for( child in data){
+            picList.add(child.pictureUrl!!)
         }
 
 
@@ -205,21 +205,3 @@ interface BannerItemClickListener{
     fun onBannerItemClicked( position: Int , bannerIndex :Int )
 }
 
-class CenteredImageSpan(context: Context, drawableRes: Int) : ImageSpan(context, drawableRes) {
-
-    override
-    fun draw(@NonNull canvas: Canvas, text: CharSequence,
-             start: Int, end: Int, x: Float,
-             top: Int, y: Int, bottom: Int, @NonNull paint: Paint  ) {
-        // image to draw
-        val b = drawable
-        // font metrics of text to be replaced
-        val fm = paint.fontMetrics
-        val transY = (y + fm.descent + y + fm.ascent) / 2 - b.bounds.bottom / 2
-
-        canvas.save()
-        canvas.translate(x, transY)
-        b.draw(canvas)
-        canvas.restore()
-    }
-}

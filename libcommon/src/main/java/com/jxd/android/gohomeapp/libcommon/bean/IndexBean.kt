@@ -13,15 +13,18 @@ package com.jxd.android.gohomeapp.libcommon.bean
  * @Version:        1.0
  */
 data class IndexBean(
-        var category : Int=0 ,
+        var category : String?="" ,
+        var goodsSource:String?="",
         var goodsId: String?="",
         var goodsList: ArrayList<GoodBean>?=null,
         /*单位：秒*/
         var limitedTime:Long=0,
         var linkUrl: String?="",
-        var mode: Int=0,
+        var mode: String?="",
         var name: String?="",
         var pictureUrl:String?="",
         var sort: Int=0,
         var toCode: String?="") {
 }
+
+data class IndexModel(var list:ArrayList<IndexBean>?)

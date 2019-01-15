@@ -45,7 +45,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  * 优惠券列表
  */
-class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayout.OnRefreshListener , BaseQuickAdapter.OnItemChildClickListener {
+class CouponFragment : BaseFragment()
+    , View.OnClickListener
+    , SwipeRefreshLayout.OnRefreshListener
+    , BaseQuickAdapter.OnItemChildClickListener {
 
     private var param1: String? = null
     private var param2: String? = null
@@ -66,7 +69,6 @@ class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayou
         dataBinding!!.clickHandler = this
         var goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
         dataBinding!!.goodsViewModel = goodsViewModel
-
 
 
         return dataBinding!!.root
@@ -90,6 +92,7 @@ class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayou
             .observe(this , Observer { it->
                 coupon_swipeRefreshView.isRefreshing=false
                 if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
+                    coupon_progress.visibility = View.GONE
                     showToast(it.resultMsg)
                     return@Observer
                 }
@@ -155,6 +158,10 @@ class CouponFragment : BaseFragment() , View.OnClickListener , SwipeRefreshLayou
         when(v!!.id){
             R.id.coupon_cause->{
                 this.startActivity(Intent(this.context, TutorialsActivity::class.java))
+
+                ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
+                    .withString("goodsId","3109518123").navigation()
+
             }
             R.id.coupon_go-> {
                 startActivity(Intent(context, MainActivity2::class.java))

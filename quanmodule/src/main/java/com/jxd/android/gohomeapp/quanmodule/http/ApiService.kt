@@ -19,15 +19,22 @@ import retrofit2.http.*
  */
 interface ApiService {
 
+    /**
+     * 初始化
+     */
+    @GET("init")
+    fun init():Observable<ApiResult<Globalbean?>>
+
     @POST("goods/detail")
     @FormUrlEncoded
-    fun getGoodsDetail(@Field("goodsId") goodsId:String ):Observable<ApiResult<GoodsDetailBean?>>
+    fun getGoodsDetail(@Field("goodsId") goodsId:String
+                       , @Field("goodsSource") goodsSource:Int=0 ):Observable<ApiResult<GoodsDetailModel?>>
 
     /**
      * 获得商品分类列表
      */
     @GET("goods/categories")
-    fun getGoodsCategories():Observable<ApiResult<ArrayList<Category>?>>
+    fun getGoodsCategories(@Query("goodsSource") goodsSource:Int=0):Observable<ApiResult< CategoryModel?>>
 
     /**
      * 优惠劵列表 随机从后台选择的商品中选5件
@@ -39,7 +46,9 @@ interface ApiService {
      * 搜索商品
      */
     @GET("goods/search")
-    fun search(@Query("keywords") keywords:String?,@Query("page") page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>
+    fun search(@Query("keywords") keywords:String?
+               ,@Query("goodsSource") goodsSource:Int = 0
+               ,@Query("page") page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>
 
     /**
      * 获取商品分享信息
@@ -52,7 +61,7 @@ interface ApiService {
      * 推荐首页
      */
     @GET("goods/index")
-    fun index():Observable<ApiResult<ArrayList<IndexBean>?>>
+    fun index():Observable<ApiResult<IndexModel?>>
 
     /**
      * 获得分类下的商品数据
@@ -67,6 +76,7 @@ interface ApiService {
     @POST("goods/category")
     @FormUrlEncoded
     fun getGoodsOfCategories(@Field("categoryId") categoryId:String ,
+                             @Field("goodsSource") goodsSource:Int = 0,
                              @Field("sort") sort:Int ,
                              @Field("page") page:Int=1):Observable<ApiResult<ArrayList<GoodBean>?>>
 

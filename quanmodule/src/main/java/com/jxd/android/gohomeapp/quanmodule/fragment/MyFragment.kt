@@ -106,6 +106,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
                 showToast(it.resultMsg)
                 return@Observer
             }
+            if(it.data==null)return@Observer
 
             my_header_logo.setImageURI(it.data!!.head)
             my_header_username.text = it.data!!.userId

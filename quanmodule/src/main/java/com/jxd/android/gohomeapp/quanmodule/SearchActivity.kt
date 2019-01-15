@@ -151,7 +151,7 @@ class SearchActivity : BaseActivity()
     override fun onTagClick(tag: String?) {
         page=0
         searchAdapter!!.setNewData(ArrayList())
-        dataBinding!!.goodsViewModel!!.search(tag, page+1)
+        dataBinding!!.goodsViewModel!!.search(tag , page+1)
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {

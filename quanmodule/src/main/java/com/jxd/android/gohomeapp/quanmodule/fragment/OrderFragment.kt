@@ -112,17 +112,13 @@ class OrderFragment : BaseFragment() , SwipeRefreshLayout.OnRefreshListener , Ba
             showToast(dataBinding!!.userViewModel!!.error.value!!)
 
         })
+
+        dataBinding!!.userViewModel!!.loading.observe(this , Observer { it->
+            order_progress.visibility = if( it==null || !it) View.GONE else View.VISIBLE
+        })
     }
 
     override fun initView() {
-//        for(i in 0..10){
-//            data.add(OrderBean(i,i.toString(),"sadfa","","asdf","23","3"))
-//        }
-
-
-
-
-
         //order_recyclerview.addItemDecoration(RecycleItemDivider(context!!,LinearLayoutManager.VERTICAL,1))
     }
 

@@ -73,6 +73,11 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
 
         quanActivityDetailBinding = DataBindingUtil.setContentView( this  , R.layout.quan_activity_detail)
 
+
+        //test
+        goodsId = "3109518123"
+        //
+
         var goodsDetailFragment = ARouter.getInstance().build(ARouterPath.QuanFragmentGoodsDetailPath)
             .withString("goodsId" , goodsId).navigation() as GoodsDetailFragment
         loadRootFragment(R.id.detail_container , goodsDetailFragment )
@@ -148,7 +153,11 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
     }
 
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        showToast( "permissions" )
+    }
 
     override fun OnBannerClick(position: Int) {
         showToast("position"+ position )

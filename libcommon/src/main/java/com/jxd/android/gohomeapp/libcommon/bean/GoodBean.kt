@@ -17,7 +17,10 @@ data class GoodBean (
 
   var	saleAmount :Long,
 
-   var	source :String? )
+   var	goodsSource :String? )
+
+
+data class GoodsDetailModel(var detail:GoodsDetailBean?)
 
 data class GoodsDetailBean(var goodsId: String= "" ,
                       /**
@@ -43,7 +46,7 @@ data class GoodsDetailBean(var goodsId: String= "" ,
                       /**
                        * 来源
                        */
-                      var source:String?="",
+                      var goodsSource:String?="",
                       /**
                        * 优惠劵有效期
                        */

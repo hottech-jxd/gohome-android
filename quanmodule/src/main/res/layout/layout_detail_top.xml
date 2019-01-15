@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
     </data>
@@ -16,7 +16,8 @@
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/detail_item_title"
-        android:text="@{goodsBean.name}"
+        app:content="@{goodsBean.name}"
+        app:source="@{goodsBean.goodsSource}"
         android:layout_width="match_parent"
         android:textSize="@dimen/sp_16"
         android:textColor="#333333"
@@ -74,7 +75,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-                android:text='@{goodsBean.saleAmount+@string/buyed}'
+                android:text='@{String.valueOf(goodsBean.saleAmount)+@string/buyed}'
                 android:gravity="center"
                 android:textColor="#8f8f8f"
                 android:textSize="@dimen/sp_12"
@@ -82,12 +83,19 @@
                 android:layout_width="0dp"
                   android:layout_height="wrap_content"/>
         <TextView
-                android:text='@{@string/reword+goodsBean.reward}'
+                android:text='@string/reword'
                 android:gravity="right"
                 android:textColor="#8f8f8f"
                 android:textSize="@dimen/sp_12"
                 android:layout_weight="1"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:text='@{@string/rmbSymbol + goodsBean.reward}'
+                android:gravity="right"
+                android:textColor="#EA4D46"
+                android:textSize="@dimen/sp_12"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
     </LinearLayout>
@@ -106,8 +114,8 @@
         android:layout_below="@id/detail_item_lay"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
-        android:paddingTop="@dimen/dp_15"
-        android:paddingBottom="@dimen/dp_13"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
         android:background="@drawable/shape_quan_grad_bg"
         android:layout_height="wrap_content">
 
@@ -176,7 +184,7 @@
                   android:textSize="@dimen/sp_15"
                   android:textColor="@color/white"
                   android:id="@+id/detail_item_get"
-                  android:text="立即领取"
+                  android:text="立即领券"
                   android:layout_marginLeft="@dimen/dp_20"
                   android:layout_marginRight="@dimen/dp_20"
                   android:layout_centerVertical="true"

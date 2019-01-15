@@ -252,7 +252,7 @@ class RecommandFragment : BaseFragment()
                 showToast(it.resultMsg)
                 return@Observer
             }
-            transferData(it.list)
+            transferData(it.resultData)
         })
 
         dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
@@ -270,20 +270,25 @@ class RecommandFragment : BaseFragment()
         })
     }
 
-    private fun transferData(list:ArrayList<IndexBean>?){
-        if(list==null||list.size<1) return
+    private fun transferData(result:IndexModel?) {
+        if (result == null || result.list == null || result.list!!.size < 1) return
+
+        //var temp = result.list.sortWith(( o1,o2->))
 
         recommands.clear()
-        for(item in list){
-            if(item.mode == ThemeIndexRecommendModeEnum.SingleTheme.code){
+        for (item in result.list!!) {
+
+            var mode = ThemeIndexRecommendModeEnum.valueOf(item.mode!!)
+
+            if (mode == ThemeIndexRecommendModeEnum.singleTheme) {
                 showSingleThemeUI(item)
-            }else if(item.mode==ThemeIndexRecommendModeEnum.Slide.code){
+            } else if (mode == ThemeIndexRecommendModeEnum.slide) {
                 showSlideUI(item)
-            }else if(item.mode==ThemeIndexRecommendModeEnum.LimitedTheme.code){
+            } else if (mode == ThemeIndexRecommendModeEnum.limitedTheme) {
                 showLimitedUI(item)
-            }else if(item.mode==ThemeIndexRecommendModeEnum.ListTheme.code){
+            } else if (mode == ThemeIndexRecommendModeEnum.listTheme) {
                 showListUI(item)
-            }else{
+            } else {
                 showToast("样式不支持")
             }
         }
@@ -408,19 +413,22 @@ class RecommandFragment : BaseFragment()
     }
 
     private fun goto(item :IndexBean){
-        if(item.category == ThemeCategoryEnum.GoodsList.code ) {
+
+        var category = ThemeCategoryEnum.valueOf( item.category!!)
+
+        if( category == ThemeCategoryEnum.goodsList ) {
 
             var fragment = ARouter.getInstance().build(ARouterPath.QuanFragmentCategoryPath)
                 .withObject("indexbean", item).navigation() as CategoryFragment
 
             (parentFragment!!.parentFragment as MainFragment).start(fragment)
-        }else if(item.category==ThemeCategoryEnum.Link.code){
+        }else if(category==ThemeCategoryEnum.link){
 
             //ARouter.getInstance().build(ARouterPath.Quanf)
             var url = item.linkUrl
             ((parentFragment!!.parentFragment)as MainFragment).start( WebFragment.newInstance(url))
 
-        }else if(item.category==ThemeCategoryEnum.Single.code){
+        }else if(category==ThemeCategoryEnum.single){
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId", item.goodsId).navigation()
         }
     }

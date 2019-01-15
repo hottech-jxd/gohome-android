@@ -24,11 +24,11 @@ import retrofit2.http.Query
 object GoodsRepository {
     private var apiService = RetrofitManager.getApiService()
 
-    fun getGoodsDetail(goodsId:String ): Observable<ApiResult<GoodsDetailBean?>> {
+    fun getGoodsDetail(goodsId:String ): Observable<ApiResult<GoodsDetailModel?>> {
         return apiService!!.getGoodsDetail(goodsId)
     }
 
-    fun getGoodsCategories():Observable<ApiResult<ArrayList<Category>?>>{
+    fun getGoodsCategories():Observable<ApiResult<CategoryModel?>>{
         return apiService!!.getGoodsCategories()
     }
 
@@ -36,15 +36,15 @@ object GoodsRepository {
         return apiService!!.getCouponList()
     }
 
-    fun search(keywords:String?, page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>{
-        return apiService!!.search(keywords,page)
+    fun search(keywords:String? , goodsSource :Int = 0 , page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>{
+        return apiService!!.search(keywords , goodsSource ,page)
     }
 
     fun getShareInfo(goodsId: String):Observable<ApiResult<GoodsShareBean?>>{
         return apiService!!.share(goodsId)
     }
 
-    fun index():Observable<ApiResult<ArrayList<IndexBean>?>>{
+    fun index():Observable<ApiResult<IndexModel?>>{
         return apiService!!.index()
     }
 

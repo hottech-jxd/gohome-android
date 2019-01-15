@@ -64,7 +64,7 @@
                     app:tabIndicatorFullWidth="false"
                     app:tabSelectedTextColor="#FF3D44"
                     app:tabGravity="fill"
-                    app:tabTextAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    app:tabTextAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     app:tabPaddingStart="5dp"
                     app:tabPaddingEnd="5dp"
                     app:tabTextColor="#000000"/>

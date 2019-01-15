@@ -99,7 +99,7 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownVi
                 showToast(it.resultMsg)
                 return@Observer
             }
-            cash_balance.text = it!!.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+            cash_balance.text = it.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 
         return dataBinding.root
