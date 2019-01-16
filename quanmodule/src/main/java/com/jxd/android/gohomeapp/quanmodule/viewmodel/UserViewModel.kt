@@ -30,6 +30,7 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     var liveDataMyCollect=MutableLiveData<ApiResult<ArrayList<FavoriteBean>?>>()
     var liveDataCollectResult = MutableLiveData<ApiResult<Any?>>()
     var liveDataApplyConfigResult = MutableLiveData<ApiResult<ApplyConfigModel?>>()
+    var liveDataApplyAccountResult = MutableLiveData<ApiResult<UserAccountModel?>>()
 
     companion object {
         var liveDataUserInfo = MutableLiveData<ApiResult<UserBean?>>()
@@ -173,5 +174,20 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             }
             .subscribe(
                 {  liveDataApplyConfigResult.postValue(it) }, { onError(it) })
+    }
+
+    fun getApplyCount() {
+        UserRepository.getApplyAccount()
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe(
+                {  liveDataApplyAccountResult.postValue(it) }, { onError(it) })
     }
 }

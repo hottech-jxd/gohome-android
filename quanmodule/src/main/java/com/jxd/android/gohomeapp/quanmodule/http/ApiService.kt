@@ -156,4 +156,10 @@ interface ApiService {
      */
     @GET("user/getApplyConfig")
     fun getApplyConfig():Observable<ApiResult<ApplyConfigModel?>>
+
+    /**
+     * 获取用户的提现账号信息
+     */
+    @GET("user/getUserApplyAccount")
+    fun getUserApplyAccount():Observable<ApiResult<UserAccountModel?>>
 }

@@ -20,6 +20,7 @@ import com.guoxintaiyi.android.wallet.util.MobileUtils
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.libcommon.bean.UserApplyAccount
 import com.jxd.android.gohomeapp.libcommon.util.KeybordUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 
@@ -57,6 +58,7 @@ class CashBankFragment : BaseBackFragment()
 
     var showCountdown:Boolean=false
     var userViewModel:UserViewModel?=null
+    var userAccount:UserApplyAccount?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +69,6 @@ class CashBankFragment : BaseBackFragment()
     }
 
     override fun onCreateView(   inflater: LayoutInflater, container: ViewGroup?,   savedInstanceState: Bundle?    ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.quan_fragment_cash_bank, container, false)
 
         var dataBinding : QuanFragmentCashBankBinding = DataBindingUtil.inflate( inflater , R.layout.quan_fragment_cash_bank , container , false)
         dataBinding.clickHandler = this
@@ -76,6 +76,7 @@ class CashBankFragment : BaseBackFragment()
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         dataBinding.userViewModel = userViewModel
+        dataBinding.accountBean= userAccount
         userViewModel!!.liveDataCashApplyResult.observe(this , Observer { it->
             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
@@ -122,6 +123,15 @@ class CashBankFragment : BaseBackFragment()
 
         })
 
+        userViewModel!!.liveDataApplyAccountResult.observe(this, Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+            if(it.resultData==null) return@Observer
+            userAccount = it.resultData!!.data
+        })
+
         return dataBinding.root
 
     }
@@ -135,6 +145,7 @@ class CashBankFragment : BaseBackFragment()
         cashbank_amount.addTextChangedListener(this)
 
 
+        userViewModel!!.getApplyCount()
         userViewModel!!.getApplyConfig()
     }
 

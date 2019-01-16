@@ -100,8 +100,6 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 return@Observer
             }
 
-
-
             setChart(it.resultData)
 
         })
@@ -112,6 +110,8 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 showToast(it.resultMsg)
                 return@Observer
             }
+            if(it.resultData==null) return@Observer
+
             income_balance.text = it.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 

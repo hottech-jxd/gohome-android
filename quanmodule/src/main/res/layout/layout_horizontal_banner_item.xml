@@ -14,11 +14,11 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/dp_5"
         android:id="@+id/horizontal_banner_item_coupon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="券￥4"
+        android:text="券￥"
         android:textColor="#fe4c55"
         android:background="@drawable/shape_quan_bg"
         android:paddingLeft="5dp"
@@ -42,17 +42,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:text="分享赚"
+            android:text="分享赚￥"
             android:textColor="#fe4c55"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_width="16dp"
-            android:src="@mipmap/zhuan2"
-            android:layout_height="16dp" />
         <TextView
             android:textColor="#fe4c55"
-            android:text="1.2"
+            android:text="0"
+            android:id="@+id/horizontal_banner_item_reword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -65,9 +62,10 @@
         android:maxLines="2"
         android:ellipsize="end"
         android:id="@+id/horizontal_banner_item_title"
+        app:layout_constraintRight_toRightOf="@id/horizontal_banner_item_image"
         app:layout_constraintLeft_toLeftOf="@id/horizontal_banner_item_coupon"
         app:layout_constraintTop_toBottomOf="@id/horizontal_banner_item_coupon"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
     <TextView

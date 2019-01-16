@@ -29,4 +29,4 @@ data class IndexBean(
 
 data class IndexModel(var list:ArrayList<IndexBean>?)
 
-data class IndexPageModel(var data:ArrayList<IndexBean>?)
+data class IndexPageModel(var data:IndexBean?)

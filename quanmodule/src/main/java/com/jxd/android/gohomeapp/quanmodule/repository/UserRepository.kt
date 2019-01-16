@@ -64,4 +64,8 @@ object  UserRepository {
     fun getApplyConfig():Observable<ApiResult<ApplyConfigModel?>>{
         return apiService!!.getApplyConfig()
     }
+
+    fun getApplyAccount():Observable<ApiResult<UserAccountModel?>>{
+        return apiService!!.getUserApplyAccount()
+    }
 }

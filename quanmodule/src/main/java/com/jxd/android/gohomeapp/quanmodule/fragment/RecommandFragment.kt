@@ -155,8 +155,6 @@ class RecommandFragment : BaseFragment()
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if (it.resultData == null || it.resultData!!.data == null || it.resultData!!.data!!.size < 1) return@Observer
-            transferData(it.resultData!!.data)
 
             dealPage(it.resultData)
 
@@ -170,38 +168,42 @@ class RecommandFragment : BaseFragment()
 
         recommands.clear()
         for (item in temp ) {
-
-            var mode = ThemeIndexRecommendModeEnum.valueOf(item.mode!!)
-
-            if (mode == ThemeIndexRecommendModeEnum.singleTheme) {
-                showSingleThemeUI(item)
-            } else if (mode == ThemeIndexRecommendModeEnum.slide) {
-                showSlideUI(item)
-            } else if (mode == ThemeIndexRecommendModeEnum.limitedTheme) {
-                showLimitedUI(item)
-            } else if (mode == ThemeIndexRecommendModeEnum.listTheme) {
-                //showListUI(item)
-                showRowBannerUI(item)
-            } else {
-                showToast("样式不支持")
-            }
+            setTheme(item)
         }
 
         recommandAdapter!!.notifyDataSetChanged()
 
-
     }
 
+    private fun setTheme(item :IndexBean){
+        var mode = ThemeIndexRecommendModeEnum.valueOf(item.mode!!)
 
-    private fun dealPage(result:IndexPageModel? ){
+        if (mode == ThemeIndexRecommendModeEnum.singleTheme) {
+            showSingleThemeUI(item)
+        } else if (mode == ThemeIndexRecommendModeEnum.slide) {
+            showSlideUI(item)
+        } else if (mode == ThemeIndexRecommendModeEnum.limitedTheme) {
+            showLimitedUI(item)
+        } else if (mode == ThemeIndexRecommendModeEnum.listTheme) {
+            //showListUI(item)
+            showRowBannerUI(item)
+        } else {
+            showToast("样式不支持")
+        }
+    }
 
-        if (result == null || result!!.data ==null ) {
+    private fun dealPage(result:IndexPageModel? ) {
+
+        if (result == null || result!!.data == null) {
             recommandAdapter!!.loadMoreEnd(false)
         } else {
-            //datas = result.list!!
-            if (  result.data!!.size < 1) {
+            var datas = result.data!!.goodsList!!
+            if (datas.size < 1) {
                 recommandAdapter!!.loadMoreEnd(false)
             } else {
+
+                showListUI(result.data!!)
+
                 recommandAdapter!!.loadMoreComplete()
                 page++
             }

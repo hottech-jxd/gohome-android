@@ -1,19 +1,13 @@
 package com.jxd.android.gohomeapp.quanmodule.adapter
 
-import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.support.v4.content.ContextCompat
+
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.SpannedString
 import android.text.TextPaint
 import android.text.style.ImageSpan
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import cn.iwgang.countdownview.CountdownView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -23,18 +17,17 @@ import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
-import com.jxd.android.gohomeapp.quanmodule.R.id.good_item_title
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnBannerListener
-import kotlin.math.log
-import android.support.constraint.solver.widgets.WidgetContainer.getBounds
-import android.graphics.Paint.FontMetricsInt
-import android.graphics.drawable.Drawable
-import android.support.annotation.NonNull
+import android.view.View
+import com.alibaba.android.arouter.launcher.ARouter
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 
 
 class RecommandAdapter(data : ArrayList<MultiItemEntity>)
-    : BaseMultiItemQuickAdapter<MultiItemEntity , BaseViewHolder>(data){
+    : BaseMultiItemQuickAdapter<MultiItemEntity , BaseViewHolder>(data)
+    , BaseQuickAdapter.OnItemClickListener{
 
     var onBannerItemClickListener:BannerItemClickListener?=null
 
@@ -164,6 +157,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
 
         var horizontalBannerAdapter = HorizontalBannerAdapter( goodsList )
         horizontalBanner.adapter=horizontalBannerAdapter
+        horizontalBannerAdapter.onItemClickListener = this
     }
 
     private fun setGoodsOfColumn(helper: BaseViewHolder?,item: MultiItemEntity?){
@@ -194,6 +188,11 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
     }
 
 
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        var goodsId = (adapter!!.getItem(position) as GoodBean).goodsId
+        ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
+            .withString("goodsId", goodsId).navigation()
+    }
 }
 
 

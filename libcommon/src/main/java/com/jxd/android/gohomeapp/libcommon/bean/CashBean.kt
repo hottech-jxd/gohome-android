@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 /**
  *
@@ -28,3 +29,54 @@ data class ApplyConfigBean(/** 手续费率(百分比)*/ val applyFeeRate: BigDe
    val highestAmount: BigDecimal? = null)
 
 data class ApplyConfigModel(var data:ApplyConfigBean?)
+
+
+data class UserAccountModel(var data:UserApplyAccount?)
+
+class UserApplyAccount {
+    /**
+     * 主键Id
+     */
+     val accountId: Int? = null
+
+    /**
+     * 用户Id
+     */
+     val userId: String? = null
+
+    /**
+     * 账户类型
+     */
+     val accountType: Int? = null
+
+    /**
+     * 账户信息
+     */
+     val accountInfo: String? = null
+
+    /**
+     * 银行名称
+     */
+     val bankName: String? = null
+
+    /**
+     * 支行信息
+     */
+     val bankInfo: String? = null
+
+    /**
+     * 真实姓名
+     */
+     val realName: String? = null
+
+    /**
+     * 是否默认(1-是，0-否）
+     */
+     val isDefault: Int? = null
+
+    /**
+     * 添加时间
+     */
+     val createTime: LocalDateTime? = null
+
+}

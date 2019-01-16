@@ -21,6 +21,11 @@ class HorizontalBannerAdapter(data:List<GoodBean>)
         width = (width - width/6)/2
 
         FrescoDraweeController.loadImage(iv , width , 0 , item!!.pictureUrl , this)
+
+        helper.setText(R.id.horizontal_banner_item_coupon, "券￥${item.couponPrice}")
+        helper.setText(R.id.horizontal_banner_item_price , "￥${item.finalPrice}")
+        helper.setText(R.id.horizontal_banner_item_reword , "${item.reward}")
+        helper.setText(R.id.horizontal_banner_item_title , item.name)
     }
 
     override fun imageCallback(width: Int, height: Int, simpleDraweeView: SimpleDraweeView?) {
@@ -29,5 +34,7 @@ class HorizontalBannerAdapter(data:List<GoodBean>)
         layoutParams.width = width
         layoutParams.height = height
         simpleDraweeView.layoutParams =layoutParams
+
+
     }
 }
