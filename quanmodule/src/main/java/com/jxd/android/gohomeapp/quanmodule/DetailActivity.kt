@@ -75,7 +75,7 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
 
 
         //test
-        goodsId = "3109518123"
+        //goodsId = "3109518123"
         //
 
         var goodsDetailFragment = ARouter.getInstance().build(ARouterPath.QuanFragmentGoodsDetailPath)

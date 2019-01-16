@@ -32,15 +32,15 @@ object GoodsRepository {
         return apiService!!.getGoodsCategories()
     }
 
-    fun getCouponList():Observable<ApiResult<ArrayList<CouponBean>?>>{
+    fun getCouponList():Observable<ApiResult<CouponModel?>>{
         return apiService!!.getCouponList()
     }
 
-    fun search(keywords:String? , goodsSource :Int = 0 , page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>{
+    fun search(keywords:String? , goodsSource :Int = 0 , page:Int):Observable<ApiResult<SearchGoodsModel?>>{
         return apiService!!.search(keywords , goodsSource ,page)
     }
 
-    fun getShareInfo(goodsId: String):Observable<ApiResult<GoodsShareBean?>>{
+    fun getShareInfo(goodsId: String):Observable<ApiResult<GoodsShareModel?>>{
         return apiService!!.share(goodsId)
     }
 
@@ -48,11 +48,15 @@ object GoodsRepository {
         return apiService!!.index()
     }
 
-    fun getGoodsOfCategory( categoryId:String,sortEnum: GoodsSortEnum, page:Int=1):Observable<ApiResult<ArrayList<GoodBean>?>>{
+    fun indexPage(page:Int = 1):Observable<ApiResult<IndexPageModel?>>{
+        return apiService!!.indexPage(page)
+    }
+
+    fun getGoodsOfCategory( categoryId:String ,goodsSource: Int ,sortEnum: GoodsSortEnum, page:Int=1):Observable<ApiResult<GoodsOfCategory?>>{
 //        var json ="{\"categoryId\":\"$categoryId\",\"sort\": ${sortEnum.code},\"page\":$page}"
 //        var requestBody = RequestBody.create(MediaType.parse("application/json"),json )
 //        return apiService!!.getGoodsOfCategories(requestBody)
-        return apiService!!.getGoodsOfCategories(categoryId , sortEnum.code , page)
+        return apiService!!.getGoodsOfCategories(categoryId ,goodsSource , sortEnum.name , page)
     }
 
 }

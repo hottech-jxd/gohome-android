@@ -61,7 +61,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
     private var categoryAdapter: CategoryAdapter?=null
     private var dataList =ArrayList<GoodBean>()
     private var dataAdapter: DataAdapter?=null
-    private var column_price_sort :GoodsSortEnum = GoodsSortEnum.RewardDes
+    private var column_price_sort :GoodsSortEnum = GoodsSortEnum.rewardDes
     private var page=0
     private var dataBinding:QuanFragmentTabBinding?=null
 
@@ -125,10 +125,10 @@ class TabFragment : BaseFragment() ,View.OnClickListener
                 }
 
                 var datas: ArrayList<GoodBean>? = null
-                if (it.list == null) {
+                if (it.resultData == null || it.resultData!!.list==null ) {
                     dataAdapter!!.loadMoreEnd(false)
                 } else {
-                    datas = it.list!!
+                    datas = it.resultData!!.list!!
                     if (  datas.size < 1) {
                         dataAdapter!!.loadMoreEnd(false)
                     } else {
@@ -174,14 +174,14 @@ class TabFragment : BaseFragment() ,View.OnClickListener
 
         if(category==null) return
 
-        dataBinding!!.goodsViewModel!!.getGoodsOfCategory(category!!.categoryId!! , column_price_sort , page+1)
+        dataBinding!!.goodsViewModel!!.getGoodsOfCategory(category!!.categoryId!! , category!!.goodsSource , column_price_sort , page+1)
     }
 
     override fun onLoadMoreRequested() {
         if(category==null) return
 
         tab_refreshview.isRefreshing=false
-        dataBinding!!.goodsViewModel!!.getGoodsOfCategory(category!!.categoryId!! , column_price_sort , page+1)
+        dataBinding!!.goodsViewModel!!.getGoodsOfCategory(category!!.categoryId!! , category!!.goodsSource , column_price_sort , page+1)
 
     }
 
@@ -205,13 +205,13 @@ class TabFragment : BaseFragment() ,View.OnClickListener
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.column_lay_price->{
-                if(column_price_sort==GoodsSortEnum.PriceDes) {
+                if(column_price_sort==GoodsSortEnum.priceDes ) {
                     column_price_icon.setImageResource(R.mipmap.up1)
                     column_price.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color_selected))
-                    column_price_sort=GoodsSortEnum.PriceAsc
+                    column_price_sort=GoodsSortEnum.priceAsc
                 }else{
                     column_price_icon.setImageResource(R.mipmap.down1)
-                    column_price_sort=GoodsSortEnum.PriceDes
+                    column_price_sort=GoodsSortEnum.priceDes
                     column_price.setTextColor(ContextCompat.getColor(context!!,R.color.column_text_color_selected))
                 }
 
@@ -223,7 +223,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
                 onRefresh()
             }
             R.id.column_commission->{
-                column_price_sort = GoodsSortEnum.RewardDes
+                column_price_sort = GoodsSortEnum.rewardDes
                 column_commission.setTextColor( ContextCompat.getColor(context!! , R.color.column_text_color_selected) )
 
                 column_news.setTextColor(ContextCompat.getColor(context!!, R.color.column_text_color))
@@ -234,7 +234,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
                 onRefresh()
             }
             R.id.column_news->{
-                column_price_sort = GoodsSortEnum.Newed
+                column_price_sort = GoodsSortEnum.newed
                 column_commission.setTextColor( ContextCompat.getColor(context!! , R.color.column_text_color) )
 
                 column_news.setTextColor(ContextCompat.getColor(context!!, R.color.column_text_color_selected))
@@ -245,7 +245,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
                 onRefresh()
             }
             R.id.column_sales->{
-                column_price_sort = GoodsSortEnum.SaleDes
+                column_price_sort = GoodsSortEnum.saleDes
                 column_commission.setTextColor( ContextCompat.getColor(context!! , R.color.column_text_color) )
 
                 column_news.setTextColor(ContextCompat.getColor(context!!, R.color.column_text_color))

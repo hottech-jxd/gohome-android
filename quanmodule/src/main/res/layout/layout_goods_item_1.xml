@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/good_item_1_container"
-    android:background="@color/white"
-    android:paddingBottom="@dimen/dp_16"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
+    <data></data>
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/good_item_1_container"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/dp_16"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/good_item_1_logo"
@@ -20,11 +23,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <!--<ImageView-->
-        <!--android:layout_width="16dp"-->
-        <!--android:layout_height="16dp"-->
-        <!--android:src="@mipmap/ic_launcher"/>-->
-
     <TextView
             android:paddingTop="@dimen/dp_8"
         android:textSize="@dimen/sp_14"
@@ -37,13 +35,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:ellipsize="end"
-        android:text="阿萨德法守dafs萨发"
+        android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_marginTop="0dp"
-        android:text="￥21.55"
+        android:text="￥0.00"
         android:textSize="@dimen/sp_12"
         android:id="@+id/good_item_1_price"
         android:layout_width="0dp"
@@ -53,7 +51,7 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
     <TextView
         android:id="@+id/good_item_1_count"
-        android:text="销售108件"
+        android:text="销售0件"
         android:textSize="@dimen/sp_12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,7 +106,7 @@
         android:id="@+id/good_item_1_coupon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="券￥4"
+        android:text="券￥"
         android:textSize="@dimen/sp_12"
         android:textColor="#fe4c55"
         android:background="@drawable/shape_quan_bg"
@@ -139,17 +137,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <!--<ImageView-->
-            <!--android:layout_width="16dp"-->
-            <!--android:src="@mipmap/zhuan2"-->
-            <!--android:layout_height="16dp" />-->
-        <TextView
-                android:id="@+id/good_item_1_reword"
-                android:textSize="@dimen/sp_12"
+        <TextView android:id="@+id/good_item_1_reword"
+            android:textSize="@dimen/sp_12"
             android:textColor="#fe4c55"
-            android:text="1.2"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+
+</layout>

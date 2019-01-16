@@ -20,3 +20,5 @@ data class CouponBean (var couponPrice:String?
                        ,var price:String?
                        ,var remain:String?){
 }
+
+data class CouponModel(var list :ArrayList<CouponBean>?)

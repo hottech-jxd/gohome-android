@@ -114,10 +114,10 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             }
 
             var datas: ArrayList<FavoriteBean>?
-            if (it.list == null) {
+            if (it.resultData == null) {
                 favoriteAdapter!!.loadMoreEnd(false)
             } else {
-                datas = it.list!!
+                datas = it.resultData!!
                 if (  datas.size < 1) {
                     favoriteAdapter!!.loadMoreEnd(false)
                 } else {
@@ -158,7 +158,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     fun select(){
         if(favoriteAdapter==null)return
         var data =favoriteAdapter!!.data
-        var count=0
+        var count:Int
         selectedAll=true
         for(bean in data){
             if(!bean.selected){

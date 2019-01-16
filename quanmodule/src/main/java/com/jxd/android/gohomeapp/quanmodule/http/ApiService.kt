@@ -4,6 +4,7 @@ import com.jxd.android.gohomeapp.libcommon.bean.*
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.*
+import java.math.BigDecimal
 
 /**
  *
@@ -40,7 +41,7 @@ interface ApiService {
      * 优惠劵列表 随机从后台选择的商品中选5件
      */
     @GET("goods/couponList")
-    fun getCouponList():Observable<ApiResult<ArrayList<CouponBean>?>>
+    fun getCouponList():Observable<ApiResult<CouponModel?>>
 
     /**
      * 搜索商品
@@ -48,13 +49,13 @@ interface ApiService {
     @GET("goods/search")
     fun search(@Query("keywords") keywords:String?
                ,@Query("goodsSource") goodsSource:Int = 0
-               ,@Query("page") page:Int):Observable<ApiResult<ArrayList<SearchGoodsBean>?>>
+               ,@Query("page") page:Int):Observable<ApiResult<SearchGoodsModel?>>
 
     /**
      * 获取商品分享信息
      */
     @GET("goods/share")
-    fun share(@Query("goodsId") goodsId:String):Observable<ApiResult<GoodsShareBean?>>
+    fun share(@Query("goodsId") goodsId:String):Observable<ApiResult<GoodsShareModel?>>
 
 
     /**
@@ -62,6 +63,9 @@ interface ApiService {
      */
     @GET("goods/index")
     fun index():Observable<ApiResult<IndexModel?>>
+
+    @GET("goods/indexPage")
+    fun indexPage(@Query("page") page:Int=1):Observable<ApiResult<IndexPageModel?>>
 
     /**
      * 获得分类下的商品数据
@@ -76,26 +80,26 @@ interface ApiService {
     @POST("goods/category")
     @FormUrlEncoded
     fun getGoodsOfCategories(@Field("categoryId") categoryId:String ,
-                             @Field("goodsSource") goodsSource:Int = 0,
-                             @Field("sort") sort:Int ,
-                             @Field("page") page:Int=1):Observable<ApiResult<ArrayList<GoodBean>?>>
+                             @Field("goodsSource") goodsSource:Int ,
+                             @Field("sort") sort:String ,
+                             @Field("page") page:Int=1):Observable<ApiResult<GoodsOfCategory?>>
 
     /**
      * 提现申请
      */
-    @POST("user/cashApply")
+    @POST("user/userApply")
     @FormUrlEncoded
-    fun cashApply(@Field("bank")  bank:String,
-                  @Field("branch")  branch:String,
-                  @Field("card")  card:String,
-                  @Field("name")  name:String,
-                  @Field("money")  money:String,
-                  @Field("mobile")  mobile:String,
-                  @Field("code")  code:String):Observable<ApiResult<Any?>>
+    fun cashApply(@Field("bankName")  bankName:String,
+                  @Field("bankInfo")  bankInfo:String,
+                  @Field("bankAccount")  bankAccount:String,
+                  @Field("realName")  realName:String,
+                  @Field("applyMoney")  applyMoney:Int,
+                  @Field("userMobile")  userMobile:String,
+                  @Field("verifyCode")  verifyCode:String):Observable<ApiResult<Any?>>
 
     @POST("user/sendCode")
     @FormUrlEncoded
-    fun sendCode(@Field("mobile") mobile:String):Observable<ApiResult<Any?>>
+    fun sendCode(@Field("userMobile") userMobile:String):Observable<ApiResult<Any?>>
 
     /**
      * 个人首页数据接口
@@ -107,14 +111,23 @@ interface ApiService {
     /**
      * 订单接口
      */
-    @POST("user/orderList")
+    @POST("user/getOrderList")
     @FormUrlEncoded
     fun getOrderList(@Field("userId") userId:String,
-                     @Field("orderStatus") orderStatus:Int ,
+                     @Field("orderStatus") orderStatus:Int=-1 ,
                      @Field("pageIndex") pageIndex:Int=1,
                      @Field("pageSize") pageSize:Int=20,
                      @Field("startTime") startTime:String?="",
-                     @Field("endTime") endTime:String?=""):Observable<ApiResult<ArrayList<OrderBean>?>>
+                     @Field("endTime") endTime:String?=""):Observable<ApiResult<OrderModel?>>
+
+    @GET("user/getOrderList")
+    fun getOrderList2(@Query("userId") userId:String,
+                     @Query("orderStatus") orderStatus:Int=-1,
+                     @Query("pageIndex") pageIndex:Int=1,
+                     @Query("pageSize") pageSize:Int=20,
+                     @Query("startTime") startTime:String?="",
+                     @Query("endTime") endTime:String?=""):Observable<ApiResult<OrderModel?>>
+
 
     /**
      *收益统计
@@ -137,4 +150,10 @@ interface ApiService {
 
     @GET("user/collect")
     fun collect(@Query("goodsId") goodsId:String):Observable<ApiResult<Any?>>
+
+    /**
+     * 获得提现配置信息
+     */
+    @GET("user/getApplyConfig")
+    fun getApplyConfig():Observable<ApiResult<ApplyConfigModel?>>
 }

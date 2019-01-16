@@ -11,3 +11,5 @@ data class SearchGoodsBean(var selected:Boolean=false,
                            var isFav :String,
                            var reward :String?,
                            var source:String?)
+
+data class SearchGoodsModel(var list :ArrayList<SearchGoodsBean>?)

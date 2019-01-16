@@ -6,5 +6,4 @@ data class UserBean (var userId : String ,
                      var nickName:String? ,
                      var money:BigDecimal,
                      var unlocked:Boolean=false ,
-                     var UserToken:String="",
                      var head : String? )

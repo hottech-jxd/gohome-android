@@ -42,11 +42,11 @@ enum class ThemeIndexRecommendModeEnum(var code: Int,var desc:String){
 }
 
 enum class GoodsSortEnum(var code: Int , var desc: String){
-    Newed(1,"最新"),
-    PriceAsc(2,"价格升序"),
-    PriceDes(3,"价格降序"),
-    RewardDes(4,"佣金"),
-    SaleDes(5,"销量")
+    newed(0,"最新"),
+    priceAsc(1,"价格升序"),
+    priceDes(2,"价格降序"),
+    rewardDes(3,"佣金"),
+    saleDes(4,"销量")
 }
 
 enum class GoodsSourceEnum(var code:Int , var desc:String?){

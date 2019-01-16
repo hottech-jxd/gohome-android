@@ -4,22 +4,23 @@ import android.support.constraint.ConstraintLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
+import com.jxd.android.gohomeapp.libcommon.bean.GoodBean
 import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
 import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.youth.banner.Banner
 
-class HorizontalBannerAdapter(data:List<String>)
-    :BaseQuickAdapter<String,BaseViewHolder>( R.layout.layout_horizontal_banner_item, data) , FrescoDraweeListener.ImageCallback {
+class HorizontalBannerAdapter(data:List<GoodBean>)
+    :BaseQuickAdapter<GoodBean,BaseViewHolder>( R.layout.layout_horizontal_banner_item, data) , FrescoDraweeListener.ImageCallback {
 
-    override fun convert(helper: BaseViewHolder?, item: String?) {
+    override fun convert(helper: BaseViewHolder?, item: GoodBean?) {
         var iv = helper!!.getView<SimpleDraweeView>(R.id.horizontal_banner_item_image)
         var width = DensityUtils.getScreenWidth(mContext)
 
         width = (width - width/6)/2
 
-        FrescoDraweeController.loadImage(iv , width , 0 , item, this)
+        FrescoDraweeController.loadImage(iv , width , 0 , item!!.pictureUrl , this)
     }
 
     override fun imageCallback(width: Int, height: Int, simpleDraweeView: SimpleDraweeView?) {

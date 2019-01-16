@@ -87,7 +87,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
                 return@Observer
             }
 
-            dataBinding!!.myBean = it.data
+            dataBinding!!.myBean = it.resultData
             //this.myBean = it.data
             //my_header_pre_week_momey.text = "￥${it.data!!.lastWeek.setScale(2,BigDecimal.ROUND_HALF_UP)}"
             //my_header_this_week_momey.text = "￥${it.data!!.thisWeek.setScale(2, BigDecimal.ROUND_HALF_UP)}"
@@ -106,11 +106,11 @@ class MyFragment : BaseFragment() , View.OnClickListener
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if(it.data==null)return@Observer
+            if(it.resultData==null)return@Observer
 
-            my_header_logo.setImageURI(it.data!!.head)
-            my_header_username.text = it.data!!.userId
-            my_header_balance.text = it.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+            my_header_logo.setImageURI(it.resultData!!.head)
+            my_header_username.text = it.resultData!!.userId
+            my_header_balance.text = it.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
 
         })
 

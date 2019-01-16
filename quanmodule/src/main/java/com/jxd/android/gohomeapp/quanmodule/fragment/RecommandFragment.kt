@@ -50,16 +50,17 @@ private const val ARG_PARAM2 = "param2"
 class RecommandFragment : BaseFragment()
     ,SwipeRefreshLayout.OnRefreshListener
     ,BaseQuickAdapter.OnItemChildClickListener
+    ,BaseQuickAdapter.RequestLoadMoreListener
     ,BannerItemClickListener
     ,OnBannerListener {
 
     private var category: String? = null
-    private var dataAdapter: DataAdapter?=null
+    //private var dataAdapter: DataAdapter?=null
     private var recommandAdapter: RecommandAdapter?=null
-    private var data= ArrayList<String>()
+    //private var data= ArrayList<String>()
     private var recommands = ArrayList<MultiItemEntity>()
     private var dataBinding:QuanFragmentRecommandBinding?=null
-
+    private var page = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,101 +86,12 @@ class RecommandFragment : BaseFragment()
         fetchData()
     }
 
-    private fun mockData():ArrayList<MultiItemEntity>{
-        recommands.clear()
-
-//        var bannerUrl = ArrayList<String>()
-//        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-01_f406f8550f0f4b21b41fca881bbcb11415278577614883710.png")
-//        bannerUrl.add("http://image.tkcm888.com/adSet_2018-05-31_56440f86ea1d4d60a9a4d725e26e62c015277545962763144.png")
-//        bannerUrl.add("http://image.tkcm888.com/adSet_2018-05-31_a13475823f524d5f8b3b9480673e339915277602221601122.png")
-//        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
-//        var item1 = RecommandItem1(bannerUrl)
-//        recommands.add(item1)
-
-
-
-//        var bean = GoodBean(1,"","","", "","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        var item2 = RecommandItem2(bean)
-//        recommands.add(item2)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item2 = RecommandItem2(bean)
-//        recommands.add(item2)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item2 = RecommandItem2(bean)
-//        recommands.add(item2)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item2 = RecommandItem2(bean)
-//        recommands.add(item2)
-//
-//        var item3 = RecommandItem3(1152021)
-//        recommands.add(item3)
-
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        var item4 = RecommandItem4(bean)
-//        recommands.add(item4)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item4 = RecommandItem4(bean)
-//        recommands.add(item4)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item4 = RecommandItem4(bean)
-//        recommands.add(item4)
-//
-//        var item5 = RecommandItem5("厂家直供")
-//        recommands.add(item5)
-//
-//        var goods = ArrayList<GoodBean>()
-//        goods.add(bean)
-//        goods.add(bean)
-//        goods.add(bean)
-//        goods.add(bean)
-//        var item6 = RecommandItem6(goods)
-//        recommands.add(item6)
-//
-//        var item7 = RecommandItem5("新品首发")
-//        recommands.add(item7)
-
-
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        var item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-//        bean = GoodBean(1,"","","","","http://t00img.yangkeduo.com/t01img/images/2018-06-04/c421980286368efa5c730b0e6404f7ec.jpeg",null,"","","","","","")
-//        item8 = RecommandItem7(bean)
-//        recommands.add(item8)
-
-        return recommands
-    }
-
-
     override fun initView() {
-//        mockData()
 
         recommandAdapter= RecommandAdapter(recommands)
         recommandAdapter!!.onItemChildClickListener=this
         recommandAdapter!!.onBannerItemClickListener=this
+        recommandAdapter!!.setOnLoadMoreListener(this, recommand_recyclerView)
         recommand_recyclerView.layoutManager= GridLayoutManager(context,2)
         recommandAdapter!!.setSpanSizeLookup(object: BaseQuickAdapter.SpanSizeLookup{
             override fun getSpanSize(gridLayoutManager: GridLayoutManager?, position: Int): Int {
@@ -203,46 +115,9 @@ class RecommandFragment : BaseFragment()
             }
         })
 
-        //var header = LayoutInflater.from(context).inflate(R.layout.layout_recommand_header, null )
-//        var bannerUrl = ArrayList<String>()
-//        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
-//        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
-//        bannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
-//        var indexBanner = header.findViewById<Banner>(R.id.recommand_banner)
-//        indexBanner.setImageLoader(FrescoImageLoader( indexBanner , DensityUtils.getScreenWidth(context!!)))
-//        indexBanner.setImages(bannerUrl)
-//        indexBanner.start()
-//        dataAdapter!!.addHeaderView(header)
-
-//        var banner = header.findViewById<Banner>(R.id.recommand_banner)
-//        banner.setOnBannerListener(this)
-
-        recommand_recyclerView.adapter = recommandAdapter //dataAdapter
+        recommand_recyclerView.adapter = recommandAdapter
         recommand_recyclerView.addItemDecoration(RecommandDevider(recommandAdapter!!,context!!))
-
         recommand_refreshLayout.setOnRefreshListener(this)
-
-//        var image1 = header.findViewById<SimpleDraweeView>(R.id.recommand_image_1)
-//        var image2 = header.findViewById<SimpleDraweeView>(R.id.recommand_image_2)
-//        var image3 = header.findViewById<SimpleDraweeView>(R.id.recommand_image_3)
-//        var image4 = header.findViewById<SimpleDraweeView>(R.id.recommand_image_4)
-//        image1.setImageURI("http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg")
-//        image2.setImageURI("http://app.infunpw.com/commons/images/cinema/cinema_films/3566.jpg")
-//        image3.setImageURI("http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg")
-//        image4.setImageURI("http://app.infunpw.com/commons/images/cinema/cinema_films/3757.jpg")
-//
-//        var countDown = header.findViewById<CountdownView>(R.id.recommand_countdown)
-//        countDown.start(15454545)
-//
-//        var horizontalBanner = header.findViewById<RecyclerView>(R.id.recommand_banner_6)
-//        horizontalBanner.layoutManager= LinearLayoutManager(context , LinearLayout.HORIZONTAL ,false )
-
-//        var horizontalBannerUrl = ArrayList<String>()
-//        horizontalBannerUrl.add("http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg")
-//        horizontalBannerUrl.add("http://app.infunpw.com/commons/images/cinema/cinema_films/3566.jpg")
-//        horizontalBannerUrl.add("http://app.infunpw.com/commons/images/cinema/cinema_films/3757.jpg")
-//        var horizontalBannerAdapter = HorizontalBannerAdapter(horizontalBannerUrl)
-//        horizontalBanner.adapter=horizontalBannerAdapter
 
         dataBinding!!.goodsViewModel!!.liveDataIndexResult.observe(this, Observer { it->
 
@@ -252,7 +127,13 @@ class RecommandFragment : BaseFragment()
                 showToast(it.resultMsg)
                 return@Observer
             }
-            transferData(it.resultData)
+
+            if (it.resultData == null || it.resultData!!.list == null || it.resultData!!.list!!.size < 1) return@Observer
+
+
+            transferData(it.resultData!!.list)
+
+            dataBinding!!.goodsViewModel!!.indexPage(page+1)
         })
 
         dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
@@ -268,15 +149,27 @@ class RecommandFragment : BaseFragment()
         dataBinding!!.goodsViewModel!!.loading.observe(this, Observer { it->
             recommand_progress.visibility = if(it==null|| !it) View.GONE else View.VISIBLE
         })
+
+        dataBinding!!.goodsViewModel!!.liveDataIndexPageResult.observe(this, Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+            if (it.resultData == null || it.resultData!!.data == null || it.resultData!!.data!!.size < 1) return@Observer
+            transferData(it.resultData!!.data)
+
+            dealPage(it.resultData)
+
+        })
     }
 
-    private fun transferData(result:IndexModel?) {
-        if (result == null || result.list == null || result.list!!.size < 1) return
+    private fun transferData(result:ArrayList<IndexBean>?) {
+        //if (result == null || result.list == null || result.list!!.size < 1) return
 
-        //var temp = result.list.sortWith(( o1,o2->))
+        var temp = result!!.sortedWith( Comparator { o1, o2 -> o1.sort.compareTo(o2.sort) })
 
         recommands.clear()
-        for (item in result.list!!) {
+        for (item in temp ) {
 
             var mode = ThemeIndexRecommendModeEnum.valueOf(item.mode!!)
 
@@ -287,13 +180,32 @@ class RecommandFragment : BaseFragment()
             } else if (mode == ThemeIndexRecommendModeEnum.limitedTheme) {
                 showLimitedUI(item)
             } else if (mode == ThemeIndexRecommendModeEnum.listTheme) {
-                showListUI(item)
+                //showListUI(item)
+                showRowBannerUI(item)
             } else {
                 showToast("样式不支持")
             }
         }
 
         recommandAdapter!!.notifyDataSetChanged()
+
+
+    }
+
+
+    private fun dealPage(result:IndexPageModel? ){
+
+        if (result == null || result!!.data ==null ) {
+            recommandAdapter!!.loadMoreEnd(false)
+        } else {
+            //datas = result.list!!
+            if (  result.data!!.size < 1) {
+                recommandAdapter!!.loadMoreEnd(false)
+            } else {
+                recommandAdapter!!.loadMoreComplete()
+                page++
+            }
+        }
     }
 
     /**
@@ -331,6 +243,7 @@ class RecommandFragment : BaseFragment()
      * 限时购样式
      */
     private fun showLimitedUI(bean: IndexBean){
+
         if(bean.goodsList==null|| bean.goodsList!!.size<1)return
 
         var itemCountDown = RecommandItem3(bean.limitedTime)
@@ -342,6 +255,20 @@ class RecommandFragment : BaseFragment()
             var item4 = RecommandItem4(item)
             recommands.add(item4)
         }
+    }
+
+    /**
+     * (一行显示多张图片的样式)
+     */
+    private fun showRowBannerUI(bean:IndexBean){
+        if(bean.goodsList==null|| bean.goodsList!!.size<1)return
+
+        var itemTitle = RecommandItem5(bean.name)
+        recommands.add(itemTitle)
+
+
+        var itemBanner= RecommandItem6( bean.goodsList!! , 10, 10 )
+        recommands.add(itemBanner)
     }
 
     /**
@@ -364,7 +291,6 @@ class RecommandFragment : BaseFragment()
 
             index++
         }
-
     }
 
     fun fetchData() {
@@ -431,6 +357,11 @@ class RecommandFragment : BaseFragment()
         }else if(category==ThemeCategoryEnum.single){
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId", item.goodsId).navigation()
         }
+    }
+
+    override fun onLoadMoreRequested() {
+        recommand_refreshLayout.isRefreshing=false
+        dataBinding!!.goodsViewModel!!.indexPage(page+1)
     }
 
     companion object {

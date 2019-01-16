@@ -37,7 +37,7 @@ data class RecommandItem5(var title:String?):MultiItemEntity{
     }
 }
 
-data class RecommandItem6(var data : ArrayList<GoodBean>):MultiItemEntity{
+data class RecommandItem6(var data : ArrayList<GoodBean> , var  paddingLeft :Int ,var paddingRight: Int):MultiItemEntity{
     override fun getItemType(): Int {
         return ItemTypeEnum.ONE_ROW_CAN_SCROLL_BANNER.type
     }

@@ -38,7 +38,8 @@ object Constants {
     //val APIBaseURL="http://api.mingshz.com/mock/125/api/"
 
     //val APIBaseURL="http://47.75.172.114:8080/api/"
-    val APIBaseURL="http://10.2.2.21:8080/api/"
+    //val APIBaseURL="http://10.2.2.21:8080/api/"
+    val APIBaseURL="http://api.dj.chinaswt.cn:8080/api/"
 
     const val READ_TIMEOUT :Long= 15
     const val CONNECT_TIMEOUT :Long= 15

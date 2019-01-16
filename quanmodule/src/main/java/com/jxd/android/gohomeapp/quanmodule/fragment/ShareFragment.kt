@@ -117,9 +117,9 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if(it!!.share==null) return@Observer
+            if(it.resultData ==null || it.resultData!!.share==null ) return@Observer
 
-            share_content.text = it.share!!.share
+            share_content.text = it.resultData!!.share!!.share
         })
 
 

@@ -50,7 +50,7 @@
     <android.support.v4.widget.NestedScrollView
             android:layout_below="@id/cashbank_lay_balance"
             android:layout_width="match_parent"
-                                                android:layout_height="wrap_content">
+            android:layout_height="wrap_content">
 
     <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -366,6 +366,43 @@
                   android:textColor="@color/white"
                   android:background="@drawable/shape_cash_circle_grad_bg"
                   android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:textSize="@dimen/sp_12"
+                android:id="@+id/cashbank_desc1"
+                android:layout_width="match_parent"
+                android:lineSpacingExtra="@dimen/dp_4"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_marginTop="@dimen/dp_16"
+                  android:textSize="@dimen/sp_12"
+                  android:layout_marginLeft="@dimen/dp_20"
+                  android:layout_marginRight="@dimen/dp_20"
+                  android:text="后台提现5~7个工作日(到账)"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:textColor="#FE2120"
+                  android:textSize="@dimen/sp_12"
+                  android:layout_marginTop="@dimen/dp_16"
+                  android:layout_marginLeft="@dimen/dp_20"
+                  android:layout_marginRight="@dimen/dp_20"
+                  android:text="后台奖金提现申请，必须是填写会员本人名下所属的银行卡资料"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:textSize="@dimen/sp_12"
+                  android:layout_marginTop="@dimen/dp_16"
+                  android:layout_marginLeft="@dimen/dp_20"
+                  android:layout_marginRight="@dimen/dp_20"
+                  android:layout_marginBottom="@dimen/dp_20"
+                  android:id="@+id/cashbank_rate"
+                  android:text="本次交易将收取￥0.00手续费."
+                  android:layout_height="wrap_content"/>
+
 
     </LinearLayout>
 

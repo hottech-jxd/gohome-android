@@ -4,6 +4,7 @@ import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.quanmodule.http.ApiService
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
 import io.reactivex.Observable
+import java.math.BigDecimal
 
 
 /**
@@ -25,7 +26,7 @@ object  UserRepository {
                   branch:String,
                   card:String,
                   name:String,
-                  money:String,
+                  money:Int,
                   mobile:String,
                   code:String):  Observable<ApiResult<Any?>> {
         return apiService!!.cashApply(bank,branch , card,name , money , mobile , code)
@@ -40,8 +41,8 @@ object  UserRepository {
         return apiService!!.myIndex()
     }
 
-    fun getOrderList(userId :String, orderStatus:Int , pageIndex:Int=1):Observable<ApiResult<ArrayList<OrderBean>?>>{
-        return apiService!!.getOrderList(userId , orderStatus , pageIndex)
+    fun getOrderList(userId :String, orderStatus:Int , pageIndex:Int=1):Observable<ApiResult<OrderModel?>>{
+        return apiService!!.getOrderList2(userId , orderStatus , pageIndex)
     }
 
     fun getProfitStat():Observable<ApiResult<ProfitStatBean?>>{
@@ -58,5 +59,9 @@ object  UserRepository {
 
     fun collect(goodsId:String):Observable<ApiResult<Any?>>{
         return apiService!!.collect(goodsId )
+    }
+
+    fun getApplyConfig():Observable<ApiResult<ApplyConfigModel?>>{
+        return apiService!!.getApplyConfig()
     }
 }

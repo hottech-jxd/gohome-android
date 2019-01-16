@@ -8,7 +8,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,7 @@ import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCashBankBinding
+import com.jxd.android.gohomeapp.quanmodule.repository.UserRepository.sendCode
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.layout_common_header.*
@@ -31,6 +34,7 @@ import kotlinx.android.synthetic.main.quan_fragment_cash_bank.view.*
 import kotlinx.android.synthetic.main.quan_fragment_income.*
 import java.lang.Exception
 import java.math.BigDecimal
+import java.sql.DatabaseMetaData
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,7 +47,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownView.OnCountdownEndListener {
+class CashBankFragment : BaseBackFragment()
+    , TextWatcher
+    , View.OnClickListener
+    , CountdownView.OnCountdownEndListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -99,7 +106,20 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownVi
                 showToast(it.resultMsg)
                 return@Observer
             }
-            cash_balance.text = it.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+            if(it!!.resultData==null) return@Observer
+            cash_balance.text = it.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+        })
+
+
+        userViewModel!!.liveDataApplyConfigResult.observe(this , Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            var config = it.resultData!!.data
+            cashbank_desc1.text = "起提金额￥${config!!.baseAmount},提现上限￥${config.highestAmount},手续费率${config.applyFeeRate}%"
+
         })
 
         return dataBinding.root
@@ -111,6 +131,11 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownVi
 
         header_title.text="提现到银行"
         cashbank_countdown.setOnCountdownEndListener(this)
+
+        cashbank_amount.addTextChangedListener(this)
+
+
+        userViewModel!!.getApplyConfig()
     }
 
 
@@ -152,8 +177,36 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownVi
 
     override fun onEnd(cv: CountdownView?) {
         cashbank_countdown.stop()
-        cashbank_countdown.setVisibility(View.GONE)
-        cashbank_getcode.setVisibility(View.VISIBLE)
+        cashbank_countdown.visibility =View.GONE
+        cashbank_getcode.visibility = View.VISIBLE
+    }
+
+
+    override fun afterTextChanged(s: Editable?) {
+
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        try{
+            if( userViewModel==null || userViewModel!!.liveDataApplyConfigResult==null|| userViewModel!!.liveDataApplyConfigResult.value==null)
+                return
+            if(userViewModel!!.liveDataApplyConfigResult.value!!.resultCode != ApiResultCodeEnum.SUCCESS.code) return
+            if(userViewModel!!.liveDataApplyConfigResult.value!!.resultData==null) return
+
+            var m = cashbank_amount.text.toString().toInt()
+
+            var rate = userViewModel!!.liveDataApplyConfigResult.value!!.resultData!!.data!!.applyFeeRate!!
+
+            var rate2 =   rate.setScale(2,BigDecimal.ROUND_HALF_UP).divide(BigDecimal(100) , 2 , BigDecimal.ROUND_HALF_UP).multiply(BigDecimal(m)).setScale(2,BigDecimal.ROUND_HALF_UP)
+
+            cashbank_rate.text ="本次交易将收取￥${rate2}手续费."
+
+        }catch (ex:Exception){
+
+        }
     }
 
     fun apply(){
@@ -203,23 +256,30 @@ class CashBankFragment : BaseBackFragment() , View.OnClickListener , CountdownVi
             return
         }
         if(TextUtils.isEmpty(money)){
-            showToast("请输入提现金额")
+            showToast("请输入100的倍数的提现金额")
             cashbank_amount.requestFocus()
             KeybordUtils.openKeybord(context!!,cashbank_amount)
             return
         }
 
         try{
-            var m  = BigDecimal(money)
+            var m  = money.toInt()
+
+            if( m == 0 || m % 100 != 0){
+                showToast("请输入正确的100的倍数的提现金额")
+                cashbank_amount.requestFocus()
+                KeybordUtils.openKeybord(context!!,cashbank_amount)
+                return
+            }
 
         }catch (ex:Exception){
-            showToast("请输入正确的提现金额")
+            showToast("请输入正确的100的倍数的提现金额")
             cashbank_amount.requestFocus()
             KeybordUtils.openKeybord(context!!,cashbank_amount)
             return
         }
 
-        userViewModel!!.cashApply(bank , branch , card,name,money , mobile ,code)
+        userViewModel!!.cashApply(bank , branch , card,name, money.toInt() , mobile ,code)
 
     }
 

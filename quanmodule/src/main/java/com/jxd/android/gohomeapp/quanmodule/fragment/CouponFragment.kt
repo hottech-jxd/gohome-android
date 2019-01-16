@@ -96,9 +96,9 @@ class CouponFragment : BaseFragment()
                     showToast(it.resultMsg)
                     return@Observer
                 }
-                if(it.list==null) return@Observer
+                if(it.resultData==null || it.resultData!!.list==null ) return@Observer
 
-                couponAdapter!!.setNewData(it.list)
+                couponAdapter!!.setNewData(it.resultData!!.list)
             })
 
         dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
@@ -144,6 +144,10 @@ class CouponFragment : BaseFragment()
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         if(view!!.id==R.id.coupon_item_buy){
             var bean = couponAdapter!!.getItem(position)
+            if(TextUtils.isEmpty(bean!!.goodsId)){
+                showToast("缺少商品Id")
+                return
+            }
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
                 .withString("goodsId",bean!!.goodsId)
                 .navigation()

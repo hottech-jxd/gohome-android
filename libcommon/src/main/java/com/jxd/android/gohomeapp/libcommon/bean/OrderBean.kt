@@ -10,3 +10,5 @@ data class OrderBean (var orderId:String?,
                       var grouped:Boolean,
                       var groupTime:String?,
                       var pictureUrl:String?)
+
+data class OrderModel(var list:ArrayList<OrderBean>?)

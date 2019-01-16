@@ -35,7 +35,7 @@ class MainActivity : BaseActivity() , View.OnClickListener {
 
     override fun initView() {
 
-        QuanModule.userBean = UserBean("13815247899","jxd", BigDecimal(0),true,"ss","")
+        QuanModule.userBean = UserBean("15869168181","jxd", BigDecimal(0),true,"ss")
 
         var couponFragment = CouponFragment.newInstance("","")
 

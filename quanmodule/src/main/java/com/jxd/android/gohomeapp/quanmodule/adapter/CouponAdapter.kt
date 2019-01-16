@@ -24,7 +24,7 @@ class CouponAdapter(data:ArrayList<CouponBean>?) : BaseQuickAdapter<CouponBean, 
     override fun convert(helper: BaseViewHolder?, item: CouponBean?) {
 
         helper!!.getView<SimpleDraweeView>(R.id.coupon_item_image).setImageURI( item!!.pictureUrl )
-        helper.setText(R.id.coupon_item_count , item.remain)
+        helper.setText(R.id.coupon_item_count , "还剩${item.remain}")
         helper.setText(R.id.coupon_item_coupon , "劵￥"+item.couponPrice)
         helper.setText(R.id.coupon_item_final_price , item.finalPrice )
         helper.setText(R.id.coupon_item_title , item.name)

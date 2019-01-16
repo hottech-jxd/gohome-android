@@ -25,11 +25,12 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
 
     var liveDataGoodsDetail = MutableLiveData<ApiResult<GoodsDetailModel?>>()
     var liveDataGoodsCategories = MutableLiveData<ApiResult<CategoryModel?>>()
-    var liveDataCouponList = MutableLiveData<ApiResult<ArrayList<CouponBean>?>>()
-    var liveDataSearchResult=MutableLiveData<ApiResult<ArrayList<SearchGoodsBean>?>>()
-    var liveDataGoodsShareBean = MutableLiveData<ApiResult<GoodsShareBean?>>()
+    var liveDataCouponList = MutableLiveData<ApiResult<CouponModel?>>()
+    var liveDataSearchResult=MutableLiveData<ApiResult<SearchGoodsModel?>>()
+    var liveDataGoodsShareBean = MutableLiveData<ApiResult<GoodsShareModel?>>()
     var liveDataIndexResult = MutableLiveData<ApiResult<IndexModel?>>()
-    var liveDataGoodsOfCategory=MutableLiveData<ApiResult<ArrayList<GoodBean>?>>()
+    var liveDataIndexPageResult = MutableLiveData<ApiResult<IndexPageModel?>>()
+    var liveDataGoodsOfCategory=MutableLiveData<ApiResult<GoodsOfCategory?>>()
 
     fun getGoodsDetail(goodsId:String){
 
@@ -123,8 +124,22 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
             .subscribe({liveDataIndexResult.postValue(it)},{onError(it)})
     }
 
-    fun getGoodsOfCategory(categoryId:String, sortEnum: GoodsSortEnum , page:Int){
-        GoodsRepository.getGoodsOfCategory(categoryId , sortEnum , page )
+    fun indexPage(page:Int ){
+        GoodsRepository.indexPage(page)
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({liveDataIndexPageResult.postValue(it)},{onError(it)})
+    }
+
+    fun getGoodsOfCategory(categoryId:String, goodsSource: Int , sortEnum: GoodsSortEnum , page:Int){
+        GoodsRepository.getGoodsOfCategory(categoryId , goodsSource , sortEnum , page )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)

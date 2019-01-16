@@ -67,3 +67,6 @@ data class GoodsDetailBean(var goodsId: String= "" ,
 
 
 data class PictureBean(var url:String?)
+
+
+data class GoodsOfCategory(var list :ArrayList<GoodBean>?)

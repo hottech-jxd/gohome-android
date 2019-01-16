@@ -89,11 +89,11 @@ class OrderFragment : BaseFragment() , SwipeRefreshLayout.OnRefreshListener , Ba
             }
 
 
-            var datas: ArrayList<OrderBean>? = null
-            if (it.list == null) {
+            var datas: ArrayList<OrderBean>?
+            if (it.resultData == null || it.resultData!!.list ==null ) {
                 orderAdapter!!.loadMoreEnd(false)
             } else {
-                datas = it.list!!
+                datas = it.resultData!!.list!!
                 if (  datas.size < 1) {
                     orderAdapter!!.loadMoreEnd(false)
                 } else {

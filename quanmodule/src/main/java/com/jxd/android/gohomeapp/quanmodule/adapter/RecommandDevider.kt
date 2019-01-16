@@ -16,6 +16,8 @@ class RecommandDevider(var recommandAdapter: RecommandAdapter , context:Context)
 
     override fun getDivider(itemPosition: Int): Y_Divider? {
         var divider : Y_Divider= Y_DividerBuilder().create()
+        if(recommandAdapter.getItem(itemPosition) ==null ) return divider
+
         var type = recommandAdapter.getItem(itemPosition)!!.itemType
 
         when(type ){

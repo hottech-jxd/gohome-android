@@ -8,9 +8,9 @@ enum class OrderTypeEnum(var id :Int, var desc:String){
 }
 
 enum class OrderStatusEnum(var id:Int,var desc:String){
-    ALL(0,"全部"),
-    PREPARE(1,"预估"),
-    RECEIVED(2,"收货"),
-    INVAIDAD(3,"失效"),
-    ARRIVED(4,"到账"),
+    ALL(-1,"全部"),
+    PREPARE(0,"预估"),
+    RECEIVED(1,"收货"),
+    INVAIDAD(2,"失效"),
+    ARRIVED(3,"到账"),
 }

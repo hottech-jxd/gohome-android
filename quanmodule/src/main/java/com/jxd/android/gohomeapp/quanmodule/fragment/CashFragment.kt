@@ -87,7 +87,9 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
                 showToast(it.resultMsg)
                 return@Observer
             }
-            cash_balance.text = it!!.data!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+            if(it!!.resultData==null) return@Observer
+
+            cash_balance.text = it!!.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 
 
@@ -114,9 +116,9 @@ class CashFragment : BaseBackFragment() , View.OnClickListener {
     override fun onClick(v: View?) {
         if(v!!.id == R.id.header_left_image){
             _mActivity.onBackPressed()
-        }else if(v!!.id==R.id.cash_lay_bank){
+        }else if(v.id==R.id.cash_lay_bank){
             this.start(CashBankFragment.newInstance("",""))
-        }else if(v!!.id==R.id.cash_lay_cash){
+        }else if(v.id==R.id.cash_lay_cash){
             showToast("todo")
         }
     }

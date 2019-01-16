@@ -88,7 +88,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
 
     private fun setBanner(goodsDetailModel: GoodsDetailModel? ){
         if(goodsDetailModel==null || goodsDetailModel.detail==null ) return
-        if(goodsDetailModel!!.detail!!.pictureUrls==null) return
+        if(goodsDetailModel.detail!!.pictureUrls==null) return
 
 //        var images = ArrayList<String>()
 //        images.add("http://t04img.yangkeduo.com/images/2018-05-26/3308bf00afb37922ceef70b9991e0dfd.jpeg")
@@ -244,19 +244,23 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
             showToast( UserViewModel!!.liveDataUserInfo.value!!.resultMsg)
             return
         }
+        if(UserViewModel.liveDataUserInfo.value!!.resultData==null){
+            showToast("请先登录")
+            return
+        }
 
-        if(!UserViewModel!!.liveDataUserInfo.value!!.data!!.unlocked) {
+        if(!UserViewModel!!.liveDataUserInfo.value!!.resultData!!.unlocked) {
             start(ShareTipFragment.newInstance("", ""))
         }else {
             //start(ShareFragment.newInstance("",""))
 
             if(quanFragmentDetailBinding==null || quanFragmentDetailBinding!!.goodsViewModel==null ) return
             var goods = quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value
-            if(goods ==null || goods.detail== null  ) return
+            if(goods ==null || goods.resultData== null  ) return
             if(goods.resultCode != ApiResultCodeEnum.SUCCESS.code ) return
 
             var shareFragment=ARouter.getInstance().build(ARouterPath.QuanFragmentGoodsSharePath)
-                .withObject("goods" , goods!!.detail )
+                .withObject("goods" , goods!!.resultData )
                 .navigation() as ShareFragment
 
 

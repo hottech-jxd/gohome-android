@@ -56,11 +56,9 @@ class SearchActivity : BaseActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.quan_activity_search)
 
         dataBinding = DataBindingUtil.setContentView(this,R.layout.quan_activity_search)
         dataBinding!!.goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
-
 
         initView()
     }
@@ -124,11 +122,11 @@ class SearchActivity : BaseActivity()
                 KeybordUtils.closeKeyboard(this, search_key)
 
                 var datas: ArrayList<SearchGoodsBean>? = null
-                if (it.list == null) {
+                if (it.resultData == null || it.resultData!!.list ==null ) {
                     searchAdapter!!.loadMoreEnd(false)
                 } else {
-                    datas = it.list!!
-                    if (  datas.size < 1) {
+                    datas = it.resultData!!.list
+                    if (  datas!!.size < 1) {
                         searchAdapter!!.loadMoreEnd(false)
                     } else {
                         searchAdapter!!.loadMoreComplete()
@@ -139,8 +137,17 @@ class SearchActivity : BaseActivity()
 
             })
 
-    }
+        dataBinding!!.goodsViewModel!!.loading.observe(this, android.arch.lifecycle.Observer { it->
+            search_progress.visibility = if(it==null || !it) View.GONE else View.VISIBLE
+        })
 
+        dataBinding!!.goodsViewModel!!.error.observe(this, android.arch.lifecycle.Observer { it->
+            if(TextUtils.isEmpty(it)) return@Observer
+            search_progress.visibility=View.GONE
+            showToast(it!!)
+        })
+
+    }
 
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
@@ -173,6 +180,9 @@ class SearchActivity : BaseActivity()
 
         page=0
         searchAdapter!!.setNewData(ArrayList())
+
+        KeybordUtils.closeKeyboard(this , search_key)
+
         dataBinding!!.goodsViewModel!!.search(key, page+1)
     }
 

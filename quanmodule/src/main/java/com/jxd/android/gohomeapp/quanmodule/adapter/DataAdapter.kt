@@ -14,6 +14,13 @@ class DataAdapter(data: List<GoodBean>) : BaseQuickAdapter<GoodBean, BaseViewHol
     override fun convert(helper: BaseViewHolder?, item: GoodBean) {
         helper!!.getView<SimpleDraweeView>(R.id.good_item_1_logo).setImageURI(item.pictureUrl)
 
+        helper.setText(R.id.good_item_1_title , item.name)
+        helper.setText(R.id.good_item_1_count , "销售${item.saleAmount}件")
+        helper.setText(R.id.good_item_1_coupon , "券￥${item.couponPrice}")
+        helper.setText(R.id.good_item_1_final_price , item.finalPrice)
+        helper.setText(R.id.good_item_1_reword , item.reward )
+        helper.setText(R.id.good_item_1_price , "￥${item.price}")
+
         helper!!.addOnClickListener(R.id.good_item_1_favorite)
     }
 }

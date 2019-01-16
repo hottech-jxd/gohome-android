@@ -25,10 +25,11 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     var liveDataCashApplyResult=MutableLiveData<ApiResult<Any?>>()
     var liveDataSendCodeResult = MutableLiveData<ApiResult<Any?>>()
     var liveDataMyResult = MutableLiveData<ApiResult<MyBean?>>()
-    var liveDataOrderList= MutableLiveData<ApiResult<ArrayList<OrderBean>?>>()
+    var liveDataOrderList= MutableLiveData<ApiResult<OrderModel?>>()
     var liveDataProfitStat=MutableLiveData<ApiResult<ProfitStatBean?>>()
     var liveDataMyCollect=MutableLiveData<ApiResult<ArrayList<FavoriteBean>?>>()
     var liveDataCollectResult = MutableLiveData<ApiResult<Any?>>()
+    var liveDataApplyConfigResult = MutableLiveData<ApiResult<ApplyConfigModel?>>()
 
     companion object {
         var liveDataUserInfo = MutableLiveData<ApiResult<UserBean?>>()
@@ -38,7 +39,7 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
                   branch:String,
                   card:String,
                   name:String,
-                  money:String,
+                  money:Int,
                   mobile:String,
                   code:String){
         UserRepository.cashApply(bank,branch,card,name,money,mobile,code)
@@ -157,5 +158,20 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             }
             .subscribe(
                 {  liveDataCollectResult.postValue(it) }, { onError(it) })
+    }
+
+    fun getApplyConfig() {
+        UserRepository.getApplyConfig()
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe(
+                {  liveDataApplyConfigResult.postValue(it) }, { onError(it) })
     }
 }
