@@ -36,7 +36,7 @@ class HeaderIntercepter : Interceptor {
     }
 
     private fun getHeaderParameter(): HeaderParameter {
-        val userId = if (QuanModule.userBean == null) "" else QuanModule.userBean!!.userId
+        val userId = if (QuanModule.userId == null) "" else QuanModule.userId
         //var userToken: String? = if (QuanModule.userBean == null) "" else QuanModule.userBean!!.UserToken
         //userToken = if (userToken == null) "" else userToken
 
@@ -44,7 +44,7 @@ class HeaderIntercepter : Interceptor {
 
         headerParameter.appVersion = BuildConfig.VERSION_NAME
         //headerParameter.userToken = userToken
-        headerParameter.userId = userId
+        headerParameter.userId = userId!!
         headerParameter.hwid = Build.ID
         headerParameter.mobileType = Build.MODEL
         headerParameter.osVersion = Build.VERSION.SDK_INT.toString()

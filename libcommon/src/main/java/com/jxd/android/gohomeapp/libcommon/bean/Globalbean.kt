@@ -12,5 +12,7 @@ package com.jxd.android.gohomeapp.libcommon.bean
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-data class Globalbean(var 	helpURL:String?) {
+data class Globalbean(var helpVideoUrl:String?) {
 }
+
+data class GlobalModel(var global:Globalbean?)

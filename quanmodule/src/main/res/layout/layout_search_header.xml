@@ -19,7 +19,7 @@
         android:singleLine="true"
         android:inputType="text"
         android:textSize="16sp"
-        android:textColor="#bfbfbf"
+        android:textColorHint="#bfbfbf"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="clickHandler" type="android.view.View.OnClickListener"/>
+        <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:layout_width="match_parent"
+                    android:background="@color/white"
+                 android:layout_height="match_parent"
+                 tools:context=".fragment.BalanceFragment">
+
+        <include android:layout_width="match_parent"
+                 android:id="@+id/balance_header"
+                 app:clickHandler="@{clickHandler}"
+                 layout="@layout/layout_common_header"
+                 android:layout_height="wrap_content" />
+
+        <View android:id="@+id/balance_line"
+              android:layout_below="@id/balance_header"
+                android:background="@color/linecolor"
+                android:layout_width="match_parent" android:layout_height="@dimen/dp_1"/>
+
+        <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
+                android:id="@+id/balance_refreshview"
+                android:layout_below="@id/balance_line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/balance_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
+
+
+        <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+                android:id="@+id/balance_progress"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+</layout>

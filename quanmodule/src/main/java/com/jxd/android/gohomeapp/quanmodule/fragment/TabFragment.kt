@@ -18,6 +18,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -110,7 +111,11 @@ class TabFragment : BaseFragment() ,View.OnClickListener
 //        tab_recyclerview_class.layoutManager = GridLayoutManager(context , 4)
 //        tab_recyclerview_class.adapter = categoryAdapter
         dataAdapter=DataAdapter(dataList)
+        dataAdapter!!.emptyView = View.inflate( context , R.layout.layout_empty , null)
+        dataAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text="啊哦，好像没有数据哦!"
+        dataAdapter!!.isUseEmpty(false)
         dataAdapter!!.onItemClickListener =this
+        dataAdapter!!.setOnLoadMoreListener(this, tab_recyclerview_list)
         tab_recyclerview_list.layoutManager=GridLayoutManager(context,2)
         tab_recyclerview_list.adapter=dataAdapter
         tab_recyclerview_list.addItemDecoration( ItemDevider2(context!! , 12f , R.color.white ) )
@@ -150,27 +155,19 @@ class TabFragment : BaseFragment() ,View.OnClickListener
         })
 
         dataBinding!!.goodsViewModel!!.loading.observe(this, Observer { it->
+
+            if(page>0){//表示加载更多
+                tab_progress.visibility = View.GONE
+                return@Observer
+            }
+
             tab_progress.visibility = if(it==null|| !it) View.GONE else View.VISIBLE
         })
     }
 
     fun fetchData() {
-//        categoryList.clear()
-//        categoryList.add(Category("1" ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"T桖"))
-//        categoryList.add(Category("2" ,"http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"休闲裤"))
-//        categoryList.add(Category("3", "http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"外套"))
-//        categoryList.add(Category("4","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"短裤"))
-//        categoryList.add(Category("5","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔裤"))
-//        categoryList.add(Category("6","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"寸衫"))
-//        categoryList.add(Category("7","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"套装"))
-//        categoryList.add(Category("8","http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png" ,"牛仔衣"))
-//        //categoryList.add(Category(9,"http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,"抖音款"))
-//        categoryAdapter!!.setNewData(categoryList)
 
-//        for(i in 0..20) {
-//            dataList.add(i.toString())
-//        }
-//        dataAdapter!!.notifyDataSetChanged()
+        tab_refreshview.isRefreshing=false
 
         if(category==null) return
 
@@ -198,8 +195,6 @@ class TabFragment : BaseFragment() ,View.OnClickListener
             }
         }
     }
-
-
 
 
     override fun onClick(v: View?) {

@@ -1,16 +1,24 @@
 package com.jxd.android.gohomeapp.quanmodule.fragment
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
+import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentTutorialsBinding
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.CommonViewModel
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import kotlinx.android.synthetic.main.quan_fragment_tutorials.*
@@ -32,6 +40,7 @@ class TutorialsFragment : BaseBackFragment() , View.OnClickListener {
     private var param2: String? = null
 
     internal var orientationUtils: OrientationUtils? = null
+    private var dataBinding:QuanFragmentTutorialsBinding?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,21 +51,52 @@ class TutorialsFragment : BaseBackFragment() , View.OnClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,  savedInstanceState: Bundle?  ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.quan_fragment_tutorials, container, false)
+
+        dataBinding = DataBindingUtil.inflate(inflater , R.layout.quan_fragment_tutorials , container ,false)
+        dataBinding!!.commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+
+        return  dataBinding!!.root
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        header_left_image.setOnClickListener(this)
+         dataBinding!!.commonViewModel!!.liveDataInitResult.observe(this, Observer { it->
+             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                 showToast(it.resultMsg)
+                 return@Observer
+             }
+
+             if(it.resultData==null || it.resultData!!.global==null || it.resultData!!.global!!.helpVideoUrl==null ) return@Observer
+
+             initVedioPlayer( it.resultData!!.global!!.helpVideoUrl )
+         })
+
+
+        dataBinding!!.commonViewModel!!.error.observe( this , Observer { it->
+            if(TextUtils.isEmpty(it)) return@Observer
+
+            showToast(it!!)
+        })
+    }
 
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
-        initVedioPlayer()
+        //initVedioPlayer()
+
+        dataBinding!!.commonViewModel!!.init()
     }
 
-    private fun initVedioPlayer(){
-        var source1 = "https://res.exexm.com/cw_145225549855002"
-        source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4"
-        tutorials_videoplay.setUp(source1, true, "sssssss")
+    private fun initVedioPlayer( videoUrl :String? ){
+
+        if(TextUtils.isEmpty(videoUrl)) return
+
+        //var source1 = "https://res.exexm.com/cw_145225549855002"
+        //source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4"
+        tutorials_videoplay.setUp(videoUrl , true, "")
 
 
 
@@ -82,11 +122,6 @@ class TutorialsFragment : BaseBackFragment() , View.OnClickListener {
 
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        header_left_image.setOnClickListener(this)
-    }
 
     override fun onResume() {
         super.onResume()

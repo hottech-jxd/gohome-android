@@ -59,4 +59,8 @@ object GoodsRepository {
         return apiService!!.getGoodsOfCategories(categoryId ,goodsSource , sortEnum.name , page)
     }
 
+    fun getHotSearch():Obserable<ApiResult<HotSearchModel?>>{
+        return apiService!!.hotSearch()
+    }
+
 }

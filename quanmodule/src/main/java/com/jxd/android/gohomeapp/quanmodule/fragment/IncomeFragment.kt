@@ -299,9 +299,9 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 if(en==null || en.size<1) continue
                 var eee = en[0]
                     if (eee is Entry1) {
-                        var e1 = eee as Entry1
-                        tvDate1!!.text = e1.data.date
-                        tvContent1!!.text = "￥"+ e1.data.money.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
+                        //var e1 = eee
+                        tvDate1!!.text = eee.data.date
+                        tvContent1!!.text = "￥"+ eee.data.money.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
 
                     }
 //                    else if( eee is Entry2 ) {

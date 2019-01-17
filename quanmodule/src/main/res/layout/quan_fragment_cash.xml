@@ -9,9 +9,9 @@
 
     <RelativeLayout
              android:layout_width="match_parent"
-                android:fitsSystemWindows="true"
-                android:clipToPadding="true"
-                android:background="#f1f1f1"
+             android:fitsSystemWindows="true"
+             android:clipToPadding="true"
+             android:background="#f1f1f1"
              android:layout_height="match_parent"
              tools:context=".fragment.CashFragment">
 
@@ -21,107 +21,123 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content" />
 
-    <LinearLayout
-            android:layout_below="@id/cash_lay_header"
-            android:paddingTop="@dimen/dp_16"
-            android:paddingBottom="@dimen/dp_16"
-            android:paddingLeft="@dimen/dp_16"
-            android:paddingRight="@dimen/dp_16"
-            android:id="@+id/cash_lay_balance"
-            android:orientation="vertical"
-            android:background="#FBBD00"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView android:layout_width="wrap_content"
-                  android:textColor="@color/white"
-                  android:textSize="@dimen/sp_12"
-                  android:text="可提现余额 (元)"
-                  android:layout_height="wrap_content"/>
-        <TextView
-                android:layout_marginTop="@dimen/dp_2"
-                android:textSize="@dimen/sp_20"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="0.00"
-                android:id="@+id/cash_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
+        <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
+                android:id="@+id/cash_refreshview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-            android:layout_below="@id/cash_lay_balance"
-            android:orientation="horizontal"
-            android:id="@+id/cash_lay_bank"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:onClick="@{clickHandler::onClick}"
-            android:layout_height="wrap_content">
-        <TextView android:layout_width="match_parent"
-                  android:textColor="@color/black"
-                  android:textSize="@dimen/dp_14"
+            <RelativeLayout
+                android:layout_below="@id/cash_lay_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                  android:text="提现到银行"
-                  android:paddingRight="@dimen/dp_16"
-                  android:paddingLeft="@dimen/dp_16"
-                  android:paddingTop="@dimen/dp_12"
-                  android:paddingBottom="@dimen/dp_12"
-                  android:drawableRight="@mipmap/arrowright"
-                  android:layout_height="wrap_content"/>
+            <LinearLayout
 
-    </LinearLayout>
+                    android:paddingTop="@dimen/dp_16"
+                    android:paddingBottom="@dimen/dp_16"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:id="@+id/cash_lay_balance"
+                    android:orientation="vertical"
+                    android:background="#FBBD00"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView android:layout_width="wrap_content"
+                          android:textColor="@color/white"
+                          android:textSize="@dimen/sp_12"
+                          android:text="可提现余额 (元)"
+                          android:layout_height="wrap_content"/>
+                <TextView
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:textSize="@dimen/sp_20"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:text="0.00"
+                        android:id="@+id/cash_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-    <View android:id="@+id/cash_line1"
-            android:layout_below="@id/cash_lay_bank"
-            android:background="#e6e6e6"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1" />
+            <LinearLayout
+                    android:layout_below="@id/cash_lay_balance"
+                    android:orientation="horizontal"
+                    android:id="@+id/cash_lay_bank"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:onClick="@{clickHandler::onClick}"
+                    android:layout_height="wrap_content">
+                <TextView android:layout_width="match_parent"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/dp_14"
 
-    <LinearLayout
-            android:layout_below="@id/cash_line1"
-            android:orientation="horizontal"
-            android:onClick="@{clickHandler::onClick}"
-            android:id="@+id/cash_lay_cash"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView android:layout_width="match_parent"
-                  android:textColor="@color/black"
-                  android:textSize="@dimen/dp_14"
-                  android:text="充值到账户"
-                  android:paddingRight="@dimen/dp_16"
-                  android:paddingLeft="@dimen/dp_16"
-                  android:paddingTop="@dimen/dp_12"
-                  android:paddingBottom="@dimen/dp_12"
-                  android:drawableRight="@mipmap/arrowright"
-                  android:layout_height="wrap_content"/>
+                          android:text="提现到银行"
+                          android:paddingRight="@dimen/dp_16"
+                          android:paddingLeft="@dimen/dp_16"
+                          android:paddingTop="@dimen/dp_12"
+                          android:paddingBottom="@dimen/dp_12"
+                          android:drawableRight="@mipmap/arrowright"
+                          android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <View android:id="@+id/cash_line2"
-          android:layout_below="@id/cash_lay_cash"
-          android:background="#e6e6e6"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp_1" />
+            <View android:id="@+id/cash_line1"
+                    android:layout_below="@id/cash_lay_bank"
+                    android:background="#e6e6e6"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1" />
 
-    <TextView android:layout_below="@id/cash_line2"
-              android:id="@+id/cash_label1"
-              android:text="提现充值记录"
-              android:textSize="@dimen/dp_16"
-              android:textColor="#878787"
-              android:textStyle="normal"
-              android:paddingLeft="@dimen/dp_16"
-              android:paddingTop="@dimen/dp_16"
-              android:paddingBottom="@dimen/dp_16"
-            android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+            <LinearLayout
+                    android:visibility="gone"
+                    android:layout_below="@id/cash_line1"
+                    android:orientation="horizontal"
+                    android:onClick="@{clickHandler::onClick}"
+                    android:id="@+id/cash_lay_cash"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView android:layout_width="match_parent"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/dp_14"
+                          android:text="充值到账户"
+                          android:paddingRight="@dimen/dp_16"
+                          android:paddingLeft="@dimen/dp_16"
+                          android:paddingTop="@dimen/dp_12"
+                          android:paddingBottom="@dimen/dp_12"
+                          android:drawableRight="@mipmap/arrowright"
+                          android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <View android:id="@+id/cash_line2"
+                  android:layout_below="@id/cash_lay_cash"
+                  android:background="#e6e6e6"
+                  android:visibility="gone"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/dp_1" />
+
+            <TextView android:layout_below="@id/cash_line1"
+                      android:id="@+id/cash_label1"
+                      android:visibility="visible"
+                      android:text="提现记录"
+                      android:textSize="@dimen/sp_15"
+                      android:textColor="#878787"
+                      android:textStyle="normal"
+                      android:paddingLeft="@dimen/dp_16"
+                      android:paddingTop="@dimen/dp_16"
+                      android:paddingBottom="@dimen/dp_16"
+                    android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
 
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/cash_recyclerview"
-            android:layout_below="@id/cash_label1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/cash_recyclerview"
+                    android:layout_below="@id/cash_label1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
+        </RelativeLayout>
+
+        </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
 
 </RelativeLayout>
 

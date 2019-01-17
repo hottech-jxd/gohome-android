@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable name="commonViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.CommonViewModel" />
+    </data>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
@@ -117,3 +123,7 @@
     </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>
+
+
+
+</layout>

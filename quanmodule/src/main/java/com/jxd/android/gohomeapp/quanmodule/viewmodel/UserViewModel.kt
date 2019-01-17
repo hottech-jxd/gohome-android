@@ -31,6 +31,8 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     var liveDataCollectResult = MutableLiveData<ApiResult<Any?>>()
     var liveDataApplyConfigResult = MutableLiveData<ApiResult<ApplyConfigModel?>>()
     var liveDataApplyAccountResult = MutableLiveData<ApiResult<UserAccountModel?>>()
+    var liveDataApplyListResult=MutableLiveData<ApiResult<ApplyRecordModel?>>()
+    var liveDataBalanceLogResult = MutableLiveData<ApiResult<BalanceModel?>>()
 
     companion object {
         var liveDataUserInfo = MutableLiveData<ApiResult<UserBean?>>()
@@ -176,7 +178,7 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
                 {  liveDataApplyConfigResult.postValue(it) }, { onError(it) })
     }
 
-    fun getApplyCount() {
+    fun getApplyAccount() {
         UserRepository.getApplyAccount()
             .wrapper()
             .doOnSubscribe { t ->
@@ -189,5 +191,35 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             }
             .subscribe(
                 {  liveDataApplyAccountResult.postValue(it) }, { onError(it) })
+    }
+
+    fun getApplyList(pageIndex: Int, pageSize:Int=10) {
+        UserRepository.getApplyList(pageIndex , pageSize )
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe(
+                {  liveDataApplyListResult.postValue(it) }, { onError(it) })
+    }
+
+    fun getBalanceLog(pageIndex: Int, pageSize:Int=10) {
+        UserRepository.getBalanceLog(pageIndex , pageSize )
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe(
+                {  liveDataBalanceLogResult.postValue(it) }, { onError(it) })
     }
 }

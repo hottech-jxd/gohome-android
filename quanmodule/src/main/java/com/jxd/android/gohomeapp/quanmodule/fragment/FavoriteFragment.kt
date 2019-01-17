@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
@@ -90,6 +91,8 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         favoriteAdapter = FavoriteAdapter(data)
         favoriteAdapter!!.setOnLoadMoreListener(this , favorite_recyclerview)
         favoriteAdapter!!.onItemChildClickListener =this
+        favoriteAdapter!!.emptyView = View.inflate( context , R.layout.layout_empty , null)
+        favoriteAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text="您还没有收藏的商品，赶快行动起来吧！"
         favorite_recyclerview.layoutManager= LinearLayoutManager(this.context)
         favorite_recyclerview.addItemDecoration( ItemDevider3(this.context!! , 1f , R.color.linecolor , 15f ))
         favorite_recyclerview.adapter = favoriteAdapter

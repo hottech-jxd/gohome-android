@@ -3,6 +3,7 @@ package com.jxd.android.gohomeapp.quanmodule.viewmodel
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
+import com.jxd.android.gohomeapp.libcommon.bean.GlobalModel
 import com.jxd.android.gohomeapp.libcommon.bean.Globalbean
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.CommonRepository
@@ -20,7 +21,7 @@ import com.jxd.android.gohomeapp.quanmodule.repository.CommonRepository
  * @Version:        1.0
  */
 class CommonViewModel(application: Application) :BaseViewModel(application) {
-    var liveDataInitResult=MutableLiveData<ApiResult<Globalbean?>>()
+    var liveDataInitResult=MutableLiveData<ApiResult<GlobalModel?>>()
 
     fun init(){
         CommonRepository.init()

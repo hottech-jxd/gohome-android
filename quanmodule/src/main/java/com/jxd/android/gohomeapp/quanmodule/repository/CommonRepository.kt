@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.repository
 
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
+import com.jxd.android.gohomeapp.libcommon.bean.GlobalModel
 import com.jxd.android.gohomeapp.libcommon.bean.Globalbean
 import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
@@ -21,7 +22,7 @@ import io.reactivex.Observable
 object CommonRepository {
     private var apiService = RetrofitManager.getApiService()
 
-    fun init(): Observable<ApiResult<Globalbean?>> {
+    fun init(): Observable<ApiResult<GlobalModel?>> {
         return apiService!!.init()
     }
 }

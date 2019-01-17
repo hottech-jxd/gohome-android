@@ -13,3 +13,5 @@ data class SearchGoodsBean(var selected:Boolean=false,
                            var source:String?)
 
 data class SearchGoodsModel(var list :ArrayList<SearchGoodsBean>?)
+
+data class HotSearchModel(var data:ArrayList<String>?)

@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
@@ -205,16 +206,18 @@ class MyFragment : BaseFragment() , View.OnClickListener
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.my_header_cash->{
-
                 (this.parentFragment as MainFragment).start(CashFragment.newInstance("",""))
 
             }
+            R.id.my_header_lay_all,
+            R.id.my_header_lay_preweek,
+            R.id.my_header_lay_thisweek,
             R.id.my_header_lay_more->{
                 (this.parentFragment as MainFragment).start(IncomeFragment.newInstance("",""))
             }
-//            R.id.my_lay_order->{
-//                newIntent<OrderActivity>()
-//            }
+            R.id.my_header_detail->{
+                (this.parentFragment as MainFragment).start(ARouter.getInstance().build(ARouterPath.QuanFragmentBalancePath).navigation() as BalanceFragment)
+            }
 //            R.id.my_lay_favorite->{
 //                newIntent<FavoriteActivity>()
 //            }

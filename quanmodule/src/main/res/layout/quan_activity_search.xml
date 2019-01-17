@@ -13,6 +13,8 @@
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
@@ -137,6 +139,13 @@
             android:layout_height="0dp"/>
 
 
+    <include layout="@layout/layout_clipboard"
+             android:id="@+id/search_clipboard"
+             android:visibility="gone"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" />
+
+
     <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
             app:layout_constraintTop_toBottomOf="@id/search_line"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -144,6 +153,10 @@
             android:visibility="@{goodsViewModel.loading?View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+
+    <EditText android:id="@+id/search_fouse" android:layout_marginLeft="10000dp"
+              android:layout_width="@dimen/dp_1" android:layout_height="@dimen/dp_1"/>
 
 </android.support.constraint.ConstraintLayout>
 

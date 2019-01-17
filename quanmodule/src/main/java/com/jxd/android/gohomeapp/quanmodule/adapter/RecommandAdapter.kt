@@ -120,7 +120,7 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         var imageSpan = CenteredImageSpan (mContext, R.mipmap.pinduoduo) //ImageSpan(logoDraw)
         spannableString.setSpan(imageSpan , 0,4, ImageSpan.ALIGN_BASELINE)
 
-        helper!!.setText(R.id.good_item_title , spannableString )
+        helper.setText(R.id.good_item_title , spannableString )
 
         helper.setText(R.id.good_item_price , "￥"+bean.price)
         helper.getView<TextView>(R.id.good_item_price).paintFlags=TextPaint.STRIKE_THRU_TEXT_FLAG

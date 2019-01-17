@@ -2,10 +2,11 @@ package com.jxd.android.gohomeapp.quanmodule
 
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ClipboardManager
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -32,10 +33,13 @@ import com.jxd.android.gohomeapp.quanmodule.adapter.SearchResultAdapter
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivitySearchBinding
 import com.jxd.android.gohomeapp.quanmodule.fragment.SearchResultFragment
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
+import kotlinx.android.synthetic.main.layout_clipboard.*
 import kotlinx.android.synthetic.main.layout_search_header.*
+import kotlinx.android.synthetic.main.layout_search_header.view.*
 import kotlinx.android.synthetic.main.quan_activity_search.*
 import kotlinx.android.synthetic.main.quan_fragment_tab.*
 import me.gujun.android.taggroup.TagGroup
+import java.security.Key
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -45,6 +49,7 @@ class SearchActivity : BaseActivity()
     , BaseQuickAdapter.RequestLoadMoreListener
     , BaseQuickAdapter.OnItemClickListener
     , TextWatcher
+    , View.OnFocusChangeListener
     , View.OnClickListener
     , TagGroup.OnTagClickListener {
 
@@ -61,6 +66,8 @@ class SearchActivity : BaseActivity()
         dataBinding!!.goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
 
         initView()
+
+        checkClipBoard()
     }
 
     override fun initView(){
@@ -78,9 +85,14 @@ class SearchActivity : BaseActivity()
         search_delete.setOnClickListener(this)
         search_cancel.setOnClickListener(this)
 
+        clipboard_close.setOnClickListener(this)
+        clipboard_pinduoduo.setOnClickListener(this)
+
         search_key.setOnEditorActionListener(this)
         search_key.addTextChangedListener(this)
-        KeybordUtils.openKeybord( this ,  search_key)
+        search_key.onFocusChangeListener =this
+
+        //KeybordUtils.openKeybord( this ,  search_key)
 
         tags = ArrayList( SPUtils.getInstance(this, Constants.PREF_SEARCH_FILENAME).readStringSet(Constants.PREF_KEY , Collections.emptySet() ))
         search_tags.setTags(tags)
@@ -118,10 +130,11 @@ class SearchActivity : BaseActivity()
                 }
 
 
-                search_key.requestFocus()
+                search_fouse.requestFocus()
                 KeybordUtils.closeKeyboard(this, search_key)
+                search_recyclerView.requestFocus()
 
-                var datas: ArrayList<SearchGoodsBean>? = null
+                var datas: ArrayList<SearchGoodsBean>?
                 if (it.resultData == null || it.resultData!!.list ==null ) {
                     searchAdapter!!.loadMoreEnd(false)
                 } else {
@@ -147,6 +160,44 @@ class SearchActivity : BaseActivity()
             showToast(it!!)
         })
 
+
+        dataBinding!!.goodsViewModel!!.liveDataHotSearch.observe(this,Observer{it->
+
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+            if(it.resultData==null||it.resultData.data==null) return
+
+            var hotTags=  it.resultData.data
+            search_tags_hot.setTags(hotTags)
+
+        })
+
+
+        dataBinding!!.goodsViewModel!!.getHotSearch()
+
+    }
+
+    override fun onFocusChange(v: View?, hasFocus: Boolean) {
+        if(hasFocus){
+            search_scrollview.visibility=View.VISIBLE
+            search_recyclerView.visibility=View.GONE
+        }
+    }
+
+    private fun checkClipBoard(){
+        val cm =  this.getSystemService (Context.CLIPBOARD_SERVICE) as ClipboardManager
+        if(cm.hasPrimaryClip()){
+            var clipData = cm.primaryClip
+            if( clipData !=null && clipData.itemCount>0 ){
+                var text = clipData.getItemAt(0).coerceToText(this)
+                clipboard_text.text = text
+                search_clipboard.visibility = View.VISIBLE
+                KeybordUtils.closeKeyboard(this , search_key)
+                return
+            }
+        }
     }
 
 
@@ -168,7 +219,7 @@ class SearchActivity : BaseActivity()
         return false
     }
 
-    fun goSearch(){
+    private fun goSearch(){
         var key = search_key.text.toString()
         if(TextUtils.isEmpty(key))return
 
@@ -186,12 +237,7 @@ class SearchActivity : BaseActivity()
         dataBinding!!.goodsViewModel!!.search(key, page+1)
     }
 
-//    private fun goSsearch(key){
-//
-//        page=0
-//        searchAdapter!!.setNewData(ArrayList())
-//        dataBinding!!.goodsViewModel!!.search(key, page+1)
-//    }
+
 
     override fun onClick(v: View?) {
         when(v!!.id){
@@ -201,6 +247,14 @@ class SearchActivity : BaseActivity()
             R.id.search_cancel->{
                 KeybordUtils.closeKeyboard(this)
                 finish()
+            }
+            R.id.clipboard_close->{
+                search_clipboard.visibility=View.GONE
+            }
+            R.id.clipboard_pinduoduo->{
+                search_clipboard.visibility=View.GONE
+                search_key.setText(clipboard_text.text )
+                goSearch()
             }
         }
 

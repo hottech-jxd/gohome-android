@@ -24,7 +24,7 @@ interface ApiService {
      * 初始化
      */
     @GET("init")
-    fun init():Observable<ApiResult<Globalbean?>>
+    fun init():Observable<ApiResult<GlobalModel?>>
 
     @POST("goods/detail")
     @FormUrlEncoded
@@ -83,6 +83,12 @@ interface ApiService {
                              @Field("goodsSource") goodsSource:Int ,
                              @Field("sort") sort:String ,
                              @Field("page") page:Int=1):Observable<ApiResult<GoodsOfCategory?>>
+
+    /**
+     * 获得热门搜索
+     */
+    @GET("goods/hotSearch")
+    fun hotSearch():Observable<ApiResult<HotSearchModel?>>
 
     /**
      * 提现申请
@@ -162,4 +168,16 @@ interface ApiService {
      */
     @GET("user/getUserApplyAccount")
     fun getUserApplyAccount():Observable<ApiResult<UserAccountModel?>>
+
+    /**
+     * 分页获取用户提现申请日志
+     */
+    @GET("user/getApplyList")
+    fun getApplyList(@Query("pageIndex") pageIndex:Int , @Query("pageSize") pageSize:Int =10):Observable<ApiResult<ApplyRecordModel?>>
+
+    /**
+     * 分页获取用户余额变动日志
+     */
+    @GET("user/getBalanceLog")
+    fun getBalanceLog(@Query("pageIndex") pageIndex:Int ,@Query("pageSize")pageSize:Int=10):Observable<ApiResult<BalanceModel?>>
 }

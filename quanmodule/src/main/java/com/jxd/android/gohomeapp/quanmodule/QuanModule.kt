@@ -24,7 +24,8 @@ import me.yokeyword.fragmentation.Fragmentation
 object QuanModule {
 
     var app :BaseApplication?=null
-    var userBean:UserBean?=null
+    //var userBean:UserBean?=null
+    var userId:String=""
 
     fun init(application: BaseApplication){
 
@@ -42,9 +43,15 @@ object QuanModule {
 
         FileDownloader.setup(app)
 
+//        var userViewModel = UserViewModel(app!!)
+//        userViewModel.getUserInfo(false)
+
+    }
+
+    fun setMobile(mobile :String){
+        this.userId = mobile
         var userViewModel = UserViewModel(app!!)
         userViewModel.getUserInfo(false)
-
     }
 
 

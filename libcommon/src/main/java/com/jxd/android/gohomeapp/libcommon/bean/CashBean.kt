@@ -80,3 +80,15 @@ class UserApplyAccount {
      val createTime: LocalDateTime? = null
 
 }
+
+
+data class ApplyRecordModel(var list:ArrayList<ApplyRecord>?)
+data class ApplyRecord(var applyId:String , var	applyMoney:BigDecimal , var applyStatusStr:String? ,var 	applyTime:Long , var applyTypeStr:String?){
+
+}
+
+data class BalanceModel(var list:ArrayList<BalanceLog>?)
+
+data class BalanceLog(var 	changeMoney:BigDecimal,/*变动金额*/
+    var 	changeTime :Long,/*变动时间*/
+    var 	logRemark:String?/*变动描述*/)

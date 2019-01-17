@@ -145,7 +145,7 @@ class CashBankFragment : BaseBackFragment()
         cashbank_amount.addTextChangedListener(this)
 
 
-        userViewModel!!.getApplyCount()
+        userViewModel!!.getApplyAccount()
         userViewModel!!.getApplyConfig()
     }
 
@@ -162,12 +162,12 @@ class CashBankFragment : BaseBackFragment()
     override fun onClick(v: View?) {
         if(v!!.id==R.id.header_left_image){
             _mActivity.onBackPressed()
-        }else if(v!!.id==R.id.cashbank_getcode){
+        }else if(v.id==R.id.cashbank_getcode){
             sendCode()
-        }else if(v!!.id == R.id.cashbank_countdown){
+        }else if(v.id == R.id.cashbank_countdown){
 
         }
-        else if(v!!.id==R.id.cashbank_confirm){
+        else if(v.id==R.id.cashbank_confirm){
             apply()
         }
     }

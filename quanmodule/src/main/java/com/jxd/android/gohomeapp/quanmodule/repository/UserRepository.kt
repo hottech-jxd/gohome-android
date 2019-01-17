@@ -68,4 +68,12 @@ object  UserRepository {
     fun getApplyAccount():Observable<ApiResult<UserAccountModel?>>{
         return apiService!!.getUserApplyAccount()
     }
+
+    fun getApplyList(pageIndex: Int=1, pageSize:Int=10):Observable<ApiResult<ApplyRecordModel?>>{
+        return apiService!!.getApplyList(pageIndex , pageSize)
+    }
+
+    fun getBalanceLog(pageIndex: Int=1,pageSize: Int=10):Observable<ApiResult<BalanceModel?>>{
+        return apiService!!.getBalanceLog(pageIndex,pageSize)
+    }
 }

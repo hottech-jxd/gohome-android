@@ -28,6 +28,9 @@ import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import com.youth.banner.BannerConfig
 import com.youth.banner.listener.OnBannerListener
 import android.arch.lifecycle.Observer
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.text.TextPaint
 import android.text.TextUtils
 import android.widget.TextView
@@ -39,6 +42,7 @@ import com.wx.goodview.GoodView
 import kotlinx.android.synthetic.main.layout_detail_top.*
 import kotlinx.android.synthetic.main.quan_activity_detail.*
 import kotlinx.android.synthetic.main.quan_fragment_goods_detail.*
+import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,7 +56,7 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 @Route(path = ARouterPath.QuanFragmentGoodsDetailPath)
-class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickListener {
+class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickListener , View.OnClickListener {
     private var detailAdapter: DetailAdapter?=null
     private var data=ArrayList<PictureBean>()
     @Autowired  @JvmField var goodsId:String=""
@@ -151,7 +155,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
 
         quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.observe(this , Observer { it->
             if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
-                showToast(it!!.resultMsg)
+                showToast(it.resultMsg)
                 return@Observer
             }
 
@@ -175,6 +179,9 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
 
         var detail_item_price1 = top.findViewById<TextView>(R.id.detail_item_price1)
         detail_item_price1.paintFlags = TextPaint.STRIKE_THRU_TEXT_FLAG
+
+        var detail_item_title = top.findViewById<TextView>(R.id.detail_item_title)
+        detail_item_title.setOnLongClickListener(this)
 
         detailAdapter!!.removeAllHeaderView()
         detailAdapter!!.addHeaderView(top)
@@ -211,6 +218,16 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
         showToast("position"+ position )
     }
 
+    override fun onLongClick(v: View?): Boolean {
+        var clipManager = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        var text = (v as TextView).text
+        text = if(text.length>4) text.substring(4) else ""
+
+        clipManager.primaryClip = ClipData.newPlainText ("text" , text)
+        showToast("复制成功")
+        return true
+    }
+
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.header_left_image->{
@@ -241,7 +258,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
             return
         }
         if(UserViewModel.liveDataUserInfo.value!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
-            showToast( UserViewModel!!.liveDataUserInfo.value!!.resultMsg)
+            showToast( UserViewModel.liveDataUserInfo.value!!.resultMsg)
             return
         }
         if(UserViewModel.liveDataUserInfo.value!!.resultData==null){
@@ -249,7 +266,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
             return
         }
 
-        if(!UserViewModel!!.liveDataUserInfo.value!!.resultData!!.unlocked) {
+        if(!UserViewModel.liveDataUserInfo.value!!.resultData!!.unlocked) {
             start(ShareTipFragment.newInstance("", ""))
         }else {
             //start(ShareFragment.newInstance("",""))
@@ -262,9 +279,6 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener , View.OnClickList
             var shareFragment=ARouter.getInstance().build(ARouterPath.QuanFragmentGoodsSharePath)
                 .withObject("goods" , goods!!.resultData )
                 .navigation() as ShareFragment
-
-
-
 
             start(shareFragment)
 

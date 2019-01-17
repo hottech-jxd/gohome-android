@@ -13,12 +13,12 @@ class FavoriteAdapter(data :ArrayList<FavoriteBean>) :BaseQuickAdapter<FavoriteB
     override fun convert(helper: BaseViewHolder?, item: FavoriteBean?) {
 
         helper!!.addOnClickListener(R.id.favorite_item_circle)
-        helper!!.addOnClickListener(R.id.favorite_item_container)
+        helper.addOnClickListener(R.id.favorite_item_container)
 
-        helper!!.getView<SimpleDraweeView>(R.id.good_item_image).setImageURI(item!!.pictureUrl)
+        helper.getView<SimpleDraweeView>(R.id.good_item_image).setImageURI(item!!.pictureUrl)
 
 
-        helper!!.setImageResource( R.id.favorite_item_circle , if( item!!.selected ) R.mipmap.selected else R.mipmap.unselected )
+        helper.setImageResource( R.id.favorite_item_circle , if( item.selected ) R.mipmap.selected else R.mipmap.unselected )
 
         helper.setText(R.id.good_item_price , item.price)
         helper.getView<TextView>(R.id.good_item_price).paintFlags = STRIKE_THRU_TEXT_FLAG

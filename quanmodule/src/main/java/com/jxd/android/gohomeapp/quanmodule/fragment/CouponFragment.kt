@@ -149,12 +149,15 @@ class CouponFragment : BaseFragment()
                 return
             }
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
-                .withString("goodsId",bean!!.goodsId)
+                .withString("goodsId",bean.goodsId)
                 .navigation()
         }
     }
 
     override fun onRefresh() {
+
+        coupon_swipeRefreshView.isRefreshing=false
+
         dataBinding!!.goodsViewModel!!.getCouponList()
     }
 
@@ -162,10 +165,6 @@ class CouponFragment : BaseFragment()
         when(v!!.id){
             R.id.coupon_cause->{
                 this.startActivity(Intent(this.context, TutorialsActivity::class.java))
-
-                ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath)
-                    .withString("goodsId","3109518123").navigation()
-
             }
             R.id.coupon_go-> {
                 startActivity(Intent(context, MainActivity2::class.java))

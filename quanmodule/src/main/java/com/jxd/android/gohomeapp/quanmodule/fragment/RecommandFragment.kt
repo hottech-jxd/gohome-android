@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import cn.iwgang.countdownview.CountdownView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -51,8 +52,7 @@ class RecommandFragment : BaseFragment()
     ,SwipeRefreshLayout.OnRefreshListener
     ,BaseQuickAdapter.OnItemChildClickListener
     ,BaseQuickAdapter.RequestLoadMoreListener
-    ,BannerItemClickListener
-    ,OnBannerListener {
+    ,BannerItemClickListener {
 
     private var category: String? = null
     //private var dataAdapter: DataAdapter?=null
@@ -87,10 +87,13 @@ class RecommandFragment : BaseFragment()
     }
 
     override fun initView() {
-
         recommandAdapter= RecommandAdapter(recommands)
         recommandAdapter!!.onItemChildClickListener=this
         recommandAdapter!!.onBannerItemClickListener=this
+        recommandAdapter!!.emptyView = View.inflate(context , R.layout.layout_empty , null)
+        //var emptyTv= recommandAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text)
+        recommandAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text="啊哦，好像没有数据哦!"
+        recommandAdapter!!.isUseEmpty(false)
         recommandAdapter!!.setOnLoadMoreListener(this, recommand_recyclerView)
         recommand_recyclerView.layoutManager= GridLayoutManager(context,2)
         recommandAdapter!!.setSpanSizeLookup(object: BaseQuickAdapter.SpanSizeLookup{
@@ -116,13 +119,15 @@ class RecommandFragment : BaseFragment()
         })
 
         recommand_recyclerView.adapter = recommandAdapter
+        recommandAdapter!!.disableLoadMoreIfNotFullPage()
         recommand_recyclerView.addItemDecoration(RecommandDevider(recommandAdapter!!,context!!))
         recommand_refreshLayout.setOnRefreshListener(this)
 
         dataBinding!!.goodsViewModel!!.liveDataIndexResult.observe(this, Observer { it->
 
             recommand_refreshLayout.isRefreshing=false
-
+            recommandAdapter!!.isUseEmpty(true)
+            recommandAdapter!!.notifyItemChanged(0)
             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
@@ -141,12 +146,17 @@ class RecommandFragment : BaseFragment()
                 return@Observer
             }
 
+            recommandAdapter!!.isUseEmpty(true)
             recommand_refreshLayout.isRefreshing=false
             showToast(it!!)
 
         })
 
         dataBinding!!.goodsViewModel!!.loading.observe(this, Observer { it->
+            if(page>0){
+                recommand_progress.visibility=View.GONE
+                return@Observer
+            }
             recommand_progress.visibility = if(it==null|| !it) View.GONE else View.VISIBLE
         })
 
@@ -156,6 +166,7 @@ class RecommandFragment : BaseFragment()
                 return@Observer
             }
 
+            recommandAdapter!!.isUseEmpty(true)
             dealPage(it.resultData)
 
         })
@@ -194,7 +205,7 @@ class RecommandFragment : BaseFragment()
 
     private fun dealPage(result:IndexPageModel? ) {
 
-        if (result == null || result!!.data == null) {
+        if (result == null || result.data == null) {
             recommandAdapter!!.loadMoreEnd(false)
         } else {
             var datas = result.data!!.goodsList!!
@@ -238,7 +249,7 @@ class RecommandFragment : BaseFragment()
             recommands.add(bannerItem)
         }
 
-        bannerItem.data!!.add(bean)
+        bannerItem.data.add(bean)
     }
 
     /**
@@ -295,18 +306,15 @@ class RecommandFragment : BaseFragment()
         }
     }
 
-    fun fetchData() {
-
+    private fun fetchData() {
+        recommandAdapter!!.isUseEmpty(false)
         dataBinding!!.goodsViewModel!!.index()
     }
 
     override fun onRefresh() {
+        page=0
+        recommand_refreshLayout.isRefreshing = false
         fetchData()
-    }
-
-    override fun OnBannerClick(position: Int) {
-        //newIntent<DetailActivity>()
-        showToast("todo")
     }
 
     override fun onBannerItemClicked(position: Int, bannerIndex: Int) {

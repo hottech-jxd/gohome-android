@@ -11,6 +11,6 @@ enum class OrderStatusEnum(var id:Int,var desc:String){
     ALL(-1,"全部"),
     PREPARE(0,"预估"),
     RECEIVED(1,"收货"),
-    INVAIDAD(2,"失效"),
-    ARRIVED(3,"到账"),
+    INVAIDAD(3,"失效"),
+    ARRIVED(2,"到账"),
 }
