@@ -90,8 +90,9 @@ class CategoryFragment : BaseBackFragment() , FrescoDraweeListener.ImageCallback
         if(indexBean==null) return
 
 
+        var pictureUrl = indexBean!!.pictureUrl
         //todo banner图片 需要后端开发 确认
-        FrescoDraweeController.loadImage(category_Banner , DensityUtils.getScreenWidth(context!!), 100,"http://image.tkcm888.com/adSet_2018-06-01_f406f8550f0f4b21b41fca881bbcb11415278577614883710.png",this)
+        FrescoDraweeController.loadImage(category_Banner , DensityUtils.getScreenWidth(context!!), 100,pictureUrl,this)
 
         var category=Category( indexBean!!.goodsId , "" )
         var fragment = ARouter.getInstance().build(ARouterPath.QuanFragmentTabPath)

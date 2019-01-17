@@ -161,15 +161,15 @@ class SearchActivity : BaseActivity()
         })
 
 
-        dataBinding!!.goodsViewModel!!.liveDataHotSearch.observe(this,Observer{it->
+        dataBinding!!.goodsViewModel!!.liveDataHotSearch.observe(this,android.arch.lifecycle.Observer{it->
 
             if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if(it.resultData==null||it.resultData.data==null) return
+            if(it.resultData==null||it.resultData!!.data==null) return@Observer
 
-            var hotTags=  it.resultData.data
+            var hotTags=  it.resultData!!.data
             search_tags_hot.setTags(hotTags)
 
         })

@@ -97,6 +97,11 @@ class IndexFragment : BaseFragment()
         })
 
 
+        indexBinding!!.goodsViewModel!!.loading.observe(this, Observer{it->
+            index_progress.visibility = if(it==null || !it) View.GONE else View.VISIBLE
+        })
+
+
         return indexBinding!!.root
     }
 

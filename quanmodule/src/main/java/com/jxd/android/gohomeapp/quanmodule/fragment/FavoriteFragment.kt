@@ -235,7 +235,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             adapter.notifyItemChanged(position)
 
             favorite_select.text = "已选(${count})"
-        }else if(view!!.id==R.id.favorite_item_container){
+        }else if(view.id==R.id.favorite_item_container){
             var goodsid = favoriteAdapter!!.getItem(position)!!.goodsId
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId",goodsid).navigation()
         }

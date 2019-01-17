@@ -277,7 +277,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
             if(goods.resultCode != ApiResultCodeEnum.SUCCESS.code ) return
 
             var shareFragment=ARouter.getInstance().build(ARouterPath.QuanFragmentGoodsSharePath)
-                .withObject("goods" , goods!!.resultData )
+                .withObject("goods" , goods.resultData )
                 .navigation() as ShareFragment
 
             start(shareFragment)

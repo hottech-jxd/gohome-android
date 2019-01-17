@@ -31,7 +31,7 @@
                    android:layout_below="@id/clipboard_close"
                    android:src="@mipmap/p1"
                    android:id="@+id/clipboard_p1"
-                   android:layout_gravity="center"
+                   android:layout_centerHorizontal="true"
                    android:layout_height="wrap_content"/>
 
         <RelativeLayout android:layout_below="@id/clipboard_p1"
