@@ -125,22 +125,14 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
 
         data.add( PictureBean( goodsDetailModel.detail!!.detail!! ) )
 
-//        for(i in 0 .. 10){
-//            data.add(DetailBean(i,0,"http://t00img.yangkeduo.com/t09img/images/2018-05-28/4ac0853e1a7a898315f5155bdb733dff.jpeg"))
-//        }
-//        data.add(DetailBean(4,0,"http://t00img.yangkeduo.com/t09img/images/2018-05-28/4ac0853e1a7a898315f5155bdb733dff.jpeg"))
-//
-//        data.add(DetailBean(4,0,"http://t04img.yangkeduo.com/images/2018-05-26/3308bf00afb37922ceef70b9991e0dfd.jpeg"))
-//
-//        data.add(DetailBean(4,0,"http://t08img.yangkeduo.com/images/2018-04-27/facf8f2067f128b3b2af353411c3ffcd.jpeg"))
-
-
         //detail_recyclerView.layoutManager=LinearLayoutManager(this)
         detailAdapter!!.setNewData(data)//= DetailAdapter(data)
 
 
         detail_share_reword.text = "￥${goodsDetailModel.detail!!.reward}"
         detail_sheng.text ="￥${goodsDetailModel.detail!!.reward}"
+
+        detail_favorite_image.setImageResource( if( goodsDetailModel.detail!!.isCollect) R.mipmap.favorite_red else R.mipmap.favorite_gray )
     }
 
 
@@ -212,6 +204,20 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
 
 
         })
+
+        quanFragmentDetailBinding!!.userViewModel!!.liveDataCancelCollectResult.observe(this, Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            detail_favorite_image.setImageResource(R.mipmap.favorite_gray)
+            var goodView= GoodView(context)
+            goodView.setImage(R.mipmap.favorite_gray)
+            goodView.setDistance(100)
+            goodView.setDuration(800)
+            goodView.show(detail_favorite)
+        })
     }
 
     override fun OnBannerClick(position: Int) {
@@ -248,7 +254,29 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
     }
 
     fun collect(){
-        quanFragmentDetailBinding!!.userViewModel!!.collect(goodsId)
+
+        if(UserViewModel.liveDataUserInfo.value ==null ){
+            showToast("请先登录")
+            return
+        }
+        if(UserViewModel.liveDataUserInfo.value!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
+            showToast( UserViewModel.liveDataUserInfo.value!!.resultMsg)
+            return
+        }
+        if(UserViewModel.liveDataUserInfo.value!!.resultData==null){
+            showToast("请先登录")
+            return
+        }
+        if(quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value==null) return
+        if(quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value!!.resultCode !=ApiResultCodeEnum.SUCCESS.code){
+            return
+        }
+
+        if( quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value!!.resultData!!.detail!!.isCollect){
+            quanFragmentDetailBinding!!.userViewModel!!.cancelCollect(goodsId)
+        }else {
+            quanFragmentDetailBinding!!.userViewModel!!.collect(goodsId)
+        }
     }
 
     fun share(){

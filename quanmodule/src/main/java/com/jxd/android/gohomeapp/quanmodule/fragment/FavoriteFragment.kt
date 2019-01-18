@@ -52,7 +52,8 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     var data= ArrayList<FavoriteBean>()
     var selectedAll=false
     var dataBinding:QuanFragmentFavoriteBinding?=null
-    var page:Int=0
+    var pageIndex:Int=0
+    var platType= -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,7 +126,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
                     favoriteAdapter!!.loadMoreEnd(false)
                 } else {
                     favoriteAdapter!!.loadMoreComplete()
-                    page++
+                    pageIndex++
                 }
                 favoriteAdapter!!.addData(datas)
             }
@@ -140,8 +141,16 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             showToast( it!! )
         })
 
+        dataBinding!!.userViewModel!!.liveDataDelCollectResul.observe(this, Observer { it->
+            if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
 
-        dataBinding!!.userViewModel!!.getMyCollect(page+1)
+            onRefresh()
+        })
+
+        dataBinding!!.userViewModel!!.getMyCollect( platType ,pageIndex+1)
     }
 
     override fun onClick(v: View?) {
@@ -186,11 +195,30 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     }
 
     private fun batchDelete(){
-        showToast("todo")
+
+        if(favoriteAdapter==null)return
+        var data =favoriteAdapter!!.data
+        var count:Int
+        var idList=""
+        selectedAll=true
+        for(bean in data){
+            if(bean.selected){
+                if(!TextUtils.isEmpty(idList)){
+                    idList +=","
+                }
+                idList+=bean.goodsId
+            }
+        }
+        if(TextUtils.isEmpty(idList)){
+            showToast("请选择要删除的记录")
+            return
+        }
+
+        dataBinding!!.userViewModel!!.delCollect(idList)
     }
 
     override fun onRefresh() {
-        page=0
+        pageIndex=0
         favoriteAdapter!!.setNewData(ArrayList())
 
         var drawa =ContextCompat.getDrawable(this.context!! , R.mipmap.unselected)
@@ -198,12 +226,12 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         favorite_select.setCompoundDrawables(drawa,null,null,null)
         favorite_select.text="已选(0)"
 
-        dataBinding!!.userViewModel!!.getMyCollect(page+1)
+        dataBinding!!.userViewModel!!.getMyCollect( platType,pageIndex+1)
     }
 
     override fun onLoadMoreRequested() {
         favorite_refreshview.isRefreshing=false
-        dataBinding!!.userViewModel!!.getMyCollect(page+1)
+        dataBinding!!.userViewModel!!.getMyCollect( platType,pageIndex +1)
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {

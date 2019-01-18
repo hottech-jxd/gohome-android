@@ -49,7 +49,7 @@ android {
 
     buildTypes {
         debug{
-            signingConfig signingConfigs.test
+            //signingConfig signingConfigs.app
         }
 
         release {

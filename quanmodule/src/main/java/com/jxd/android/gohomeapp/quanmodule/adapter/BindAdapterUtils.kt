@@ -29,14 +29,14 @@ object BindAdapterUtils {
 
 
     @JvmStatic @BindingAdapter("app:content", "app:source" , requireAll = false)
-    fun setGoodsName(textView: TextView, content: String?, source: String?) {
+    fun setGoodsName(textView: TextView, content: String?, source: Int) {
 
         var spannableString = SpannableString("^&&^$content")
 
         var logo = R.mipmap.pinduoduo
-        if( source== GoodsSourceEnum.PingDuoDuo.code.toString() ){
+        if( source== GoodsSourceEnum.PingDuoDuo.code ){
             logo = R.mipmap.pinduoduo
-        }else if(source== GoodsSourceEnum.TaoBao.code.toString() ){
+        }else if(source== GoodsSourceEnum.TaoBao.code ){
             logo = R.mipmap.taobao
         }
 

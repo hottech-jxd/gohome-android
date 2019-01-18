@@ -117,7 +117,7 @@
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:id="@+id/detail_collect_lay"
-                            android:onClick="@{clickHandler.onClick}"
+                            android:onClick="@{clickHandler::onClick}"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent">
                         <ImageView

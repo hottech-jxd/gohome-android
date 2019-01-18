@@ -49,8 +49,8 @@ object  UserRepository {
         return apiService!!.getProfitStat()
     }
 
-    fun getMyCollect(page:Int):Observable<ApiResult<ArrayList<FavoriteBean>?>>{
-        return apiService!!.getMyCollect(page)
+    fun getMyCollect( platType :Int = -1 , pageIndex:Int=1, pageSize:Int=10 ):Observable<ApiResult<ArrayList<FavoriteBean>?>>{
+        return apiService!!.getMyCollect(platType , pageIndex ,pageSize)
     }
 
     fun getUserInfo():Observable<ApiResult<UserBean?>>{
@@ -75,5 +75,13 @@ object  UserRepository {
 
     fun getBalanceLog(pageIndex: Int=1,pageSize: Int=10):Observable<ApiResult<BalanceModel?>>{
         return apiService!!.getBalanceLog(pageIndex,pageSize)
+    }
+
+    fun cancelCollect(goodsId:String):Observable<ApiResult<Any?>>{
+        return apiService!!.cancelCollect(goodsId)
+    }
+
+    fun delCollect(idList:String):Observable<ApiResult<Any?>>{
+        return apiService!!.delCollect(idList)
     }
 }

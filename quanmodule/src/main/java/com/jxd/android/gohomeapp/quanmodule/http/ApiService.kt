@@ -153,9 +153,11 @@ interface ApiService {
     /**
      * 我的收藏
      */
-    @POST("user/myCollect")
+    @POST("user/getMyCollect")
     @FormUrlEncoded
-    fun getMyCollect(@Field("page") page:Int):Observable<ApiResult<ArrayList<FavoriteBean>?>>
+    fun getMyCollect(@Field("platType") platType:Int =-1
+                     , @Field("pageIndex") pageIndex:Int=1
+                    ,@Field("pageSize") pageSize:Int=10 ):Observable<ApiResult<ArrayList<FavoriteBean>?>>
 
     /**
      * 用户信息
@@ -165,6 +167,12 @@ interface ApiService {
 
     @GET("user/collect")
     fun collect(@Query("goodsId") goodsId:String):Observable<ApiResult<Any?>>
+
+    /**
+     * 取消收藏
+     */
+    @GET("user/cancelCollect")
+    fun cancelCollect(@Query("goodsId") goodsId:String):Observable<ApiResult<Any?>>
 
     /**
      * 获得提现配置信息
@@ -189,4 +197,12 @@ interface ApiService {
      */
     @GET("user/getBalanceLog")
     fun getBalanceLog(@Query("pageIndex") pageIndex:Int ,@Query("pageSize")pageSize:Int=10):Observable<ApiResult<BalanceModel?>>
+
+
+    /**
+     * 批量删除收藏的商品
+     */
+    @GET("user/delCollect")
+    fun delCollect(@Query("cIdList") cIdList:String):Observable<ApiResult<Any?>>
+
 }

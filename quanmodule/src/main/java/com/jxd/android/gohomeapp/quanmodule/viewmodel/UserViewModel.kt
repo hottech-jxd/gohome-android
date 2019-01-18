@@ -33,6 +33,8 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     var liveDataApplyAccountResult = MutableLiveData<ApiResult<UserAccountModel?>>()
     var liveDataApplyListResult=MutableLiveData<ApiResult<ApplyRecordModel?>>()
     var liveDataBalanceLogResult = MutableLiveData<ApiResult<BalanceModel?>>()
+    var liveDataCancelCollectResult = MutableLiveData<ApiResult<Any?>>()
+    var liveDataDelCollectResul = MutableLiveData<ApiResult<Any?>>()
 
     companion object {
         var liveDataUserInfo = MutableLiveData<ApiResult<UserBean?>>()
@@ -115,8 +117,8 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             .subscribe({liveDataProfitStat.postValue(it)}, {onError(it)} )
     }
 
-    fun getMyCollect(page:Int){
-        UserRepository.getMyCollect(page)
+    fun getMyCollect( platType :Int= -1,  pageIndex:Int ){
+        UserRepository.getMyCollect(platType , pageIndex  )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -221,5 +223,35 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             }
             .subscribe(
                 {  liveDataBalanceLogResult.postValue(it) }, { onError(it) })
+    }
+
+    fun cancelCollect( goodsId: String) {
+        UserRepository.cancelCollect(goodsId)
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe(
+                {  liveDataCancelCollectResult.postValue(it) }, { onError(it) })
+    }
+
+    fun delCollect( idList: String) {
+        UserRepository.delCollect( idList)
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe(
+                {  liveDataDelCollectResul.postValue(it) }, { onError(it) })
     }
 }

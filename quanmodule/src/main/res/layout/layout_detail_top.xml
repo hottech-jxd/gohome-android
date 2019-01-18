@@ -2,6 +2,7 @@
 
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="com.jxd.android.gohomeapp.libcommon.util.DateUtils"/>
         <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
     </data>
 
@@ -161,7 +162,7 @@
         <TextView
             android:layout_below="@id/detail_item_lay_1"
             android:id="@+id/detail_item_time"
-            android:text='@{@string/expiredate+goodsBean.couponExpiryDate}'
+            android:text='@{@string/expiredate+  goodsBean.getCouponExpiryDateString() }'
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginLeft="@dimen/dp_20"

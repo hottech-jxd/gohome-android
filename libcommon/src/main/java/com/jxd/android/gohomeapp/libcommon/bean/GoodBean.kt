@@ -1,5 +1,7 @@
 package com.jxd.android.gohomeapp.libcommon.bean
 
+import com.jxd.android.gohomeapp.libcommon.util.DateUtils
+
 data class GoodBean (
    /** 劵价格*/
     var couponPrice :String? ,
@@ -46,11 +48,11 @@ data class GoodsDetailBean(var goodsId: String= "" ,
                       /**
                        * 来源
                        */
-                      var goodsSource:String?="",
+                      var goodsSource:Int=0,
                       /**
                        * 优惠劵有效期
                        */
-                      var couponExpiryDate:String?="" ,
+                      var couponExpiryDate:Long=0 ,
                       /**
                        * 劵价格
                        */
@@ -62,7 +64,15 @@ data class GoodsDetailBean(var goodsId: String= "" ,
                       /**
                        * 劵后价格
                        */
-                      var finalPrice:String?=""){
+                      var finalPrice:String?="",
+                           /**
+                            * 是否收藏过
+                            */
+                      var isCollect:Boolean =false     ){
+
+    fun getCouponExpiryDateString():String{
+        return DateUtils.formatDate(this.couponExpiryDate)
+    }
 }
 
 
