@@ -56,7 +56,11 @@ class MainActivity : BaseActivity() , View.OnClickListener {
         //ARouter.getInstance().build(ARouterPath.QuanActivityIndexPath).navigation()
         //ARouter.getInstance().build("/app/test").navigation()
 
-        newIntent<MainActivity2>()
+        //newIntent<MainActivity2>()
+
+
+
 
     }
+
 }

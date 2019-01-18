@@ -32,6 +32,7 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     var liveDataIndexPageResult = MutableLiveData<ApiResult<IndexPageModel?>>()
     var liveDataGoodsOfCategory=MutableLiveData<ApiResult<GoodsOfCategory?>>()
     var liveDataHotSearch=MutableLiveData<ApiResult<HotSearchModel?>>()
+    var liveDataThemeListResult = MutableLiveData<ApiResult<GoodsOfCategory?>>()
 
     fun getGoodsDetail(goodsId:String){
 
@@ -167,4 +168,18 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
             .subscribe({liveDataHotSearch.postValue(it)},{onError(it)})
     }
 
+    fun getThemeList(goodsSource: String? , code:String?,sortEnum: GoodsSortEnum,page: Int){
+        GoodsRepository.getTheme(goodsSource,code, sortEnum , page)
+            .wrapper()
+            .doOnSubscribe {
+                    t->mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe({liveDataThemeListResult.postValue(it)},{onError(it)})
+    }
 }
+

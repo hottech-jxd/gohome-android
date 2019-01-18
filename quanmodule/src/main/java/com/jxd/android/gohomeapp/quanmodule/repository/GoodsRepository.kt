@@ -63,4 +63,8 @@ object GoodsRepository {
         return apiService!!.hotSearch()
     }
 
+    fun getTheme(goodsSource: String? , code :String? , goodsSortEnum: GoodsSortEnum , page:Int=1):Observable<ApiResult<GoodsOfCategory?>>{
+        return apiService!!.theme(goodsSource , code , goodsSortEnum.name , page)
+    }
+
 }

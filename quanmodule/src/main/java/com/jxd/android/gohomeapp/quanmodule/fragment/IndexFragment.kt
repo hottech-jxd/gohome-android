@@ -26,15 +26,23 @@ import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.Category
+import com.jxd.android.gohomeapp.libcommon.bean.Constants
+import com.jxd.android.gohomeapp.libcommon.util.AppUtil
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
 import com.jxd.android.gohomeapp.libcommon.util.showToast
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
 //import com.jxd.android.gohomeapp.quanmodule.DetailActivity
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.index_tab
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIndexBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
+import com.tencent.mm.opensdk.modelmsg.WXTextObject
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject
 import kotlinx.android.synthetic.main.layout_header.*
 import kotlinx.android.synthetic.main.quan_fragment_index.*
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -160,7 +168,8 @@ class IndexFragment : BaseFragment()
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.header_search_lay -> {
-                search()
+                // search()
+                testshare()
             }
             R.id.header_right_image -> {
                 (parentFragment as MainFragment).start(FavoriteFragment.newInstance("", ""))
@@ -175,6 +184,32 @@ class IndexFragment : BaseFragment()
                 _mActivity.onBackPressed()
             }
         }
+    }
+
+    fun testshare(){
+        var text = WXTextObject()
+        text.text = "ssssssssss"
+        //webPage.webpageUrl = "http://wwww.baidu.com"
+
+        var msg= WXMediaMessage(text)
+        //msg.title = "testtest"
+        msg.description="testtestest"
+        //var bitmapFolder = Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"
+        //val imageDirectory = File(bitmapFolder)
+
+        //val filePath = imageDirectory.list()[0]
+        //var bitmap = AppUtil.fileToByte(filePath)
+
+        //msg.thumbData = bitmap
+
+        var req = SendMessageToWX.Req()
+        req.transaction =  System.currentTimeMillis().toString()
+        req.message =msg
+        req.scene =  SendMessageToWX.Req.WXSceneSession
+        //req.userOpenId = getOpenId()
+
+        //调用api接口，发送数据到微信
+        QuanModule.WechatApi!!.sendReq(req)
     }
 
     fun search() {

@@ -91,6 +91,15 @@ interface ApiService {
     fun hotSearch():Observable<ApiResult<HotSearchModel?>>
 
     /**
+     *
+     */
+    @GET("goods/theme")
+    fun theme(@Query("goodsSource") goodsSource:String?="0",
+              @Query("code") code:String?,
+              @Query("sort") sort:String ,
+              @Query("page") page:Int =1 ):Observable<ApiResult<GoodsOfCategory?>>
+
+    /**
      * 提现申请
      */
     @POST("user/userApply")

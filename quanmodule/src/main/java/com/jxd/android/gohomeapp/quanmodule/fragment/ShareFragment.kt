@@ -36,6 +36,7 @@ import com.jxd.android.gohomeapp.libcommon.bean.ShareBean
 import com.jxd.android.gohomeapp.libcommon.util.AppUtil
 import com.jxd.android.gohomeapp.libcommon.util.PermissionsUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider4
@@ -46,6 +47,9 @@ import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadListener
 import com.liulishuo.filedownloader.FileDownloadQueueSet
 import com.liulishuo.filedownloader.FileDownloader
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject
 import kotlinx.android.synthetic.main.layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_goods_detail.*
 import kotlinx.android.synthetic.main.quan_fragment_share.*
@@ -212,7 +216,9 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
                 showToast("复制成功")
             }
             R.id.share_weChat->{
-                shareImages()
+                //shareImages()
+
+                shareImageByWechaSDK()
             }
             R.id.share_weComment->{
                 shareImages()
@@ -340,6 +346,36 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         //shareIntent.putExtra(Constants.INTENT_GOODSID , quan.dataId )
         //currentShareDataId=quan.dataId
         startActivityForResult( shareIntent , REQUEST_CODE_SHARE )
+    }
+
+    private fun shareImageByWechaSDK(){
+
+        var dirPath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
+        if(isDownPicture(dirPath)) saveImage( true)
+
+
+        var webPage = WXWebpageObject()
+        webPage.webpageUrl = "http://wwww.baidu.com"
+
+        var msg= WXMediaMessage(webPage)
+        msg.title = "testtest"
+        msg.description="testtestest"
+        var bitmapFolder = Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"
+        val imageDirectory = File(bitmapFolder)
+
+        val filePath = imageDirectory.list()[0]
+        var bitmap = AppUtil.fileToByte(filePath)
+
+        msg.thumbData = bitmap
+
+        var req = SendMessageToWX.Req()
+        req.transaction =  System.currentTimeMillis().toString()
+        req.message =msg
+        req.scene =  SendMessageToWX.Req.WXSceneSession
+        //req.userOpenId = getOpenId()
+
+        //调用api接口，发送数据到微信
+        QuanModule.WechatApi!!.sendReq(req)
     }
 
     /**

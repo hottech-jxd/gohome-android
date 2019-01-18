@@ -1,45 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
         <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
     </data>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
+            android:layout_width="match_parent"
+            android:id="@+id/category_refreshview"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:addStatesFromChildren="true"
+            android:fitsSystemWindows="true"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
              xmlns:tools="http://schemas.android.com/tools"
              android:orientation="vertical"
+             android:fitsSystemWindows="true"
               android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".fragment.CategoryFragment">
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:orientation="vertical"
-                  android:id="@+id/category_header"
-                  android:layout_height="wrap_content">
-    <include layout="@layout/layout_header"
-             app:clickHandler="@{clickHandler}"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"/>
-    </LinearLayout>
 
-    <com.facebook.drawee.view.SimpleDraweeView android:layout_width="match_parent"
-                                               app:actualImageScaleType="centerCrop"
-                                               app:failureImageScaleType="centerCrop"
-                                               app:placeholderImageScaleType="centerCrop"
-                                               android:id="@+id/category_Banner"
-                                               android:layout_below="@id/category_header"
-                                               android:layout_height="wrap_content"/>
+            <include layout="@layout/layout_header"
+                     android:background="@color/white"
+                     app:clickHandler="@{clickHandler}"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
 
-    <FrameLayout
-            android:layout_below="@id/category_Banner"
-            android:id="@+id/category_container"
+
+
+
+            <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    </FrameLayout>
+            android:clipToPadding="true"
+            android:layout_height="match_parent"
+            tools:context=".fragment.CategoryFragment">
 
+    <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/category_appbarlayout"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/white"
+                app:title=""
+                app:titleEnabled="false"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="match_parent"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.6"
+                    app:actualImageScaleType="centerCrop"
+                    app:failureImageScaleType="centerCrop"
+                    app:placeholderImageScaleType="centerCrop"
+                    android:id="@+id/category_Banner"
+                    android:layout_height="match_parent"/>
+
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--app:layout_collapseMode="pin"-->
+                <!--android:background="@color/white"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<include layout="@layout/layout_header"-->
+                         <!--app:clickHandler="@{clickHandler}"-->
+                         <!--android:layout_width="match_parent"-->
+                         <!--android:layout_height="wrap_content"/>-->
+
+
+            <!--</android.support.v7.widget.Toolbar>-->
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <include layout="@layout/layout_column"
+                 app:layout_collapseMode="pin"
+                 app:clickHandler="@{clickHandler}"
+                 android:id="@+id/category_column"
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"/>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+        <!--<LinearLayout android:layout_width="match_parent"-->
+                      <!--android:orientation="vertical"-->
+                      <!--android:layout_height="wrap_content">-->
+
+            <!--<include layout="@layout/layout_column"-->
+                     <!--app:clickHandler="@{clickHandler}"-->
+                     <!--android:id="@+id/category_column"-->
+                     <!--android:layout_height="wrap_content"-->
+                     <!--android:layout_width="match_parent"/>-->
+
+            <android.support.v7.widget.RecyclerView
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:id="@+id/category_recyclerview_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+        <!--</LinearLayout>-->
+
+
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+            <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+            android:id="@+id/category_progress"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </LinearLayout>
+
+    </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
 
 </layout>

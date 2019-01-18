@@ -7,6 +7,8 @@ import com.jxd.android.gohomeapp.libcommon.bean.UserBean
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.CommonViewModel
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import com.liulishuo.filedownloader.FileDownloader
+import com.tencent.mm.opensdk.openapi.IWXAPI
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import me.yokeyword.fragmentation.Fragmentation
 
 /**
@@ -27,6 +29,10 @@ object QuanModule {
     //var userBean:UserBean?=null
     var userId:String=""
 
+    var wechat_appId="wx7a334070f7d14aee"
+
+    var WechatApi: IWXAPI?=null
+
     fun init(application: BaseApplication){
 
         app = application
@@ -45,6 +51,11 @@ object QuanModule {
 
 //        var userViewModel = UserViewModel(app!!)
 //        userViewModel.getUserInfo(false)
+
+
+        WechatApi = WXAPIFactory.createWXAPI( app , wechat_appId , true )
+        WechatApi!!.registerApp( wechat_appId )
+
 
     }
 

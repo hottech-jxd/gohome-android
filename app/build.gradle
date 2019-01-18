@@ -9,7 +9,8 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.jxd.android.gohomeapp"
+        //applicationId "com.jxd.android.gohomeapp"
+        applicationId "com.huotu.mall.cathigo"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -37,11 +38,18 @@ android {
             storeFile file('../keystore/key.jks')
             storePassword 'jinxiangdong'
         }
+
+        test{
+            keyAlias 'huotucathigo'
+            keyPassword 'huotucathigo'
+            storeFile file('../keystore/cathigo.jks')
+            storePassword 'huotucathigo'
+        }
     }
 
     buildTypes {
         debug{
-            //signingConfig signingConfigs.app
+            signingConfig signingConfigs.test
         }
 
         release {
@@ -96,4 +104,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     /*recyckerview库*/
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
+
+    //微信分享库
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
 }
