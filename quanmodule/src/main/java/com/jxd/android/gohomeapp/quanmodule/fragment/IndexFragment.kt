@@ -168,8 +168,7 @@ class IndexFragment : BaseFragment()
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.header_search_lay -> {
-                // search()
-                testshare()
+                search()
             }
             R.id.header_right_image -> {
                 (parentFragment as MainFragment).start(FavoriteFragment.newInstance("", ""))
