@@ -29,10 +29,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.Constants
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
-import com.jxd.android.gohomeapp.libcommon.bean.ShareBean
+import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.libcommon.util.AppUtil
 import com.jxd.android.gohomeapp.libcommon.util.PermissionsUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
@@ -43,6 +40,7 @@ import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider4
 import com.jxd.android.gohomeapp.quanmodule.adapter.SharePictureAdapter
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentShareBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadListener
 import com.liulishuo.filedownloader.FileDownloadQueueSet
@@ -50,17 +48,14 @@ import com.liulishuo.filedownloader.FileDownloader
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject
-import kotlinx.android.synthetic.main.layout_common_header.*
+import com.tencent.wxop.stat.event.i
+import kotlinx.android.synthetic.main.layout_me_header.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_goods_detail.*
 import kotlinx.android.synthetic.main.quan_fragment_share.*
 import kotlinx.android.synthetic.main.quan_fragment_share.view.*
 import java.io.File
 import java.util.*
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -70,31 +65,21 @@ private const val ARG_PARAM2 = "param2"
  */
 @Route(path = ARouterPath.QuanFragmentGoodsSharePath)
 class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener , View.OnClickListener {
-
-    private var param1: String? = null
-    private var param2: String? = null
-    var dataBinding:QuanFragmentShareBinding?=null
-    var sharePictureAdapter : SharePictureAdapter?=null
+    private var dataBinding:QuanFragmentShareBinding?=null
+    private var sharePictureAdapter : SharePictureAdapter?=null
     private var REQUEST_CODE_SHARE=3001
-
     @Autowired(name="goods") @JvmField var goodsDetailBean :GoodsDetailBean?=null
+    private var shareBean:GoodsShareBean?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         ARouter.getInstance().inject(this)
-
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
     }
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         dataBinding = DataBindingUtil.inflate(inflater , R.layout.quan_fragment_share , container , false )
         dataBinding!!.goodsViewModel = ViewModelProviders.of(this).get(GoodsViewModel::class.java)
+        dataBinding!!.userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         dataBinding!!.goodsBean = goodsDetailBean
         dataBinding!!.clickHandler=this
         return dataBinding!!.root
@@ -123,9 +108,9 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             }
             if(it.resultData ==null || it.resultData!!.share==null ) return@Observer
 
+            shareBean = it.resultData!!.share
             share_content.text = it.resultData!!.share!!.share
         })
-
 
         dataBinding!!.goodsViewModel!!.error.observe(this, Observer { it->
             if(TextUtils.isEmpty(it)) return@Observer
@@ -136,15 +121,20 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         dataBinding!!.goodsViewModel!!.loading.observe(this, Observer { it->
             share_progress.visibility = if( it==null || !it ) View.GONE else View.VISIBLE
         })
+
+        dataBinding!!.userViewModel!!.liveDataRollDescResult.observe(this , Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                return@Observer
+            }
+
+            initShareMessage(it.resultData)
+        })
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
 
-        if (goodsDetailBean == null) return
-
-
-
+        if(goodsDetailBean == null) return
         if( goodsDetailBean!!.pictureUrls == null) return
 
         sharePictureAdapter!!.setNewData(ArrayList())
@@ -153,22 +143,22 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             sharePictureAdapter!!.addData(bean)
         }
 
-        initShareMessage()
+        dataBinding!!.goodsViewModel!!.getShareInfo( goodsDetailBean!!.goodsId , goodsDetailBean!!.goodsSource )
 
-        dataBinding!!.goodsViewModel!!.getShareInfo( goodsDetailBean!!.goodsId )
-
+        dataBinding!!.userViewModel!!.getRollDesc()
     }
 
-    private fun initShareMessage(){
-        var messages = ArrayList<String>()
-        messages.add("asdfsafassfa")
-        messages.add("232323")
-        messages.add("打发斯蒂芬爱的发声发顺丰阿法士大夫撒飞洒发啊所发生的")
-        messages.add("sdfs3w423sfs2342342342342423srsfsf")
+    private fun initShareMessage(messageList : MessageModel?){
+        if(messageList==null || messageList.list==null|| messageList.list!!.size<1){
+            share_lay_scroll.visibility=View.GONE
+            return
+        }
+
+        share_lay_scroll.visibility=View.VISIBLE
 
 
 
-        share_scrollTextInfo.setResource(messages)
+        share_scrollTextInfo.setResource(messageList.list)
 
 
         //提供四个方向动画；默认从下往上
@@ -192,13 +182,14 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         for(i in 0 until  data.size ){
             if( i==position){
-                data[i].check = !data[i].check
-                sharePictureAdapter!!.notifyItemChanged(position)
+                data[i].check = true //!data[i].check
+                //sharePictureAdapter!!.notifyItemChanged(position)
+            }else{
+                data[i].check = false
             }
         }
 
-
-
+        sharePictureAdapter!!.notifyDataSetChanged()
     }
 
 
@@ -217,11 +208,11 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             }
             R.id.share_weChat->{
                 //shareImages()
-
-                shareImageByWechaSDK()
+                shareImageByWechaSDK(SendMessageToWX.Req.WXSceneSession)
             }
             R.id.share_weComment->{
-                shareImages()
+                //shareImages()
+                shareImageByWechaSDK(SendMessageToWX.Req.WXSceneTimeline)
             }
         }
     }
@@ -237,15 +228,21 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
     /**
      * 将图片存到本地
      */
-    private fun saveImage( needShare:Boolean=false) {
+    private fun saveImage( needShare:Boolean=false , scene: Int= -1) {
 
         if(!checkPermission()) return
-
 
         if(goodsDetailBean==null || goodsDetailBean!!.pictureUrls ==null || goodsDetailBean!!.pictureUrls!!.size<1){
             showToast("没有图像需要下载！")
             return
         }
+
+        if(!checkSelectPicture()){
+            showToast("请勾选要下载的图片")
+            return
+        }
+
+
         var dir = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
         //isShowProgress=true
         var downLoadQueueSet = FileDownloadQueueSet(object : FileDownloadListener() {
@@ -262,7 +259,8 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
                     showToast("图片已经保存在"+dir)
 
                     if(needShare){
-                        shareImages()
+                        //shareImages()
+                        shareImageByWechaSDK(scene)
                     }
                 }
 
@@ -298,13 +296,18 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             f.parentFile.mkdir()
         }
 
-        for (i in 0 until goodsDetailBean!!.pictureUrls!!.size) {
+        //var index= 0
+        for ( item in  sharePictureAdapter!!.data) {
+            if(!item.check) continue
 
-            var name = AppUtil.getFileName( goodsDetailBean!!.pictureUrls!![i] ) //(i + 1).toString() + ".jpg"
+            var name = AppUtil.getFileName( item.url )
             var path = dir + name
-            var idId = IdId(i, goodsDetailBean!!.pictureUrls!!.size - 1)
+            var idId = IdId( 1 , 1 )
 
-            tasks.add(FileDownloader.getImpl().create(goodsDetailBean!!.pictureUrls!![i]).setTag(i + 1).setPath(path).setTag(idId))
+            tasks.add(FileDownloader.getImpl().create(item.url).setPath(path).setTag(idId))
+
+            //index++
+
         }
         downLoadQueueSet.disableCallbackProgressTimes()
         downLoadQueueSet.setAutoRetryTimes(1)
@@ -348,30 +351,100 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         startActivityForResult( shareIntent , REQUEST_CODE_SHARE )
     }
 
-    private fun shareImageByWechaSDK(){
+
+    private fun checkSelectPicture():Boolean{
+        if(sharePictureAdapter!!.data.size<1) return false
+        for(item in sharePictureAdapter!!.data){
+            if(item.check) return true
+        }
+        return false
+    }
+
+    private fun getSelectPicture():String?{
+        if(sharePictureAdapter!!.data.size<1) return ""
+        for(item in sharePictureAdapter!!.data){
+            if(item.check) return item.url
+        }
+        return ""
+    }
+
+
+    private fun shareImageByWechaSDK( scene: Int ){
+        if(goodsDetailBean==null) return
+        if(shareBean==null) return
+
+        if(!checkSelectPicture()) {
+            showToast("请选择要分享的图片")
+            return
+        }
+
+        var pictureName = getSelectPicture()
+        if(TextUtils.isEmpty(pictureName)){
+            return
+        }
+        pictureName = AppUtil.getFileName(pictureName)
 
         var dirPath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
-        if(isDownPicture(dirPath)) saveImage( true)
+        if(isDownPicture(dirPath)) {
+            saveImage(true , scene )
+            return
+        }
+
+        var linkUrl = shareBean!!.weAppWebViewUrl
+        if(TextUtils.isEmpty(linkUrl)){
+            linkUrl=shareBean!!.weAppWebViewShortUrl
+        }
+        if(TextUtils.isEmpty(linkUrl)){
+            linkUrl = shareBean!!.url
+        }
+        if(TextUtils.isEmpty(linkUrl)){
+            linkUrl = shareBean!!.shortUrl
+        }
+
+        var title = shareBean!!.share
+
+        var description = title
 
 
+        val imageDirectory = File(dirPath)
+        var filePath =""
+        var list = imageDirectory.list()
+        for(item in list){
+            var tempName =AppUtil.getFileName(item)
+            if(tempName.equals(pictureName,true)){
+                filePath = item
+                break
+            }
+        }
+        if( TextUtils.isEmpty( filePath)){
+            showToast("请下载图片")
+            return
+        }
+
+        var imageBytes = AppUtil.fileToByte(filePath)
+
+        shareWechat(scene , linkUrl , title , description , imageBytes)
+    }
+
+    private fun shareWechat( scene:Int ,  linkUrl:String? , title:String?, description:String? , imageBytes:ByteArray?){
         var webPage = WXWebpageObject()
-        webPage.webpageUrl = "http://wwww.baidu.com"
+        webPage.webpageUrl = linkUrl//"http://wwww.baidu.com"
 
         var msg= WXMediaMessage(webPage)
-        msg.title = "testtest"
-        msg.description="testtestest"
+        msg.title = title //"testtest"
+        msg.description= description // "testtestest"
         var bitmapFolder = Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"
         val imageDirectory = File(bitmapFolder)
 
         val filePath = imageDirectory.list()[0]
         var bitmap = AppUtil.fileToByte(filePath)
 
-        msg.thumbData = bitmap
+        msg.thumbData = imageBytes //bitmap
 
         var req = SendMessageToWX.Req()
         req.transaction =  System.currentTimeMillis().toString()
         req.message =msg
-        req.scene =  SendMessageToWX.Req.WXSceneSession
+        req.scene = scene // SendMessageToWX.Req.WXSceneSession
         //req.userOpenId = getOpenId()
 
         //调用api接口，发送数据到微信
@@ -505,18 +578,11 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment ShareFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             ShareFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
             }
     }
 }

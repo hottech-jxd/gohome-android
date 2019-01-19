@@ -33,6 +33,8 @@ object QuanModule {
 
     var WechatApi: IWXAPI?=null
 
+    var userViewModel:UserViewModel?=null
+
     fun init(application: BaseApplication){
 
         app = application
@@ -61,8 +63,8 @@ object QuanModule {
 
     fun setMobile(mobile :String){
         this.userId = mobile
-        var userViewModel = UserViewModel(app!!)
-        userViewModel.getUserInfo(false)
+        userViewModel = UserViewModel(app!!)
+        userViewModel!!.getMyIndex()//getUserInfo(false)
     }
 
 

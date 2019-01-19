@@ -28,8 +28,9 @@ import com.jxd.android.gohomeapp.quanmodule.adapter.FavoriteAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentFavoriteBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
-import kotlinx.android.synthetic.main.layout_common_header.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_favorite.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,14 +100,6 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         favorite_recyclerview.adapter = favoriteAdapter
         favorite_refreshview.setOnRefreshListener(this)
 
-//        for(i in 0..10){
-//            data.add(FavoriteBean(1, false , 0 ,"测试" ,"", "","", "http://app.infunpw.com/commons/images/cinema/cinema_films/3823.jpg" ,null,"","","","","",""))
-//        }
-//        favoriteAdapter!!.notifyDataSetChanged()
-
-        //presenter=FavoritePresenter(this)
-        //presenter!!.favoriteList(pageIndex)
-
 
         dataBinding!!.userViewModel!!.liveDataMyCollect.observe(this, Observer { it->
 
@@ -118,11 +111,11 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             }
 
             var datas: ArrayList<FavoriteBean>?
-            if (it.resultData == null) {
+            if (it.resultData == null || it.resultData!!.list==null ) {
                 favoriteAdapter!!.loadMoreEnd(false)
             } else {
-                datas = it.resultData!!
-                if (  datas.size < 1) {
+                datas = it.resultData!!.list
+                if (  datas!!.size < 1) {
                     favoriteAdapter!!.loadMoreEnd(false)
                 } else {
                     favoriteAdapter!!.loadMoreComplete()
@@ -141,7 +134,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             showToast( it!! )
         })
 
-        dataBinding!!.userViewModel!!.liveDataDelCollectResul.observe(this, Observer { it->
+        dataBinding!!.userViewModel!!.liveDataDelCollectResult.observe(this, Observer { it->
             if(it!!.resultCode != ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer

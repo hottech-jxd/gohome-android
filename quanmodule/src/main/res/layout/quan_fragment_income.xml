@@ -21,7 +21,7 @@
                  android:clipToPadding="true"
              tools:context=".fragment.IncomeFragment">
 
-        <include layout="@layout/layout_common_header"
+        <include layout="@layout/quan_layout_common_header"
                  app:clickHandler="@{clickHandler}"
                  android:layout_width="match_parent"
                  android:id="@+id/income_lay_header"
@@ -86,14 +86,14 @@
                                   android:textSize="@dimen/sp_14"
                                   android:layout_height="wrap_content"/>
                         <TextView android:layout_width="wrap_content"
-                                  android:text='@{statsData.today.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default="0.00"}'
+                                  android:text='@{statsData.todayProfit.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default="0.00"}'
                                   android:id="@+id/incom_today_balance"
                                   android:textSize="@dimen/sp_16"
                                   android:textColor="@color/black"
                                   android:layout_gravity="center_horizontal"
                                   android:layout_height="wrap_content"/>
                         <TextView android:layout_width="wrap_content"
-                                  android:text="预估5单"
+                                  android:text="预估0单"
                                   android:paddingTop="@dimen/dp_4"
                                   android:textSize="@dimen/sp_10"
                                   android:id="@+id/income_today_order_count"
@@ -115,14 +115,14 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text='@{ statsData.yesterday.setScale(2, BigDecimal.ROUND_HALF_UP).toString() , default="0.00"}'
+                              android:text='@{ statsData.yesterdayProfit.setScale(2, BigDecimal.ROUND_HALF_UP).toString() , default="0.00"}'
                               android:id="@+id/income_yestoday_balance"
                               android:textColor="@color/black"
                               android:textSize="@dimen/sp_16"
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估5单"
+                              android:text="预估0单"
                               android:id="@+id/income_yestoday_order_count"
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
@@ -148,14 +148,14 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text='@{statsData.thisWeek.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default="0.00"}'
+                              android:text='@{statsData.thisWeekProfit.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default="0.00"}'
                               android:id="@+id/income_week_balance"
                               android:textColor="@color/black"
                               android:textSize="@dimen/sp_16"
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估5单"
+                              android:text="预估0单"
                               android:id="@+id/income_week_order_count"
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
@@ -178,14 +178,14 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text='@{statsData.lastWeek.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default="0.00"}'
+                              android:text='@{statsData.lastWeekProfit.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default="0.00"}'
                               android:id="@+id/income_pre_week_balance"
                               android:textColor="@color/black"
                               android:textSize="@dimen/sp_16"
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估5单"
+                              android:text="预估0单"
                               android:id="@+id/income_pre_week_order_count"
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
@@ -212,14 +212,14 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text='@{ statsData.thisMonth.setScale(2, BigDecimal.ROUND_HALF_UP).toString() , default= "0.00"}'
+                              android:text='@{ statsData.thisMonthProfit.setScale(2, BigDecimal.ROUND_HALF_UP).toString() , default= "0.00"}'
                               android:textColor="@color/black"
                               android:textSize="@dimen/sp_16"
                               android:id="@+id/income_month_balance"
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估5单"
+                              android:text="预估0单"
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
                               android:id="@+id/income_month_order_count"
@@ -242,14 +242,14 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text='@{statsData.lastMonth.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default= "0.00"}'
+                              android:text='@{statsData.lastMonthProfit.setScale(2, BigDecimal.ROUND_HALF_UP).toString(),default= "0.00"}'
                               android:id="@+id/income_pre_month_balance"
                               android:textColor="@color/black"
                               android:textSize="@dimen/sp_16"
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估5单"
+                              android:text="预估0单"
                               android:paddingTop="@dimen/dp_4"
                               android:id="@+id/income_pre_month_order_count"
                               android:textSize="@dimen/sp_10"

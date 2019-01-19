@@ -190,13 +190,13 @@
 
                 </LinearLayout>
 
-                <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
-                        android:layout_width="match_parent"
-                        android:id="@+id/detail_progress"
-                        android:visibility="@{goodsViewModel.loading ? View.VISIBLE : View.GONE}"
-                        android:layout_height="match_parent"/>
-
             </android.support.design.widget.CoordinatorLayout>
+
+            <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
+                    android:id="@+id/detail_progress"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
         </FrameLayout>
     </layout>

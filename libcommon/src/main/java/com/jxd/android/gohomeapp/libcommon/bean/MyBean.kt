@@ -14,5 +14,7 @@ import java.math.BigDecimal
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-data class MyBean(var lastWeek:BigDecimal , 	var thisWeek:BigDecimal , var 	total:BigDecimal) {
+data class MyBean(var lastWeekMoney :BigDecimal , 	var thisWeekMoney:BigDecimal , var 	totalMoney :BigDecimal , var userBalance:BigDecimal) {
 }
+
+data class MyModel(var data:MyBean?)

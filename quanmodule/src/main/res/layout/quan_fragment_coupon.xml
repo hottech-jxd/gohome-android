@@ -13,7 +13,7 @@
              android:layout_height="match_parent"
              android:fitsSystemWindows="true"
              android:clipToPadding="true"
-             android:background="#FFC000"
+             android:background="@mipmap/bg"
              tools:context=".fragment.CouponFragment">
 
     <RelativeLayout
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content">
 
         <ImageView android:layout_width="wrap_content"
-                   android:src="@mipmap/category"
+                   android:src="@mipmap/more2"
                    android:paddingTop="@dimen/dp_10"
                    android:paddingRight="@dimen/dp_16"
                    android:paddingBottom="@dimen/dp_10"
@@ -70,6 +70,7 @@
                   android:layout_centerVertical="true"
                   android:textColor="@color/white"
                   android:text="可省0元"
+                  android:visibility="gone"
                   android:layout_marginLeft="@dimen/dp_10"
                   android:layout_height="wrap_content"/>
         <ImageView android:layout_width="wrap_content"

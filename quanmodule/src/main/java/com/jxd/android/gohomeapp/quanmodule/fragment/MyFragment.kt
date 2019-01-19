@@ -10,6 +10,7 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +20,9 @@ import com.gyf.barlibrary.ImmersionBar
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.MyBean
-import com.jxd.android.gohomeapp.libcommon.bean.OrderStatusEnum
-import com.jxd.android.gohomeapp.libcommon.bean.OrderTypeEnum
+import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.libcommon.util.showToast
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentMeBinding
@@ -51,7 +50,6 @@ class MyFragment : BaseFragment() , View.OnClickListener
     , SwipeRefreshLayout.OnRefreshListener
     , AppBarLayout.OnOffsetChangedListener{
 
-    private var param1: String? = null
     var fragments=ArrayList<BaseFragment>()
     var titles =ArrayList<String?>()
     var orderAdapter:AppFragmentAdapter?=null
@@ -69,7 +67,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
         dataBinding = DataBindingUtil.inflate(inflater , R.layout.quan_fragment_me , container, false)
         dataBinding!!.clickHandler = this
         dataBinding!!.userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        dataBinding!!.myBean = MyBean(BigDecimal.ZERO,BigDecimal.ZERO , BigDecimal.ZERO)
+        dataBinding!!.myBean = MyBean(BigDecimal.ZERO,BigDecimal.ZERO , BigDecimal.ZERO, BigDecimal.ZERO )
         return dataBinding!!.root
     }
 
@@ -77,52 +75,54 @@ class MyFragment : BaseFragment() , View.OnClickListener
         super.onViewCreated(view, savedInstanceState)
 
 
+        my_header_username.text = QuanModule.userId
         quan_my_appbarLayout.addOnOffsetChangedListener (this)
 
 
-        dataBinding!!.userViewModel!!.liveDataMyResult.observe(this, Observer { it->
+        UserViewModel.liveDataMyResult.observe(this, Observer { it->
             quan_my_refresview.isRefreshing=false
             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
 
                 showToast(it.resultMsg)
                 return@Observer
             }
+            if(it!!.resultData ==null || it!!.resultData!!.data==null) return@Observer
 
-            dataBinding!!.myBean = it.resultData
-            //this.myBean = it.data
-            //my_header_pre_week_momey.text = "￥${it.data!!.lastWeek.setScale(2,BigDecimal.ROUND_HALF_UP)}"
-            //my_header_this_week_momey.text = "￥${it.data!!.thisWeek.setScale(2, BigDecimal.ROUND_HALF_UP)}"
-            //my_header_all_momey.text = "￥${it.data!!.total.setScale(2,BigDecimal.ROUND_HALF_UP)}"
+            dataBinding!!.myBean = it.resultData!!.data
+
         })
 
-        dataBinding!!.userViewModel!!.hasError.observe(this, Observer {
-            if(it==false) return@Observer
+        dataBinding!!.userViewModel!!.error.observe(this, Observer {
+            if( TextUtils.isEmpty(it) ) return@Observer
             quan_my_refresview.isRefreshing=false
-            showToast( dataBinding!!.userViewModel!!.error.value!! )
+            showToast( it )
         } )
 
-
-        UserViewModel.liveDataUserInfo.observe(this, Observer {it->
+        dataBinding!!.userViewModel!!.liveDataRollDescResult.observe(this, Observer { it->
             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
-                showToast(it.resultMsg)
                 return@Observer
             }
-            if(it.resultData==null)return@Observer
 
-            my_header_logo.setImageURI(it.resultData!!.head)
-            my_header_username.text = it.resultData!!.userId
-            my_header_balance.text = it.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
-
+            getMessages(it.resultData)
         })
+
+//        UserViewModel.liveDataUserInfo.observe(this, Observer {it->
+//            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+//                showToast(it.resultMsg)
+//                return@Observer
+//            }
+//            if(it.resultData==null)return@Observer
+//
+//            my_header_logo.setImageURI(it.resultData!!.head)
+//            my_header_username.text = it.resultData!!.userId
+//            my_header_balance.text = it.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+//
+//        })
 
     }
 
     override fun onOffsetChanged(p0: AppBarLayout?, verticalOffset: Int) {
-        if(verticalOffset>=0){
-            quan_my_refresview.isEnabled=true
-        }else{
-            quan_my_refresview.isEnabled = false
-        }
+            quan_my_refresview.isEnabled= verticalOffset>=0
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -176,19 +176,25 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
     fun fetchData() {
         dataBinding!!.userViewModel!!.getMyIndex()
-        dataBinding!!.userViewModel!!.getUserInfo(false)
+        //dataBinding!!.userViewModel!!.getUserInfo(false)
+        dataBinding!!.userViewModel!!.getRollDesc()
 
-        initMessages()
     }
 
-    private fun initMessages(){
-        var messages = ArrayList<String>()
-        messages.add("asdfsafassfaeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-        messages.add("23232333333333333333333333333333333333333333333")
-        messages.add("打发斯蒂芬爱的发声发顺丰阿法士大夫撒飞洒发啊所发生的")
-        messages.add("sdfs3w423sfs23eeeeeeeeee42342342342423srsfsf")
+    private fun getMessages(messageList :MessageModel?){
+        if(messageList==null || messageList.list==null|| messageList.list!!.size<1){
+            my_header_lay_message.visibility=View.GONE
+            return
+        }
 
-        my_header_scrollTextInfo.setResource(messages)
+        my_header_lay_message.visibility=View.VISIBLE
+//        var messages = ArrayList<String>()
+//        messages.add("asdfsafassfaeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+//        messages.add("23232333333333333333333333333333333333333333333")
+//        messages.add("打发斯蒂芬爱的发声发顺丰阿法士大夫撒飞洒发啊所发生的")
+//        messages.add("sdfs3w423sfs23eeeeeeeeee42342342342423srsfsf")
+
+        my_header_scrollTextInfo.setResource( messageList.list)
 
         //提供四个方向动画；默认从下往上
         my_header_scrollTextInfo.setAnimationTop2Bottom()

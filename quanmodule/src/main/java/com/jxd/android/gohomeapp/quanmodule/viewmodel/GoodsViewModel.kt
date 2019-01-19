@@ -98,8 +98,8 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
             .subscribe({liveDataSearchResult.postValue(it)},{onError(it)})
     }
 
-    fun getShareInfo(goodsId:String ){
-        GoodsRepository.getShareInfo( goodsId )
+    fun getShareInfo(goodsId:String , goodsSource:Int ){
+        GoodsRepository.getShareInfo( goodsId ,goodsSource )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)

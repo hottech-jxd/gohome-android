@@ -29,7 +29,7 @@ import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCashBankBind
 import com.jxd.android.gohomeapp.quanmodule.repository.UserRepository.sendCode
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.layout_common_header.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_cash_bank.*
 import kotlinx.android.synthetic.main.quan_fragment_cash_bank.view.*
 import kotlinx.android.synthetic.main.quan_fragment_income.*
@@ -102,13 +102,13 @@ class CashBankFragment : BaseBackFragment()
         })
 
 
-        UserViewModel.liveDataUserInfo.observe(this, Observer { it->
+        UserViewModel.liveDataMyResult.observe(this, Observer { it->
             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if(it!!.resultData==null) return@Observer
-            cash_balance.text = it.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+            if(it!!.resultData==null || it!!.resultData!!.data==null ) return@Observer
+            cash_balance.text = it.resultData!!.data!!.userBalance.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 
 

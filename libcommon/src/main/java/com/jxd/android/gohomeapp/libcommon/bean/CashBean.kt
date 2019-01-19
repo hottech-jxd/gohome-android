@@ -77,7 +77,7 @@ class UserApplyAccount {
     /**
      * 添加时间
      */
-     val createTime: LocalDateTime? = null
+     val createTime: String? = null
 
 }
 

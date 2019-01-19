@@ -6,6 +6,7 @@
         <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
         <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
+        <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
     </data>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +15,7 @@
              android:layout_height="match_parent"
              tools:context=".fragment.ShareFragment">
 
-    <include layout="@layout/layout_common_header"
+    <include layout="@layout/quan_layout_common_header"
              android:layout_width="match_parent"
              android:id="@+id/share_header"
              android:background="#f2f2f2"
@@ -23,14 +24,15 @@
              android:layout_height="wrap_content"/>
 
     <LinearLayout
+            android:visibility="gone"
             android:id="@+id/share_lay_scroll"
             android:layout_below="@id/share_header"
             android:layout_width="match_parent"
             android:paddingLeft="@dimen/dp_12"
             android:paddingRight="@dimen/dp_12"
             android:background="#FFF99F"
-            android:paddingTop="@dimen/dp_8"
-            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_6"
+            android:paddingBottom="@dimen/dp_6"
             android:layout_height="wrap_content"
     android:orientation="horizontal">
         <ImageView android:layout_width="wrap_content"
@@ -42,8 +44,8 @@
                 android:id="@+id/share_scrollTextInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:switcherRollingTime="3000"
-                android:layout_marginLeft="@dimen/dp_16"
+                app:switcherRollingTime="3500"
+                android:layout_marginLeft="@dimen/dp_12"
                 app:switcherTextColor="#FF7A09"
                 app:switcherTextSize="@dimen/sp_12" />
 
@@ -181,7 +183,8 @@
                   android:paddingLeft="@dimen/dp_16"
                   android:paddingRight="@dimen/dp_16"
                   android:paddingBottom="@dimen/dp_10"
-        android:text="分享文案" android:textColor="@color/black" android:textSize="@dimen/sp_15"/>
+                  android:text="分享文案"
+                  android:textColor="@color/black" android:textSize="@dimen/sp_15"/>
 
         <TextView android:layout_width="match_parent"
                   android:id="@+id/share_content"
@@ -195,7 +198,7 @@
                   android:paddingRight="@dimen/dp_10"
                   android:lineSpacingExtra="@dimen/dp_4"
                   android:paddingBottom="@dimen/dp_10"
-                  android:text="分享分享文案分享文案分享文案分享文分享分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案文案分享分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案文案分享分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案分享文案文案案分享文案分享文案分享文案分享文案分享文案分享文案文案"
+                  android:text=""
                   android:textColor="@color/black" android:textSize="@dimen/sp_14"/>
 
 
@@ -221,7 +224,7 @@
                   android:drawableTop="@mipmap/download"
                   android:textSize="@dimen/sp_14"
                   android:drawablePadding="@dimen/dp_8"
-                  android:onClick="@{clickHandler.onClick}"
+                  android:onClick="@{clickHandler::onClick}"
                   android:textColor="#494949"
                   android:id="@+id/share_saveImage"
                   android:layout_height="wrap_content"/>
@@ -229,8 +232,9 @@
                   android:layout_weight="1"
                   android:text="复制文案"
                   android:gravity="center"
+                  android:drawableTop="@mipmap/download"
                   android:textSize="@dimen/sp_14"
-                  android:onClick="@{clickHandler.onClick}"
+                  android:onClick="@{clickHandler::onClick}"
                   android:drawablePadding="@dimen/dp_8"
                   android:textColor="#494949"
                   android:id="@+id/share_copyText"
@@ -244,14 +248,14 @@
                   android:drawablePadding="@dimen/dp_8"
                   android:textColor="#494949"
                   android:id="@+id/share_weChat"
-                  android:onClick="@{clickHandler.onClick}"
+                  android:onClick="@{clickHandler::onClick}"
                   android:layout_height="wrap_content"/>
         <TextView android:layout_width="0dp"
                   android:layout_weight="1"
                   android:text="朋友圈"
                   android:drawableTop="@mipmap/wecomment"
                   android:gravity="center"
-                  android:onClick="@{clickHandler.onClick}"
+                  android:onClick="@{clickHandler::onClick}"
                   android:textSize="@dimen/sp_14"
                   android:drawablePadding="@dimen/dp_8"
                   android:textColor="#494949"

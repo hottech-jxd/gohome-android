@@ -35,7 +35,7 @@ class MainActivity : BaseActivity() , View.OnClickListener {
 
     override fun initView() {
 
-        QuanModule.userId ="15869168181"
+        QuanModule.setMobile("15869168181")
 
         var couponFragment = CouponFragment.newInstance("","")
 

@@ -14,15 +14,14 @@ import java.math.BigDecimal
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-data class ProfitStatBean(var lastMonth:BigDecimal ,
-                          var lastWeek:BigDecimal,
-                          var thisMonth:BigDecimal,
-                          var thisWeek:BigDecimal,
-                          var today:BigDecimal,
-                          var total:BigDecimal,
-                          var trends:ArrayList<ProfitStatDataBean>?,
-                          var yesterday:BigDecimal ) {
+data class ProfitStatBean(var lastMonthProfit:BigDecimal ,
+                          var lastWeekProfit:BigDecimal,
+                          var thisMonthProfit:BigDecimal,
+                          var thisWeekProfit:BigDecimal,
+                          var todayProfit:BigDecimal,
+                          var trendsProfit:ArrayList<ProfitStatDataBean>?,
+                          var yesterdayProfit:BigDecimal ) {
 }
 
-data class ProfitStatDataBean(var date : String,
-                    var	money:BigDecimal)
+data class ProfitStatDataBean(var profitData : Long,
+                    var	profitAmount :BigDecimal)

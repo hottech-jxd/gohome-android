@@ -47,4 +47,7 @@ object Constants {
 
 
     val ImageDirPath= Environment.getExternalStorageDirectory().toString()+"/quan/images/"
+
+
+    const val PACKAGENAME_PINDUODUO="com.xunmeng.pinduoduo"
 }

@@ -12,7 +12,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentShareTipBinding
-import kotlinx.android.synthetic.main.layout_common_header.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

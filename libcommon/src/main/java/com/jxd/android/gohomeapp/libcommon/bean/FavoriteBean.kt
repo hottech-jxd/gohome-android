@@ -11,3 +11,5 @@ data class FavoriteBean( var selected:Boolean=false ,
                        var isFav :String,
                        var reward :String? ,
                        var source:String?)
+
+data class FavoriteModel(var list :ArrayList<FavoriteBean>?)

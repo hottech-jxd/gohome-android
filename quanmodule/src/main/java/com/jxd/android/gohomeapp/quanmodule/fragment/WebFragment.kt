@@ -21,7 +21,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentWebBinding
 import com.jxd.android.gohomeapp.quanmodule.widget.TipAlertDialog
-import kotlinx.android.synthetic.main.layout_common_header.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_web.*
 
 

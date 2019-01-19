@@ -115,7 +115,7 @@ class WXEntryActivity : Activity(), IWXAPIEventHandler {
             }
             BaseResp.ErrCode.ERR_AUTH_DENIED -> showToast( "授权失败" + baseResp.errStr)
             BaseResp.ErrCode.ERR_UNSUPPORT -> showToast( "操作不支持" + baseResp.errStr)
-            BaseResp.ErrCode.ERR_USER_CANCEL -> showToast( "用户取消操作" + baseResp.errStr)
+            BaseResp.ErrCode.ERR_USER_CANCEL -> showToast( "用户取消操作")
             else -> showToast( "操作异常=" + baseResp.errCode + baseResp.errStr)
         }
     }

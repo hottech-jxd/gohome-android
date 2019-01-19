@@ -27,7 +27,7 @@ import com.jxd.android.gohomeapp.quanmodule.adapter.BalanceAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentBalanceBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
-import kotlinx.android.synthetic.main.layout_common_header.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_balance.*
 
 // TODO: Rename parameter arguments, choose names that match

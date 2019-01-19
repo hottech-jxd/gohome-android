@@ -24,20 +24,21 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
 
     var liveDataCashApplyResult=MutableLiveData<ApiResult<Any?>>()
     var liveDataSendCodeResult = MutableLiveData<ApiResult<Any?>>()
-    var liveDataMyResult = MutableLiveData<ApiResult<MyBean?>>()
     var liveDataOrderList= MutableLiveData<ApiResult<OrderModel?>>()
     var liveDataProfitStat=MutableLiveData<ApiResult<ProfitStatBean?>>()
-    var liveDataMyCollect=MutableLiveData<ApiResult<ArrayList<FavoriteBean>?>>()
+    var liveDataMyCollect=MutableLiveData<ApiResult<FavoriteModel?>>()
     var liveDataCollectResult = MutableLiveData<ApiResult<Any?>>()
     var liveDataApplyConfigResult = MutableLiveData<ApiResult<ApplyConfigModel?>>()
     var liveDataApplyAccountResult = MutableLiveData<ApiResult<UserAccountModel?>>()
     var liveDataApplyListResult=MutableLiveData<ApiResult<ApplyRecordModel?>>()
     var liveDataBalanceLogResult = MutableLiveData<ApiResult<BalanceModel?>>()
     var liveDataCancelCollectResult = MutableLiveData<ApiResult<Any?>>()
-    var liveDataDelCollectResul = MutableLiveData<ApiResult<Any?>>()
+    var liveDataDelCollectResult = MutableLiveData<ApiResult<Any?>>()
+    var liveDataRollDescResult = MutableLiveData<ApiResult<MessageModel?>>()
 
     companion object {
-        var liveDataUserInfo = MutableLiveData<ApiResult<UserBean?>>()
+        //var liveDataUserInfo = MutableLiveData<ApiResult<UserBean?>>()
+        var liveDataMyResult = MutableLiveData<ApiResult<MyModel?>>()
     }
 
     fun cashApply(bank:String,
@@ -131,27 +132,29 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
             .subscribe({liveDataMyCollect.postValue(it)}, {onError(it)} )
     }
 
-    fun getUserInfo(showProgress: Boolean) {
-        UserRepository.getUserInfo()
-            .wrapper()
-            .doOnSubscribe { t ->
-                mDisposable.add(t)
-                if(showProgress) {
-                    loading.postValue(true)
-                }
-                hasError.postValue(false)
-            }
-            .doOnComplete {
-                if(showProgress) {
-                    loading.postValue(false)
-                }
-            }
-            .subscribe(
-                {  UserViewModel.liveDataUserInfo.postValue(it) }, { onError(it) })
-    }
 
-    fun collect(goodsId : String ) {
-        UserRepository.collect(goodsId)
+//    fun getUserInfo(showProgress: Boolean) {
+//        UserRepository.getUserInfo()
+//            .wrapper()
+//            .doOnSubscribe { t ->
+//                mDisposable.add(t)
+//                if(showProgress) {
+//                    loading.postValue(true)
+//                }
+//                hasError.postValue(false)
+//            }
+//            .doOnComplete {
+//                if(showProgress) {
+//                    loading.postValue(false)
+//                }
+//            }
+//            .subscribe(
+//                {  UserViewModel.liveDataUserInfo.postValue(it) }, { onError(it) })
+//    }
+
+
+    fun collect(goodsId : String , platType: Int) {
+        UserRepository.collect(goodsId , platType )
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -252,6 +255,21 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
                 loading.postValue(false)
             }
             .subscribe(
-                {  liveDataDelCollectResul.postValue(it) }, { onError(it) })
+                {  liveDataDelCollectResult.postValue(it) }, { onError(it) })
+    }
+
+    fun getRollDesc() {
+        UserRepository.getRollDesc()
+            .wrapper()
+            .doOnSubscribe { t ->
+                mDisposable.add(t)
+                loading.postValue(true)
+                hasError.postValue(false)
+            }
+            .doOnComplete {
+                loading.postValue(false)
+            }
+            .subscribe(
+                {  liveDataRollDescResult.postValue(it) }, { onError(it) })
     }
 }

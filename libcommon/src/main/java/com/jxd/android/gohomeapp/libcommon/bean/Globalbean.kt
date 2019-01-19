@@ -16,3 +16,5 @@ data class Globalbean(var helpVideoUrl:String?) {
 }
 
 data class GlobalModel(var global:Globalbean?)
+
+data class MessageModel(var list:ArrayList<String>?)

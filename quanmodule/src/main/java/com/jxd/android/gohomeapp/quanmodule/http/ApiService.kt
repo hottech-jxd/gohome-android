@@ -55,7 +55,7 @@ interface ApiService {
      * 获取商品分享信息
      */
     @GET("goods/share")
-    fun share(@Query("goodsId") goodsId:String):Observable<ApiResult<GoodsShareModel?>>
+    fun share(@Query("goodsId") goodsId:String , @Query("goodsSource") goodsSource:Int = 0):Observable<ApiResult<GoodsShareModel?>>
 
 
     /**
@@ -119,8 +119,8 @@ interface ApiService {
     /**
      * 个人首页数据接口
      */
-    @POST("user/index")
-    fun myIndex():Observable<ApiResult<MyBean?>>
+    @POST("user/getUserAssets")
+    fun myIndex():Observable<ApiResult<MyModel?>>
 
 
     /**
@@ -157,7 +157,7 @@ interface ApiService {
     @FormUrlEncoded
     fun getMyCollect(@Field("platType") platType:Int =-1
                      , @Field("pageIndex") pageIndex:Int=1
-                    ,@Field("pageSize") pageSize:Int=10 ):Observable<ApiResult<ArrayList<FavoriteBean>?>>
+                    ,@Field("pageSize") pageSize:Int=10 ):Observable<ApiResult<FavoriteModel?>>
 
     /**
      * 用户信息
@@ -165,8 +165,11 @@ interface ApiService {
     @POST("user/userInfo")
     fun getUserInfo():Observable<ApiResult<UserBean?>>
 
-    @GET("user/collect")
-    fun collect(@Query("goodsId") goodsId:String):Observable<ApiResult<Any?>>
+    /**
+     * 收藏商品
+     */
+    @GET("user/goodsCollect")
+    fun collect(@Query("goodsId") goodsId:String , @Query("platType") platType:Int ):Observable<ApiResult<Any?>>
 
     /**
      * 取消收藏
@@ -204,5 +207,11 @@ interface ApiService {
      */
     @GET("user/delCollect")
     fun delCollect(@Query("cIdList") cIdList:String):Observable<ApiResult<Any?>>
+
+    /**
+     * 获取滚动数据(完成)
+     */
+    @GET("user/getRollDesc")
+    fun getRollDesc():Observable<ApiResult<MessageModel?>>
 
 }

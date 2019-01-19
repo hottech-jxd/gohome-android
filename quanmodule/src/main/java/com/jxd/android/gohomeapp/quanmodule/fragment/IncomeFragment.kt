@@ -30,6 +30,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatBean
 import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatDataBean
+import com.jxd.android.gohomeapp.libcommon.util.DateUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
@@ -37,7 +38,7 @@ import com.jxd.android.gohomeapp.quanmodule.R.id.income_lineChart
 import com.jxd.android.gohomeapp.quanmodule.R.mipmap.x
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIncomeBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
-import kotlinx.android.synthetic.main.layout_common_header.*
+import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_cash.*
 import kotlinx.android.synthetic.main.quan_fragment_income.*
 import kotlinx.android.synthetic.main.quan_fragment_income.view.*
@@ -75,7 +76,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         dataBinding!!.clickHandler = this
         dataBinding!!.userViewModel=ViewModelProviders.of(this).get(UserViewModel::class.java)
         dataBinding!!.statsData = ProfitStatBean(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
-            BigDecimal.ZERO, BigDecimal.ZERO,null, BigDecimal.ZERO)
+            BigDecimal.ZERO, null, BigDecimal.ZERO)
         return  dataBinding!!.root
     }
 
@@ -105,14 +106,14 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         })
 
 
-        UserViewModel.liveDataUserInfo.observe(this, android.arch.lifecycle.Observer {  it->
+        UserViewModel.liveDataMyResult.observe(this, android.arch.lifecycle.Observer {  it->
             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if(it.resultData==null) return@Observer
+            if(it.resultData==null || it.resultData!!.data==null ) return@Observer
 
-            income_balance.text = it.resultData!!.money.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
+            income_balance.text = it.resultData!!.data!!.userBalance.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 
         dataBinding!!.userViewModel!!.hasError.observe(this, android.arch.lifecycle.Observer { it->
@@ -190,13 +191,13 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         dataBinding!!.statsData = data
 
 
-        var stats = data.trends
+        var stats = data.trendsProfit
         if(stats==null) return
         var list = ArrayList<Entry>()
         var x = 0f
         for(item in stats) {
             x++
-            var entry = Entry1( item  , x, item.money.toFloat() )
+            var entry = Entry1( item  , x, item.profitAmount.toFloat() )
             list.add(entry)
         }
 
@@ -300,8 +301,8 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 var eee = en[0]
                     if (eee is Entry1) {
                         //var e1 = eee
-                        tvDate1!!.text = eee.data.date
-                        tvContent1!!.text = "￥"+ eee.data.money.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
+                        tvDate1!!.text = DateUtils.formatDate( eee.data.profitData)
+                        tvContent1!!.text = "￥"+ eee.data.profitAmount.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
 
                     }
 //                    else if( eee is Entry2 ) {

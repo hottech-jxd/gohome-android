@@ -83,24 +83,26 @@ class WXEntryActivity : Activity(), IWXAPIEventHandler {
             ConstantsAPI.COMMAND_SENDAUTH->{//微信授权登录,回调
                 authLogin(baseResp)
             }
-
+            ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX->{
+                share(baseResp)
+            }
         }
 
-//        when (baseResp.errCode) {
-//            BaseResp.ErrCode.ERR_OK -> {
-//                ToastUtils.single.showLongToast(this, "操作成功" + baseResp.errStr)
-//                var intent = Intent()
-//                intent.setAction(Constants.ACTION_WECHAT_LOGIN)
-//                intent.putExtra("code", (baseResp as SendAuth.Resp).code )
-//                sendBroadcast( intent)
-//            }
-//            BaseResp.ErrCode.ERR_AUTH_DENIED -> ToastUtils.single.showLongToast(this, "授权失败" + baseResp.errStr)
-//            BaseResp.ErrCode.ERR_UNSUPPORT -> ToastUtils.single.showLongToast(this, "操作不支持" + baseResp.errStr)
-//            BaseResp.ErrCode.ERR_USER_CANCEL -> ToastUtils.single.showLongToast(this, "用户取消操作" + baseResp.errStr)
-//            else -> ToastUtils.single.showLongToast(this, "操作异常=" + baseResp.errCode + baseResp.errStr)
-//        }
 
         finish()
+    }
+
+
+    private fun share(baseResp : BaseResp ){
+        when (baseResp.errCode) {
+            BaseResp.ErrCode.ERR_OK -> {
+                showToast("授权成功")
+            }
+            BaseResp.ErrCode.ERR_AUTH_DENIED -> showToast( "授权失败" + baseResp.errStr)
+            BaseResp.ErrCode.ERR_UNSUPPORT -> showToast( "操作不支持" + baseResp.errStr)
+            BaseResp.ErrCode.ERR_USER_CANCEL -> showToast( "用户取消操作")
+            else -> showToast( "操作异常=" + baseResp.errCode + baseResp.errStr)
+        }
     }
 
     private fun authLogin( baseResp : BaseResp){

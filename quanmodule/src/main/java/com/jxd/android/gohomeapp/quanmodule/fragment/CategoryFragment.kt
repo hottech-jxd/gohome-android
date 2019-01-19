@@ -298,8 +298,9 @@ class CategoryFragment : BaseBackFragment()
             R.id.good_item_1_favorite->{
 
                 var goodsId = dataAdapter!!.getItem(position)!!.goodsId
+                var goodsSource = dataAdapter!!.getItem(position)!!.goodsSource
                 if(TextUtils.isEmpty(goodsId)) return
-                dataBinding!!.userViewModel!!.collect(goodsId!!)
+                dataBinding!!.userViewModel!!.collect(goodsId!! , goodsSource)
             }
         }
     }

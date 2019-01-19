@@ -15,7 +15,7 @@
         <include android:layout_width="match_parent"
                  android:id="@+id/balance_header"
                  app:clickHandler="@{clickHandler}"
-                 layout="@layout/layout_common_header"
+                 layout="@layout/quan_layout_common_header"
                  android:layout_height="wrap_content" />
 
         <View android:id="@+id/balance_line"

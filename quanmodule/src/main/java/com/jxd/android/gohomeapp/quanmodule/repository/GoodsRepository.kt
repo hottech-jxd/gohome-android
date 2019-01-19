@@ -40,8 +40,8 @@ object GoodsRepository {
         return apiService!!.search(keywords , goodsSource ,page)
     }
 
-    fun getShareInfo(goodsId: String):Observable<ApiResult<GoodsShareModel?>>{
-        return apiService!!.share(goodsId)
+    fun getShareInfo(goodsId: String , goodsSource:Int ):Observable<ApiResult<GoodsShareModel?>>{
+        return apiService!!.share(goodsId , goodsSource )
     }
 
     fun index():Observable<ApiResult<IndexModel?>>{

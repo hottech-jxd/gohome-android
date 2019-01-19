@@ -15,7 +15,7 @@
              android:layout_height="match_parent"
              tools:context=".fragment.CashFragment">
 
-    <include layout="@layout/layout_common_header"
+    <include layout="@layout/quan_layout_common_header"
              app:clickHandler="@{clickHandler}"
              android:id="@+id/cash_lay_header"
              android:layout_width="match_parent"
@@ -23,6 +23,7 @@
 
         <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
                 android:id="@+id/cash_refreshview"
+                android:layout_below="@id/cash_lay_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

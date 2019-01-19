@@ -6,7 +6,7 @@ data class GoodBean (
    /** 劵价格*/
     var couponPrice :String? ,
 
-    var  	finalPrice :String?,
+    var finalPrice :String?,
 
    var 	goodsId :String?,
    var	name  :String?,
@@ -19,7 +19,7 @@ data class GoodBean (
 
   var	saleAmount :Long,
 
-   var	goodsSource :String? )
+   var	goodsSource :Int )
 
 
 data class GoodsDetailModel(var detail:GoodsDetailBean?)

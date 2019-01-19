@@ -23,6 +23,7 @@
         android:layout_height="wrap_content" >
 
     <LinearLayout
+            android:visibility="gone"
             android:id="@+id/my_header_lay_message"
             android:background="#FBBD00"
             android:paddingTop="@dimen/dp_6"
@@ -91,7 +92,7 @@
                   android:layout_marginRight="@dimen/dp_20"
                   android:textSize="@dimen/sp_12"
                   android:textColor="#FF9000"
-                  android:onClick="@{clickHandler.onClick}"
+                  android:onClick="@{clickHandler::onClick}"
                   android:paddingLeft="@dimen/dp_10"
                   android:layout_gravity="center_vertical"
                   android:paddingRight="@dimen/dp_10"
@@ -112,12 +113,12 @@
                       android:layout_weight="1"
                       android:id="@+id/my_header_lay_thisweek"
                       android:gravity="center"
-                      android:onClick="@{clickHandler.onClick}"
+                      android:onClick="@{clickHandler::onClick}"
                       android:orientation="vertical"
                       android:layout_height="wrap_content">
             <TextView android:textSize="@dimen/sp_15"
                       android:textColor="@color/white"
-                      android:text='@{@string/rmbSymbol+myBean.thisWeek}'
+                      android:text='@{@string/rmbSymbol+myBean.thisWeekMoney}'
                       android:id="@+id/my_header_this_week_momey"
                     android:layout_width="wrap_content"
                       android:singleLine="true"
@@ -135,12 +136,12 @@
                       android:layout_weight="1"
                       android:gravity="center"
                       android:id="@+id/my_header_lay_preweek"
-                      android:onClick="@{clickHandler.onClick}"
+                      android:onClick="@{clickHandler::onClick}"
                       android:orientation="vertical"
                       android:layout_height="wrap_content">
             <TextView android:textSize="@dimen/sp_15"
                       android:textColor="@color/white"
-                      android:text='@{@string/rmbSymbol+myBean.lastWeek}'
+                      android:text='@{@string/rmbSymbol+myBean.lastWeekMoney}'
                       android:id="@+id/my_header_pre_week_momey"
                       android:layout_width="wrap_content"
                       android:singleLine="true"
@@ -159,13 +160,13 @@
                       android:gravity="center"
                       android:layout_weight="1"
                       android:id="@+id/my_header_lay_all"
-                      android:onClick="@{clickHandler.onClick}"
+                      android:onClick="@{clickHandler::onClick}"
                       android:orientation="vertical"
                       android:layout_height="wrap_content">
             <TextView android:textSize="@dimen/sp_15"
                       android:textColor="@color/white"
                       android:singleLine="true"
-                      android:text='@{@string/rmbSymbol+myBean.total}'
+                      android:text='@{@string/rmbSymbol+myBean.totalMoney}'
                       android:id="@+id/my_header_all_momey"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"/>
@@ -182,7 +183,7 @@
                       android:layout_weight="1"
                       android:gravity="center"
                       android:id="@+id/my_header_lay_more"
-                      android:onClick="@{clickHandler.onClick}"
+                      android:onClick="@{clickHandler::onClick}"
                       android:orientation="vertical"
                       android:layout_height="wrap_content">
             <ImageView
@@ -232,14 +233,14 @@
                   android:textColor="@color/black"
                   android:layout_below="@id/my_header_balance_label"
                   android:textSize="@dimen/sp_20"
-                  android:text="0.00元"
+                  android:text='@{myBean.userBalance + @string/yuan}'
                   android:textStyle="bold"
                   android:layout_marginTop="@dimen/dp_5"
                   android:layout_height="wrap_content"/>
 
         <ImageView android:id="@+id/my_header_cash"
                  android:src="@mipmap/cash"
-                   android:onClick="@{clickHandler.onClick}"
+                   android:onClick="@{clickHandler::onClick}"
                   android:textSize="@dimen/dp_1"
                    android:layout_alignParentRight="true"
                    android:layout_centerVertical="true"

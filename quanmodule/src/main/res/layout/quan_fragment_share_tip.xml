@@ -13,7 +13,7 @@
                 android:clickable="true"
              tools:context=".fragment.ShareTipFragment">
 
-    <include layout="@layout/layout_common_header"
+    <include layout="@layout/quan_layout_common_header"
              app:clickHandler="@{clickHandler}"
              android:layout_height="wrap_content"
              android:id="@+id/share_tip_header"

@@ -187,6 +187,8 @@
                   android:id="@+id/detail_item_get"
                   android:text="立即领券"
                   android:layout_marginLeft="@dimen/dp_20"
+                  android:paddingTop="@dimen/dp_8"
+                  android:paddingBottom="@dimen/dp_8"
                   android:layout_marginRight="@dimen/dp_20"
                   android:layout_centerVertical="true"
                   android:layout_alignParentRight="true"

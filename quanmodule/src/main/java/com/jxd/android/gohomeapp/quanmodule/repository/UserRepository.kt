@@ -37,7 +37,7 @@ object  UserRepository {
     }
 
 
-    fun getMy():Observable<ApiResult<MyBean?>>{
+    fun getMy():Observable<ApiResult<MyModel?>>{
         return apiService!!.myIndex()
     }
 
@@ -49,16 +49,16 @@ object  UserRepository {
         return apiService!!.getProfitStat()
     }
 
-    fun getMyCollect( platType :Int = -1 , pageIndex:Int=1, pageSize:Int=10 ):Observable<ApiResult<ArrayList<FavoriteBean>?>>{
+    fun getMyCollect( platType :Int = -1 , pageIndex:Int=1, pageSize:Int=10 ):Observable<ApiResult<FavoriteModel?>>{
         return apiService!!.getMyCollect(platType , pageIndex ,pageSize)
     }
 
-    fun getUserInfo():Observable<ApiResult<UserBean?>>{
-        return apiService!!.getUserInfo()
-    }
+//    fun getUserInfo():Observable<ApiResult<UserBean?>>{
+//        return apiService!!.getUserInfo()
+//    }
 
-    fun collect(goodsId:String):Observable<ApiResult<Any?>>{
-        return apiService!!.collect(goodsId )
+    fun collect(goodsId:String, platType: Int):Observable<ApiResult<Any?>>{
+        return apiService!!.collect(goodsId , platType )
     }
 
     fun getApplyConfig():Observable<ApiResult<ApplyConfigModel?>>{
@@ -83,5 +83,9 @@ object  UserRepository {
 
     fun delCollect(idList:String):Observable<ApiResult<Any?>>{
         return apiService!!.delCollect(idList)
+    }
+
+    fun getRollDesc():Observable<ApiResult<MessageModel?>>{
+        return apiService!!.getRollDesc()
     }
 }

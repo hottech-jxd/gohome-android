@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
+import java.lang.Exception
 import java.math.BigDecimal
 
 /**
@@ -90,6 +91,23 @@ object AppUtil {
                 e.printStackTrace()
             }
 
+        }
+    }
+
+
+    /**
+     * 检测是否安装了指定包名的app
+     */
+    fun checkInstallApp( context: Context , packageName:String):Boolean{
+        try {
+            var packageManager = context.packageManager
+            var pList = packageManager.getInstalledPackages(0)
+            for (item in pList) {
+                if (item.packageName.equals(packageName, true)) return true
+            }
+            return false
+        }catch (ex:Exception){
+            return false
         }
     }
 

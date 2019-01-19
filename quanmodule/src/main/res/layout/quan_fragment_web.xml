@@ -11,7 +11,7 @@
     android:layout_height="match_parent"
     tools:context=".fragment.WebFragment">
 
-    <include layout="@layout/layout_common_header"
+    <include layout="@layout/quan_layout_common_header"
              android:layout_width="match_parent"
              app:clickHandler="@{clickHandler}"
              android:id="@+id/web_header"
