@@ -96,9 +96,9 @@ class WXEntryActivity : Activity(), IWXAPIEventHandler {
     private fun share(baseResp : BaseResp ){
         when (baseResp.errCode) {
             BaseResp.ErrCode.ERR_OK -> {
-                showToast("授权成功")
+                showToast("分享成功")
             }
-            BaseResp.ErrCode.ERR_AUTH_DENIED -> showToast( "授权失败" + baseResp.errStr)
+            BaseResp.ErrCode.ERR_AUTH_DENIED -> showToast( "操作失败" + baseResp.errStr)
             BaseResp.ErrCode.ERR_UNSUPPORT -> showToast( "操作不支持" + baseResp.errStr)
             BaseResp.ErrCode.ERR_USER_CANCEL -> showToast( "用户取消操作")
             else -> showToast( "操作异常=" + baseResp.errCode + baseResp.errStr)
