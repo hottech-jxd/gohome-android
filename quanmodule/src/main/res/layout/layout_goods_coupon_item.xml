@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+ <RelativeLayout android:layout_width="wrap_content"
+                 android:background="@drawable/shape_goods_coupon_bg2"
+                 android:id="@+id/goods_coupon_item_lay_1"
+                 android:paddingTop="@dimen/dp_20"
+                 android:paddingBottom="@dimen/dp_20"
+                 android:paddingLeft="@dimen/dp_16"
+                 android:paddingRight="@dimen/dp_16"
+                 android:layout_height="wrap_content">
+     <TextView android:layout_width="wrap_content"
+               android:id="@+id/goods_coupon_item_couponPrice"
+               android:textColor="#936223"
+               android:textSize="@dimen/sp_24"
+               android:text="90元"
+               android:layout_centerHorizontal="true"
+               android:layout_height="wrap_content"/>
+     <TextView android:layout_width="wrap_content"
+               android:text="领券即可省"
+               android:layout_below="@id/goods_coupon_item_couponPrice"
+               android:layout_marginTop="@dimen/dp_4"
+               android:layout_centerHorizontal="true"
+               android:layout_height="wrap_content"/>
+ </RelativeLayout>
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:background="@drawable/shape_goods_coupon_bg_grad"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:layout_alignTop="@id/goods_coupon_item_lay_1"
+                    android:layout_alignBottom="@id/goods_coupon_item_lay_1"
+                    android:layout_toRightOf="@+id/goods_coupon_item_lay_1"
+                    android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content"
+                  android:id="@+id/goods_coupon_item_goodname"
+                  android:layout_toLeftOf="@id/goods_coupon_item_pic"
+                  android:layout_alignParentLeft="true"
+                  android:textSize="@dimen/sp_12"
+                  android:paddingRight="@dimen/dp_10"
+                  android:textColor="#EFEEEC"
+                  android:layout_alignParentTop="true"
+                  android:maxLines="2"
+                  android:layout_above="@+id/goods_coupon_item_go"
+                  android:text="safdsafasfaf"
+                  android:ellipsize="end"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginTop="@dimen/dp_8"
+                  android:id="@+id/goods_coupon_item_go"
+                  android:layout_height="wrap_content"
+                  android:textColor="#936223"
+                  android:background="@drawable/shape_good_coupon_bg"
+                  android:layout_alignParentBottom="true"
+                  android:text="立即抢"
+                  android:paddingTop="@dimen/dp_4"
+                  android:paddingBottom="@dimen/dp_4"
+                  android:paddingLeft="@dimen/dp_10"
+                  android:paddingRight="@dimen/dp_10"
+                 android:textSize="@dimen/sp_10" />
+        
+        <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="@dimen/dp_58"
+                android:background="@color/white"
+                android:layout_centerVertical="true"
+                android:id="@+id/goods_coupon_item_pic"
+                android:layout_alignParentRight="true"
+                app:roundedCornerRadius="@dimen/dp_5"
+                android:layout_height="@dimen/dp_58"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

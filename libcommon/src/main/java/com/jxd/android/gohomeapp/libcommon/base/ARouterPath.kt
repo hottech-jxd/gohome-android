@@ -43,4 +43,6 @@ object ARouterPath {
     const val QuanFragmentRecommandPath="/quanmodule/fragment/recommand"
 
     const val QuanFragmentBalancePath = "/quanmodule/fragment/balance"
+
+    const val QuanFragmentCouponListPath="/quanmodule/fragment/couponlist"
 }

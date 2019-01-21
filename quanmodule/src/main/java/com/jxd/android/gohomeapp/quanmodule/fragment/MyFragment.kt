@@ -86,7 +86,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if(it!!.resultData ==null || it!!.resultData!!.data==null) return@Observer
+            if(it.resultData ==null || it.resultData!!.data==null) return@Observer
 
             dataBinding!!.myBean = it.resultData!!.data
 

@@ -32,6 +32,7 @@ import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentRecommandBinding
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
+import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.quan_fragment_recommand.*
@@ -72,6 +73,7 @@ class RecommandFragment : BaseFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dataBinding=DataBindingUtil.inflate(inflater, R.layout.quan_fragment_recommand,container,false)
         dataBinding!!.goodsViewModel=ViewModelProviders.of(this).get(GoodsViewModel::class.java)
+        dataBinding!!.userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         return dataBinding!!.root
     }
 
@@ -168,6 +170,18 @@ class RecommandFragment : BaseFragment()
 
             recommandAdapter!!.isUseEmpty(true)
             dealPage(it.resultData)
+
+        })
+
+        dataBinding!!.userViewModel!!.liveDataCollectResult.observe(this, Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+
+            var position = it.resultData.toString().toInt()
+            var bean = recommandAdapter!!.getItem(position)
+            //bean.
 
         })
     }
@@ -290,10 +304,10 @@ class RecommandFragment : BaseFragment()
     private fun showListUI(bean: IndexBean){
         if(bean.goodsList==null|| bean.goodsList!!.size<1)return
 
-
-        var itemTitle = RecommandItem5(bean.name)
-        recommands.add(itemTitle)
-
+        if(page==0) {
+            var itemTitle = RecommandItem5(bean.name)
+            recommands.add(itemTitle)
+        }
 
         var index = 0
         for(item in bean.goodsList!!) {
@@ -329,7 +343,7 @@ class RecommandFragment : BaseFragment()
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         if(view!!.id == R.id.recommand_banner){
             showToast("todo")
-        }else if(view!!.id==R.id.recommand_image_1){
+        }else if(view.id==R.id.recommand_image_1){
             var item = (recommandAdapter!!.getItem(position) as RecommandItem2).data
 
             goto(item)
@@ -343,8 +357,14 @@ class RecommandFragment : BaseFragment()
         else if(view.id==R.id.good_item_1_container){
             var item  =(recommandAdapter!!.getItem(position) as RecommandItem7).data
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId", item.goodsId).navigation()
-        }else if(view.id==R.id.good_item_favorite || view.id==R.id.good_item_1_favorite){
-            showToast("todo 收藏")
+        }else if(view.id==R.id.good_item_favorite ){
+            var goodsId = (recommandAdapter!!.getItem(position) as RecommandItem4).data.goodsId
+            var platType = (recommandAdapter!!.getItem(position) as RecommandItem4).data.goodsSource
+            dataBinding!!.userViewModel!!.collect( goodsId!! , platType)
+        }else if(view.id == R.id.good_item_1_favorite){
+            var goodsId = (recommandAdapter!!.getItem(position) as RecommandItem7).data.goodsId
+            var platType = (recommandAdapter!!.getItem(position) as RecommandItem7).data.goodsSource
+            dataBinding!!.userViewModel!!.collect( goodsId!! , platType)
         }
     }
 
@@ -359,8 +379,6 @@ class RecommandFragment : BaseFragment()
 
             (parentFragment!!.parentFragment as MainFragment).start(fragment)
         }else if(category==ThemeCategoryEnum.link){
-
-            //ARouter.getInstance().build(ARouterPath.Quanf)
             var url = item.linkUrl
             ((parentFragment!!.parentFragment)as MainFragment).start( WebFragment.newInstance(url))
 
@@ -379,8 +397,6 @@ class RecommandFragment : BaseFragment()
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment RecommandFragment.
          */
         @JvmStatic

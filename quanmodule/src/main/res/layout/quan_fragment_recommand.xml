@@ -3,6 +3,7 @@
     <data>
         <import type="android.view.View" />
         <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
+        <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
     </data>
 
     <RelativeLayout

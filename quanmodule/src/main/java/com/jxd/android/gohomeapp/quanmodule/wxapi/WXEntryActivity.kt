@@ -77,7 +77,7 @@ class WXEntryActivity : Activity(), IWXAPIEventHandler {
 
         when(baseResp.type){
             ConstantsAPI.COMMAND_LAUNCH_WX_MINIPROGRAM->{//启动小程序，回调
-                var launchMinProResp =   baseResp as WXLaunchMiniProgram.Resp
+                //var launchMinProResp =   baseResp as WXLaunchMiniProgram.Resp
                 //var extraData = launchMinProResp.extMsg
             }
             ConstantsAPI.COMMAND_SENDAUTH->{//微信授权登录,回调

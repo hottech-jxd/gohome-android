@@ -22,14 +22,16 @@ import java.math.BigDecimal
 object  UserRepository {
     private var apiService = RetrofitManager.getApiService()
 
-    fun cashApply(bank:String,
+    fun cashApply(
+        userId: String?,
+        bank:String,
                   branch:String,
                   card:String,
                   name:String,
                   money:Int,
                   mobile:String,
                   code:String):  Observable<ApiResult<Any?>> {
-        return apiService!!.cashApply(bank,branch , card,name , money , mobile , code)
+        return apiService!!.cashApply(userId , bank,branch , card,name , money , mobile , code)
     }
 
     fun sendCode(mobile: String): Observable<ApiResult<Any?>> {
@@ -37,55 +39,55 @@ object  UserRepository {
     }
 
 
-    fun getMy():Observable<ApiResult<MyModel?>>{
-        return apiService!!.myIndex()
+    fun getMy(userId: String?):Observable<ApiResult<MyModel?>>{
+        return apiService!!.myIndex(userId)
     }
 
     fun getOrderList(userId :String, orderStatus:Int , pageIndex:Int=1):Observable<ApiResult<OrderModel?>>{
         return apiService!!.getOrderList2(userId , orderStatus , pageIndex)
     }
 
-    fun getProfitStat():Observable<ApiResult<ProfitStatBean?>>{
-        return apiService!!.getProfitStat()
+    fun getProfitStat(userId: String?):Observable<ApiResult<ProfitStatModel?>>{
+        return apiService!!.getProfitStat(userId)
     }
 
-    fun getMyCollect( platType :Int = -1 , pageIndex:Int=1, pageSize:Int=10 ):Observable<ApiResult<FavoriteModel?>>{
-        return apiService!!.getMyCollect(platType , pageIndex ,pageSize)
+    fun getMyCollect(userId: String?, platType :Int = -1 , pageIndex:Int=1, pageSize:Int=10 ):Observable<ApiResult<FavoriteModel?>>{
+        return apiService!!.getMyCollect(userId , platType , pageIndex ,pageSize)
     }
 
 //    fun getUserInfo():Observable<ApiResult<UserBean?>>{
 //        return apiService!!.getUserInfo()
 //    }
 
-    fun collect(goodsId:String, platType: Int):Observable<ApiResult<Any?>>{
-        return apiService!!.collect(goodsId , platType )
+    fun collect(userId: String? , goodsId:String, platType: Int):Observable<ApiResult<Any?>>{
+        return apiService!!.collect(userId , goodsId , platType )
     }
 
-    fun getApplyConfig():Observable<ApiResult<ApplyConfigModel?>>{
-        return apiService!!.getApplyConfig()
+    fun getApplyConfig(userId: String?):Observable<ApiResult<ApplyConfigModel?>>{
+        return apiService!!.getApplyConfig(userId )
     }
 
-    fun getApplyAccount():Observable<ApiResult<UserAccountModel?>>{
-        return apiService!!.getUserApplyAccount()
+    fun getApplyAccount(userId: String?):Observable<ApiResult<UserAccountModel?>>{
+        return apiService!!.getUserApplyAccount(userId)
     }
 
-    fun getApplyList(pageIndex: Int=1, pageSize:Int=10):Observable<ApiResult<ApplyRecordModel?>>{
-        return apiService!!.getApplyList(pageIndex , pageSize)
+    fun getApplyList(userId: String? , pageIndex: Int=1, pageSize:Int=10):Observable<ApiResult<ApplyRecordModel?>>{
+        return apiService!!.getApplyList(userId , pageIndex , pageSize)
     }
 
-    fun getBalanceLog(pageIndex: Int=1,pageSize: Int=10):Observable<ApiResult<BalanceModel?>>{
-        return apiService!!.getBalanceLog(pageIndex,pageSize)
+    fun getBalanceLog(userId: String? , pageIndex: Int=1,pageSize: Int=10):Observable<ApiResult<BalanceModel?>>{
+        return apiService!!.getBalanceLog(userId , pageIndex,pageSize)
     }
 
-    fun cancelCollect(goodsId:String):Observable<ApiResult<Any?>>{
-        return apiService!!.cancelCollect(goodsId)
+    fun cancelCollect(userId: String? , goodsId:String):Observable<ApiResult<Any?>>{
+        return apiService!!.cancelCollect( userId , goodsId)
     }
 
-    fun delCollect(idList:String):Observable<ApiResult<Any?>>{
-        return apiService!!.delCollect(idList)
+    fun delCollect( userId: String? , idList:String):Observable<ApiResult<Any?>>{
+        return apiService!!.delCollect(userId , idList)
     }
 
-    fun getRollDesc():Observable<ApiResult<MessageModel?>>{
-        return apiService!!.getRollDesc()
+    fun getRollDesc(userId: String?):Observable<ApiResult<MessageModel?>>{
+        return apiService!!.getRollDesc(userId)
     }
 }

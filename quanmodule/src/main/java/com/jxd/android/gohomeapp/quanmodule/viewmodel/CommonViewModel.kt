@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
 import com.jxd.android.gohomeapp.libcommon.bean.GlobalModel
 import com.jxd.android.gohomeapp.libcommon.bean.Globalbean
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.CommonRepository
 
@@ -24,7 +25,8 @@ class CommonViewModel(application: Application) :BaseViewModel(application) {
     var liveDataInitResult=MutableLiveData<ApiResult<GlobalModel?>>()
 
     fun init(){
-        CommonRepository.init()
+        var userId= QuanModule.userId
+        CommonRepository.init(userId)
             .wrapper()
             .doOnSubscribe{t -> mDisposable.add(t)
                 loading.postValue(true)

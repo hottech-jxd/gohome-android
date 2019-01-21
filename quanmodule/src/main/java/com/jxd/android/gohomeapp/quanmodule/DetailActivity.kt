@@ -59,7 +59,7 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        showToast( "permissions" )
+        //showToast( "permissions" )
     }
 
     override fun OnBannerClick(position: Int) {

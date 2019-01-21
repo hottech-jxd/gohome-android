@@ -45,6 +45,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  * 优惠券列表
  */
+
 class CouponFragment : BaseFragment()
     , View.OnClickListener
     , SwipeRefreshLayout.OnRefreshListener

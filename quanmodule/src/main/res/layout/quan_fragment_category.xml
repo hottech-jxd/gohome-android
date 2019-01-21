@@ -16,33 +16,31 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:addStatesFromChildren="true"
             android:fitsSystemWindows="true"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
              xmlns:tools="http://schemas.android.com/tools"
              android:orientation="vertical"
              android:fitsSystemWindows="true"
-              android:layout_width="match_parent"
+             android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".fragment.CategoryFragment">
 
-
             <include layout="@layout/layout_header"
+                     android:id="@+id/category_header"
                      android:background="@color/white"
                      app:clickHandler="@{clickHandler}"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"/>
 
-
-
-
             <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:clipToPadding="true"
-            android:layout_height="match_parent"
-            tools:context=".fragment.CategoryFragment">
+                android:layout_below="@id/category_header"
+                android:layout_width="match_parent"
+                android:clipToPadding="true"
+                android:layout_height="match_parent"
+                tools:context=".fragment.CategoryFragment">
 
-    <android.support.design.widget.AppBarLayout
+                <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:id="@+id/category_appbarlayout"
             android:layout_height="wrap_content"
@@ -94,38 +92,21 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-        <!--<LinearLayout android:layout_width="match_parent"-->
-                      <!--android:orientation="vertical"-->
-                      <!--android:layout_height="wrap_content">-->
-
-            <!--<include layout="@layout/layout_column"-->
-                     <!--app:clickHandler="@{clickHandler}"-->
-                     <!--android:id="@+id/category_column"-->
-                     <!--android:layout_height="wrap_content"-->
-                     <!--android:layout_width="match_parent"/>-->
-
-            <android.support.v7.widget.RecyclerView
+                <android.support.v7.widget.RecyclerView
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:id="@+id/category_recyclerview_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
-        <!--</LinearLayout>-->
-
-
-
-
-    </android.support.design.widget.CoordinatorLayout>
-
+            </android.support.design.widget.CoordinatorLayout>
 
             <com.jxd.android.gohomeapp.quanmodule.widget.ProgressWidget
-            android:id="@+id/category_progress"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+                android:id="@+id/category_progress"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-</LinearLayout>
+    </RelativeLayout>
 
     </com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView>
 

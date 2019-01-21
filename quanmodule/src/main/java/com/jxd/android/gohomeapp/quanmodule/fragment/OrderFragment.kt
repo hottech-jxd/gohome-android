@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
@@ -77,6 +78,8 @@ class OrderFragment : BaseFragment() , SwipeRefreshLayout.OnRefreshListener , Ba
         order_recyclerview.adapter = orderAdapter
         order_refreshview.setOnRefreshListener(this)
         order_recyclerview.addItemDecoration(ItemDevider3(context!!, 10f ,R.color.linecolor, 0f))
+        orderAdapter!!.emptyView = View.inflate(context, R.layout.layout_empty , null)
+        orderAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text="暂无数据"
 
 
         dataBinding!!.userViewModel!!.liveDataOrderList.observe(this , Observer { it->

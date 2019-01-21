@@ -24,30 +24,32 @@ interface ApiService {
      * 初始化
      */
     @GET("init")
-    fun init():Observable<ApiResult<GlobalModel?>>
+    fun init(@Query("userId") userId:String?):Observable<ApiResult<GlobalModel?>>
 
     @POST("goods/detail")
     @FormUrlEncoded
-    fun getGoodsDetail(@Field("goodsId") goodsId:String
+    fun getGoodsDetail(@Field("userId") userId:String?
+                       , @Field("goodsId") goodsId:String
                        , @Field("goodsSource") goodsSource:Int=0 ):Observable<ApiResult<GoodsDetailModel?>>
 
     /**
      * 获得商品分类列表
      */
     @GET("goods/categories")
-    fun getGoodsCategories(@Query("goodsSource") goodsSource:Int=0):Observable<ApiResult< CategoryModel?>>
+    fun getGoodsCategories(@Query("userId") userId:String?, @Query("goodsSource") goodsSource:Int=0):Observable<ApiResult< CategoryModel?>>
 
     /**
      * 优惠劵列表 随机从后台选择的商品中选5件
      */
     @GET("goods/couponList")
-    fun getCouponList():Observable<ApiResult<CouponModel?>>
+    fun getCouponList(@Query("userId") userId:String? ):Observable<ApiResult<CouponModel?>>
 
     /**
      * 搜索商品
      */
     @GET("goods/search")
-    fun search(@Query("keywords") keywords:String?
+    fun search(@Query("userId") userId:String?
+               ,@Query("keywords") keywords:String?
                ,@Query("goodsSource") goodsSource:Int = 0
                ,@Query("page") page:Int):Observable<ApiResult<SearchGoodsModel?>>
 
@@ -55,17 +57,17 @@ interface ApiService {
      * 获取商品分享信息
      */
     @GET("goods/share")
-    fun share(@Query("goodsId") goodsId:String , @Query("goodsSource") goodsSource:Int = 0):Observable<ApiResult<GoodsShareModel?>>
+    fun share(@Query("userId") userId:String?,@Query("goodsId") goodsId:String , @Query("goodsSource") goodsSource:Int = 0):Observable<ApiResult<GoodsShareModel?>>
 
 
     /**
      * 推荐首页
      */
     @GET("goods/index")
-    fun index():Observable<ApiResult<IndexModel?>>
+    fun index(@Query("userId") userId:String?):Observable<ApiResult<IndexModel?>>
 
     @GET("goods/indexPage")
-    fun indexPage(@Query("page") page:Int=1):Observable<ApiResult<IndexPageModel?>>
+    fun indexPage(@Query("userId") userId:String?, @Query("page") page:Int=1):Observable<ApiResult<IndexPageModel?>>
 
     /**
      * 获得分类下的商品数据
@@ -79,7 +81,9 @@ interface ApiService {
      */
     @POST("goods/category")
     @FormUrlEncoded
-    fun getGoodsOfCategories(@Field("categoryId") categoryId:String ,
+    fun getGoodsOfCategories(
+        @Field("userId") userId:String?,
+        @Field("categoryId") categoryId:String ,
                              @Field("goodsSource") goodsSource:Int ,
                              @Field("sort") sort:String ,
                              @Field("page") page:Int=1):Observable<ApiResult<GoodsOfCategory?>>
@@ -88,13 +92,14 @@ interface ApiService {
      * 获得热门搜索
      */
     @GET("goods/hotSearch")
-    fun hotSearch():Observable<ApiResult<HotSearchModel?>>
+    fun hotSearch(@Query("userId") userId:String?):Observable<ApiResult<HotSearchModel?>>
 
     /**
      *
      */
     @GET("goods/theme")
-    fun theme(@Query("goodsSource") goodsSource:String?="0",
+    fun theme( @Query("userId") userId:String?,
+               @Query("goodsSource") goodsSource:String?="0",
               @Query("code") code:String?,
               @Query("sort") sort:String ,
               @Query("page") page:Int =1 ):Observable<ApiResult<GoodsOfCategory?>>
@@ -104,7 +109,9 @@ interface ApiService {
      */
     @POST("user/userApply")
     @FormUrlEncoded
-    fun cashApply(@Field("bankName")  bankName:String,
+    fun cashApply(
+        @Field("userId") userId:String?,
+        @Field("bankName")  bankName:String,
                   @Field("bankInfo")  bankInfo:String,
                   @Field("bankAccount")  bankAccount:String,
                   @Field("realName")  realName:String,
@@ -120,7 +127,8 @@ interface ApiService {
      * 个人首页数据接口
      */
     @POST("user/getUserAssets")
-    fun myIndex():Observable<ApiResult<MyModel?>>
+    @FormUrlEncoded
+    fun myIndex( @Field("userId") userId:String?):Observable<ApiResult<MyModel?>>
 
 
     /**
@@ -148,15 +156,17 @@ interface ApiService {
      *收益统计
      */
     @POST("user/profitStat")
-    fun getProfitStat():Observable<ApiResult<ProfitStatBean?>>
+    @FormUrlEncoded
+    fun getProfitStat( @Field("userId") userId:String?):Observable<ApiResult<ProfitStatModel?>>
 
     /**
      * 我的收藏
      */
     @POST("user/getMyCollect")
     @FormUrlEncoded
-    fun getMyCollect(@Field("platType") platType:Int =-1
-                     , @Field("pageIndex") pageIndex:Int=1
+    fun getMyCollect(@Field("userId") userId:String?
+                    ,@Field("platType") platType:Int =-1
+                    ,@Field("pageIndex") pageIndex:Int=1
                     ,@Field("pageSize") pageSize:Int=10 ):Observable<ApiResult<FavoriteModel?>>
 
     /**
@@ -169,49 +179,49 @@ interface ApiService {
      * 收藏商品
      */
     @GET("user/goodsCollect")
-    fun collect(@Query("goodsId") goodsId:String , @Query("platType") platType:Int ):Observable<ApiResult<Any?>>
+    fun collect(@Query("userId") userId:String?,@Query("goodsId") goodsId:String , @Query("platType") platType:Int ):Observable<ApiResult<Any?>>
 
     /**
      * 取消收藏
      */
     @GET("user/cancelCollect")
-    fun cancelCollect(@Query("goodsId") goodsId:String):Observable<ApiResult<Any?>>
+    fun cancelCollect(@Query("userId") userId:String?,@Query("goodsId") goodsId:String):Observable<ApiResult<Any?>>
 
     /**
      * 获得提现配置信息
      */
     @GET("user/getApplyConfig")
-    fun getApplyConfig():Observable<ApiResult<ApplyConfigModel?>>
+    fun getApplyConfig(@Query("userId") userId:String?):Observable<ApiResult<ApplyConfigModel?>>
 
     /**
      * 获取用户的提现账号信息
      */
     @GET("user/getUserApplyAccount")
-    fun getUserApplyAccount():Observable<ApiResult<UserAccountModel?>>
+    fun getUserApplyAccount(@Query("userId") userId:String? ):Observable<ApiResult<UserAccountModel?>>
 
     /**
      * 分页获取用户提现申请日志
      */
     @GET("user/getApplyList")
-    fun getApplyList(@Query("pageIndex") pageIndex:Int , @Query("pageSize") pageSize:Int =10):Observable<ApiResult<ApplyRecordModel?>>
+    fun getApplyList(@Query("userId") userId:String?, @Query("pageIndex") pageIndex:Int , @Query("pageSize") pageSize:Int =10):Observable<ApiResult<ApplyRecordModel?>>
 
     /**
      * 分页获取用户余额变动日志
      */
     @GET("user/getBalanceLog")
-    fun getBalanceLog(@Query("pageIndex") pageIndex:Int ,@Query("pageSize")pageSize:Int=10):Observable<ApiResult<BalanceModel?>>
+    fun getBalanceLog(@Query("userId") userId:String?, @Query("pageIndex") pageIndex:Int ,@Query("pageSize")pageSize:Int=10):Observable<ApiResult<BalanceModel?>>
 
 
     /**
      * 批量删除收藏的商品
      */
     @GET("user/delCollect")
-    fun delCollect(@Query("cIdList") cIdList:String):Observable<ApiResult<Any?>>
+    fun delCollect(@Query("userId") userId:String? , @Query("cIdList") cIdList:String):Observable<ApiResult<Any?>>
 
     /**
      * 获取滚动数据(完成)
      */
     @GET("user/getRollDesc")
-    fun getRollDesc():Observable<ApiResult<MessageModel?>>
+    fun getRollDesc(@Query("userId") userId:String?):Observable<ApiResult<MessageModel?>>
 
 }

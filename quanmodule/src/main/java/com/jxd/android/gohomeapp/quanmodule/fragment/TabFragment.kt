@@ -129,7 +129,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
                     return@Observer
                 }
 
-                var datas: ArrayList<GoodBean>? = null
+                var datas: ArrayList<GoodBean>?
                 if (it.resultData == null || it.resultData!!.list==null ) {
                     dataAdapter!!.loadMoreEnd(false)
                 } else {

@@ -24,47 +24,47 @@ import retrofit2.http.Query
 object GoodsRepository {
     private var apiService = RetrofitManager.getApiService()
 
-    fun getGoodsDetail(goodsId:String ): Observable<ApiResult<GoodsDetailModel?>> {
-        return apiService!!.getGoodsDetail(goodsId)
+    fun getGoodsDetail( userId: String? , goodsId:String ): Observable<ApiResult<GoodsDetailModel?>> {
+        return apiService!!.getGoodsDetail( userId , goodsId)
     }
 
-    fun getGoodsCategories():Observable<ApiResult<CategoryModel?>>{
-        return apiService!!.getGoodsCategories()
+    fun getGoodsCategories(userId:String?, goodsSource: Int):Observable<ApiResult<CategoryModel?>>{
+        return apiService!!.getGoodsCategories(userId,goodsSource)
     }
 
-    fun getCouponList():Observable<ApiResult<CouponModel?>>{
-        return apiService!!.getCouponList()
+    fun getCouponList(userId: String?):Observable<ApiResult<CouponModel?>>{
+        return apiService!!.getCouponList(userId)
     }
 
-    fun search(keywords:String? , goodsSource :Int = 0 , page:Int):Observable<ApiResult<SearchGoodsModel?>>{
-        return apiService!!.search(keywords , goodsSource ,page)
+    fun search(userId: String?, keywords:String? , goodsSource :Int = 0 , page:Int):Observable<ApiResult<SearchGoodsModel?>>{
+        return apiService!!.search( userId , keywords , goodsSource ,page)
     }
 
-    fun getShareInfo(goodsId: String , goodsSource:Int ):Observable<ApiResult<GoodsShareModel?>>{
-        return apiService!!.share(goodsId , goodsSource )
+    fun getShareInfo(userId: String? , goodsId: String , goodsSource:Int ):Observable<ApiResult<GoodsShareModel?>>{
+        return apiService!!.share(userId , goodsId , goodsSource )
     }
 
-    fun index():Observable<ApiResult<IndexModel?>>{
-        return apiService!!.index()
+    fun index(userId: String?):Observable<ApiResult<IndexModel?>>{
+        return apiService!!.index(userId)
     }
 
-    fun indexPage(page:Int = 1):Observable<ApiResult<IndexPageModel?>>{
-        return apiService!!.indexPage(page)
+    fun indexPage(userId: String? , page:Int = 1):Observable<ApiResult<IndexPageModel?>>{
+        return apiService!!.indexPage( userId , page)
     }
 
-    fun getGoodsOfCategory( categoryId:String ,goodsSource: Int ,sortEnum: GoodsSortEnum, page:Int=1):Observable<ApiResult<GoodsOfCategory?>>{
+    fun getGoodsOfCategory(userId: String? , categoryId:String ,goodsSource: Int ,sortEnum: GoodsSortEnum, page:Int=1):Observable<ApiResult<GoodsOfCategory?>>{
 //        var json ="{\"categoryId\":\"$categoryId\",\"sort\": ${sortEnum.code},\"page\":$page}"
 //        var requestBody = RequestBody.create(MediaType.parse("application/json"),json )
 //        return apiService!!.getGoodsOfCategories(requestBody)
-        return apiService!!.getGoodsOfCategories(categoryId ,goodsSource , sortEnum.name , page)
+        return apiService!!.getGoodsOfCategories( userId, categoryId ,goodsSource , sortEnum.name , page)
     }
 
-    fun getHotSearch():Observable<ApiResult<HotSearchModel?>>{
-        return apiService!!.hotSearch()
+    fun getHotSearch(userId: String?):Observable<ApiResult<HotSearchModel?>>{
+        return apiService!!.hotSearch(userId)
     }
 
-    fun getTheme(goodsSource: String? , code :String? , goodsSortEnum: GoodsSortEnum , page:Int=1):Observable<ApiResult<GoodsOfCategory?>>{
-        return apiService!!.theme(goodsSource , code , goodsSortEnum.name , page)
+    fun getTheme(userId: String?,goodsSource: String? , code :String? , goodsSortEnum: GoodsSortEnum , page:Int=1):Observable<ApiResult<GoodsOfCategory?>>{
+        return apiService!!.theme(userId , goodsSource , code , goodsSortEnum.name , page)
     }
 
 }

@@ -22,7 +22,7 @@ import io.reactivex.Observable
 object CommonRepository {
     private var apiService = RetrofitManager.getApiService()
 
-    fun init(): Observable<ApiResult<GlobalModel?>> {
-        return apiService!!.init()
+    fun init(userId:String?): Observable<ApiResult<GlobalModel?>> {
+        return apiService!!.init(userId)
     }
 }

@@ -109,11 +109,10 @@ dependencies {
     implementation 'com.android.support:support-v4:28.0.0'
     //implementation 'me.yokeyword:fragmentation-core:1.3.6'
     implementation 'me.yokeyword:fragmentation:1.3.6'
-    implementation 'me.yokeyword:fragmentation-swipeback:1.3.6'
+    //implementation 'me.yokeyword:fragmentation-swipeback:1.3.6'
     implementation 'com.android.support:multidex:1.0.3'
     /*recyckerview库*/
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
-
     //微信分享库
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
 }

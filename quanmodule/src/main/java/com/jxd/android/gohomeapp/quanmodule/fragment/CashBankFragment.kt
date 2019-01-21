@@ -107,7 +107,7 @@ class CashBankFragment : BaseBackFragment()
                 showToast(it.resultMsg)
                 return@Observer
             }
-            if(it!!.resultData==null || it!!.resultData!!.data==null ) return@Observer
+            if(it!!.resultData==null || it.resultData!!.data==null ) return@Observer
             cash_balance.text = it.resultData!!.data!!.userBalance.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()
         })
 

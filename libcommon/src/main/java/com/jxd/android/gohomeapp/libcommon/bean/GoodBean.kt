@@ -68,10 +68,10 @@ data class GoodsDetailBean(var goodsId: String= "" ,
                            /**
                             * 是否收藏过
                             */
-                      var isCollect:Boolean =false     ){
+                      var collect:Boolean =false     ){
 
     fun getCouponExpiryDateString():String{
-        return DateUtils.formatDate(this.couponExpiryDate)
+        return DateUtils.formatDate(this.couponExpiryDate*1000)
     }
 }
 

@@ -93,7 +93,7 @@
                                   android:layout_gravity="center_horizontal"
                                   android:layout_height="wrap_content"/>
                         <TextView android:layout_width="wrap_content"
-                                  android:text="预估0单"
+                                  android:text='@{@string/yugu+ statsData.todayOrderNum +@string/dan}'
                                   android:paddingTop="@dimen/dp_4"
                                   android:textSize="@dimen/sp_10"
                                   android:id="@+id/income_today_order_count"
@@ -122,7 +122,7 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估0单"
+                              android:text='@{@string/yugu+ statsData.yesterdayOrderNum +@string/dan}'
                               android:id="@+id/income_yestoday_order_count"
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
@@ -155,7 +155,7 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估0单"
+                              android:text='@{@string/yugu+statsData.thisWeekOrderNum +@string/dan}'
                               android:id="@+id/income_week_order_count"
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
@@ -185,7 +185,7 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估0单"
+                              android:text='@{@string/yugu+statsData.lastWeekOrderNum +@string/dan}'
                               android:id="@+id/income_pre_week_order_count"
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
@@ -219,7 +219,7 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估0单"
+                              android:text='@{@string/yugu+statsData.thisMonthOrderNum+@string/dan}'
                               android:paddingTop="@dimen/dp_4"
                               android:textSize="@dimen/sp_10"
                               android:id="@+id/income_month_order_count"
@@ -249,7 +249,7 @@
                               android:layout_gravity="center_horizontal"
                               android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
-                              android:text="预估0单"
+                              android:text='@{@string/yugu+statsData.lastMonthOrderNum+@string/dan}'
                               android:paddingTop="@dimen/dp_4"
                               android:id="@+id/income_pre_month_order_count"
                               android:textSize="@dimen/sp_10"

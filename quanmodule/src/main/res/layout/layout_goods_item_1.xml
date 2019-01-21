@@ -97,6 +97,7 @@
         android:layout_width="@dimen/dp_32"
         android:paddingLeft="@dimen/dp_10"
         android:layout_height="@dimen/dp_22"
+        android:visibility="invisible"
         android:src="@mipmap/favorite_gray"
         app:layout_constraintTop_toTopOf="@id/good_item_1_final_label"
         app:layout_constraintRight_toRightOf="parent"/>

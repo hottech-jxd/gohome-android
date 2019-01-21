@@ -18,4 +18,6 @@
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
     <string name="yuan">元</string>
+    <string name="yugu">预估</string>
+    <string name="dan">单</string>
 </resources>

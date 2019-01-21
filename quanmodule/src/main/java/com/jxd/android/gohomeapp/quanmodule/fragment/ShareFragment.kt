@@ -82,6 +82,7 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         dataBinding!!.userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         dataBinding!!.goodsBean = goodsDetailBean
         dataBinding!!.clickHandler=this
+
         return dataBinding!!.root
     }
 
@@ -256,11 +257,12 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
                 //hideProgress()
                 dataBinding!!.goodsViewModel!!.loading.postValue(false )
                 if ((task!!.tag as IdId).id == (task!!.tag as IdId).total) {
-                    showToast("图片已经保存在"+dir)
 
                     if(needShare){
                         //shareImages()
                         shareImageByWechaSDK(scene)
+                    }else{
+                        showToast("图片已经保存在"+dir)
                     }
                 }
 
@@ -300,11 +302,13 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         for ( item in  sharePictureAdapter!!.data) {
             if(!item.check) continue
 
-            var name = AppUtil.getFileName( item.url )
+            var url = item.url
+
+            var name = AppUtil.getFileName( url )
             var path = dir + name
             var idId = IdId( 1 , 1 )
 
-            tasks.add(FileDownloader.getImpl().create(item.url).setPath(path).setTag(idId))
+            tasks.add(FileDownloader.getImpl().create(url).setPath(path).setTag(idId))
 
             //index++
 
@@ -408,11 +412,11 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         val imageDirectory = File(dirPath)
         var filePath =""
-        var list = imageDirectory.list()
+        var list = imageDirectory.listFiles()
         for(item in list){
-            var tempName =AppUtil.getFileName(item)
+            var tempName =AppUtil.getFileName(item.path)
             if(tempName.equals(pictureName,true)){
-                filePath = item
+                filePath = item.path
                 break
             }
         }
@@ -427,17 +431,25 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
     }
 
     private fun shareWechat( scene:Int ,  linkUrl:String? , title:String?, description:String? , imageBytes:ByteArray?){
+
+        var maxImageSize = 1024*32
+        var imageSize = if(imageBytes==null ) 0 else imageBytes.size
+        if(imageSize> maxImageSize){
+            showToast("分享图片大小超过32KB,分享失败")
+            return
+        }
+
         var webPage = WXWebpageObject()
         webPage.webpageUrl = linkUrl//"http://wwww.baidu.com"
 
         var msg= WXMediaMessage(webPage)
         msg.title = title //"testtest"
         msg.description= description // "testtestest"
-        var bitmapFolder = Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"
-        val imageDirectory = File(bitmapFolder)
+        //var bitmapFolder = Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"
+        //val imageDirectory = File(bitmapFolder)
 
-        val filePath = imageDirectory.list()[0]
-        var bitmap = AppUtil.fileToByte(filePath)
+        //val filePath = imageDirectory.list()[0]
+        //var bitmap = AppUtil.fileToByte(filePath)
 
         msg.thumbData = imageBytes //bitmap
 

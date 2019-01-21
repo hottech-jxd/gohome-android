@@ -36,7 +36,8 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         addItemType(ItemTypeEnum.BANNER.type , R.layout.layout_recommand_item_1 )
         addItemType(ItemTypeEnum.ONE_COLLOMN_SIMPLE.type , R.layout.layout_recommand_item_2)
         addItemType(ItemTypeEnum.ONE_ROW_COUNTDOWN.type , R.layout.layout_recommand_item_3)
-        addItemType(ItemTypeEnum.ONE_ROW_GOODS.type , R.layout.layout_goods_item)
+        //addItemType(ItemTypeEnum.ONE_ROW_GOODS.type , R.layout.layout_goods_item)
+        addItemType(ItemTypeEnum.ONE_ROW_GOODS.type , R.layout.layout_goods_coupon_item)
         addItemType(ItemTypeEnum.ONE_ROW_TITLE.type , R.layout.layout_recommand_item_5)
         addItemType(ItemTypeEnum.ONE_ROW_CAN_SCROLL_BANNER.type,R.layout.layout_recommand_item_6)
         addItemType(ItemTypeEnum.ONE_COLLOMN_GOODS.type,R.layout.layout_goods_item_1 )
@@ -54,7 +55,8 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
                 setCountdown(helper,item)
             }
             ItemTypeEnum.ONE_ROW_GOODS.type->{
-                setGoodsOfRow(helper,item)
+                //setGoodsOfRow(helper,item)
+                setGoodsCouponOfRow(helper,item)
             }
             ItemTypeEnum.ONE_ROW_TITLE.type->{
                 set_5(helper,item)
@@ -136,6 +138,10 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         helper.addOnClickListener(R.id.good_item_container)
 
         helper.addOnClickListener(R.id.good_item_favorite)
+    }
+
+    private fun setGoodsCouponOfRow(helper:BaseViewHolder?, item:MultiItemEntity?){
+
     }
 
     private fun set_5(helper: BaseViewHolder?,item: MultiItemEntity?){

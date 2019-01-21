@@ -79,6 +79,7 @@ class BalanceFragment : BaseBackFragment() , SwipeRefreshLayout.OnRefreshListene
         balanceAdapter!!.emptyView = View.inflate(context, R.layout.layout_empty, null)
         balanceAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text = "暂无数据"
         balanceAdapter!!.isUseEmpty(false)
+        balanceAdapter!!.disableLoadMoreIfNotFullPage(balance_recyclerview)
 
         dataBinding!!.userViewModel!!.liveDataBalanceLogResult.observe(this, Observer { it->
             balance_refreshview.isRefreshing=false
@@ -131,6 +132,7 @@ class BalanceFragment : BaseBackFragment() , SwipeRefreshLayout.OnRefreshListene
 
     override fun onRefresh() {
         pageIndex=0
+        balanceAdapter!!.setNewData(ArrayList())
         balanceAdapter!!.isUseEmpty(false)
         balance_refreshview.isRefreshing=false
         dataBinding!!.userViewModel!!.getBalanceLog(pageIndex+1)

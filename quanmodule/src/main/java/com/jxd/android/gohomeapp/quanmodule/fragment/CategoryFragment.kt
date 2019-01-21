@@ -111,7 +111,7 @@ class CategoryFragment : BaseBackFragment()
 
         category_refreshview.setProgressViewOffset(true, -20, 100)
 
-
+        column_news.visibility = View.GONE
 
         category_appbarlayout.addOnOffsetChangedListener(this)
 
@@ -209,7 +209,8 @@ class CategoryFragment : BaseBackFragment()
                 ARouter.getInstance().build(ARouterPath.QuanActivitySearch).navigation()
             }
             R.id.header_right_image->{
-                (parentFragment!!.parentFragment as MainFragment).start(FavoriteFragment.newInstance("", ""))
+                //(parentFragment!!.parentFragment as MainFragment).start(FavoriteFragment.newInstance("", ""))
+                start(FavoriteFragment.newInstance("",""))
             }
             R.id.column_lay_price->{
                 if(column_price_sort==GoodsSortEnum.priceDes ) {
@@ -290,7 +291,21 @@ class CategoryFragment : BaseBackFragment()
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         var bean = dataAdapter!!.getItem(position)
-        ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString( "goodsId", bean!!.goodsId ).navigation()
+        if(bean==null) return
+        var arouter = ARouter.getInstance()
+        if(arouter ==null){
+            //showToast("ARouter empty")
+            return
+        }
+
+        var pastCard = arouter.build(ARouterPath.QuanActivityGoodsDetailPath)
+        if(pastCard==null){
+            //showToast("pastCard empty")
+            return
+        }
+
+
+        pastCard.withString( "goodsId", bean!!.goodsId ).navigation()
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
@@ -310,13 +325,10 @@ class CategoryFragment : BaseBackFragment()
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment CategoryFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             CategoryFragment().apply {
                 arguments = Bundle().apply {
 

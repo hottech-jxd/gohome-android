@@ -43,7 +43,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class CashFragment : BaseBackFragment() ,SwipeRefreshLayout.OnRefreshListener, View.OnClickListener , BaseQuickAdapter.RequestLoadMoreListener {
+class CashFragment : BaseBackFragment()
+    , SwipeRefreshLayout.OnRefreshListener
+    , View.OnClickListener
+    , BaseQuickAdapter.RequestLoadMoreListener {
 
     private var param1: String? = null
     private var param2: String? = null
@@ -145,6 +148,7 @@ class CashFragment : BaseBackFragment() ,SwipeRefreshLayout.OnRefreshListener, V
         cashRecordAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text="暂无数据"
         cash_recyclerview.layoutManager = LinearLayoutManager(context)
         cash_recyclerview.adapter = cashRecordAdapter
+        cashRecordAdapter!!.disableLoadMoreIfNotFullPage(cash_recyclerview)
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
@@ -158,6 +162,7 @@ class CashFragment : BaseBackFragment() ,SwipeRefreshLayout.OnRefreshListener, V
 
     override fun onRefresh() {
         pageIndex=0
+        cashRecordAdapter!!.setNewData(ArrayList())
         fetchData()
     }
 

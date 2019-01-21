@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.libcommon.bean.Constants.userId
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.GoodsRepository
 import com.jxd.android.gohomeapp.quanmodule.repository.UserRepository
@@ -25,7 +26,7 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     var liveDataCashApplyResult=MutableLiveData<ApiResult<Any?>>()
     var liveDataSendCodeResult = MutableLiveData<ApiResult<Any?>>()
     var liveDataOrderList= MutableLiveData<ApiResult<OrderModel?>>()
-    var liveDataProfitStat=MutableLiveData<ApiResult<ProfitStatBean?>>()
+    var liveDataProfitStat=MutableLiveData<ApiResult<ProfitStatModel?>>()
     var liveDataMyCollect=MutableLiveData<ApiResult<FavoriteModel?>>()
     var liveDataCollectResult = MutableLiveData<ApiResult<Any?>>()
     var liveDataApplyConfigResult = MutableLiveData<ApiResult<ApplyConfigModel?>>()
@@ -41,14 +42,18 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
         var liveDataMyResult = MutableLiveData<ApiResult<MyModel?>>()
     }
 
-    fun cashApply(bank:String,
+    fun cashApply(
+        bank:String,
                   branch:String,
                   card:String,
                   name:String,
                   money:Int,
                   mobile:String,
                   code:String){
-        UserRepository.cashApply(bank,branch,card,name,money,mobile,code)
+
+        var userId = QuanModule.userId
+
+        UserRepository.cashApply(userId , bank,branch,card,name,money,mobile,code)
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -77,7 +82,10 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getMyIndex(){
-        UserRepository.getMy()
+
+        var userId = QuanModule.userId
+
+        UserRepository.getMy(userId)
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -105,7 +113,9 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getProfitStat(){
-        UserRepository.getProfitStat()
+        var userId = QuanModule.userId
+
+        UserRepository.getProfitStat(userId)
             .wrapper()
             .doOnSubscribe {
                 t->mDisposable.add(t)
@@ -119,7 +129,10 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getMyCollect( platType :Int= -1,  pageIndex:Int ){
-        UserRepository.getMyCollect(platType , pageIndex  )
+
+        var userId = QuanModule.userId
+
+        UserRepository.getMyCollect( userId , platType , pageIndex  )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -154,7 +167,9 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
 
 
     fun collect(goodsId : String , platType: Int) {
-        UserRepository.collect(goodsId , platType )
+        var userId = QuanModule.userId
+
+        UserRepository.collect(userId , goodsId , platType )
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -169,7 +184,8 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getApplyConfig() {
-        UserRepository.getApplyConfig()
+        var userId = QuanModule.userId
+        UserRepository.getApplyConfig(userId)
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -184,7 +200,8 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getApplyAccount() {
-        UserRepository.getApplyAccount()
+        var userId = QuanModule.userId
+        UserRepository.getApplyAccount(userId)
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -199,7 +216,8 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getApplyList(pageIndex: Int, pageSize:Int=10) {
-        UserRepository.getApplyList(pageIndex , pageSize )
+        var userId = QuanModule.userId
+        UserRepository.getApplyList(userId , pageIndex , pageSize )
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -214,7 +232,8 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getBalanceLog(pageIndex: Int, pageSize:Int=10) {
-        UserRepository.getBalanceLog(pageIndex , pageSize )
+        var userId = QuanModule.userId
+        UserRepository.getBalanceLog(userId , pageIndex , pageSize )
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -229,7 +248,9 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun cancelCollect( goodsId: String) {
-        UserRepository.cancelCollect(goodsId)
+        var userId = QuanModule.userId
+
+        UserRepository.cancelCollect(userId , goodsId)
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -244,7 +265,9 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun delCollect( idList: String) {
-        UserRepository.delCollect( idList)
+        var userId = QuanModule.userId
+
+        UserRepository.delCollect(userId , idList)
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)
@@ -259,7 +282,9 @@ class UserViewModel(application: Application):  BaseViewModel(application) {
     }
 
     fun getRollDesc() {
-        UserRepository.getRollDesc()
+        var userId = QuanModule.userId
+
+        UserRepository.getRollDesc(userId )
             .wrapper()
             .doOnSubscribe { t ->
                 mDisposable.add(t)

@@ -104,7 +104,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
         detail_share_reword.text = "￥${goodsDetailModel.detail!!.reward}"
         detail_sheng.text ="￥${goodsDetailModel.detail!!.reward}"
 
-        detail_favorite_image.setImageResource( if( goodsDetailModel.detail!!.isCollect) R.mipmap.favorite_red else R.mipmap.favorite_gray )
+        detail_favorite_image.setImageResource( if( goodsDetailModel.detail!!.collect ) R.mipmap.favorite_red else R.mipmap.favorite_gray )
     }
 
     override fun initView(){
@@ -299,7 +299,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
             return
         }
 
-        if( quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value!!.resultData!!.detail!!.isCollect){
+        if( quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value!!.resultData!!.detail!!.collect ){
             quanFragmentDetailBinding!!.userViewModel!!.cancelCollect(goodsId)
         }else {
             quanFragmentDetailBinding!!.userViewModel!!.collect(goodsId , goodDetail!!.goodsSource)

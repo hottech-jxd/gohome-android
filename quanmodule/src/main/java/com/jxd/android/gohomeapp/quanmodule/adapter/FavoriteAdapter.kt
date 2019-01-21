@@ -15,19 +15,19 @@ class FavoriteAdapter(data :ArrayList<FavoriteBean>) :BaseQuickAdapter<FavoriteB
         helper!!.addOnClickListener(R.id.favorite_item_circle)
         helper.addOnClickListener(R.id.favorite_item_container)
 
-        helper.getView<SimpleDraweeView>(R.id.good_item_image).setImageURI(item!!.pictureUrl)
+        helper.getView<SimpleDraweeView>(R.id.good_item_image).setImageURI(item!!.picUrl)
 
 
         helper.setImageResource( R.id.favorite_item_circle , if( item.selected ) R.mipmap.selected else R.mipmap.unselected )
 
-        helper.setText(R.id.good_item_price , item.price)
+        helper.setText(R.id.good_item_price , item.goodsPrice )
         helper.getView<TextView>(R.id.good_item_price).paintFlags = STRIKE_THRU_TEXT_FLAG
 
         helper.setText(R.id.good_item_final_price , item.finalPrice)
         helper.setText(R.id.good_item_coupon , "销量" + item.couponPrice+"件")
-        helper.setText(R.id.good_item_count , item.saleAmount.toString())
-        helper.setText(R.id.good_item_title, item.name )
-        helper.setText(R.id.good_item_reword , item.reward)
+        helper.setText(R.id.good_item_count , item.saleVol)
+        helper.setText(R.id.good_item_title, item.goodsName )
+        helper.setText(R.id.good_item_reword , item.rewardPrice )
 
     }
 }

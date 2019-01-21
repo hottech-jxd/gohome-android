@@ -4,6 +4,8 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.jxd.android.gohomeapp.libcommon.bean.*
+import com.jxd.android.gohomeapp.quanmodule.QuanModule
+import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityDetailBinding
 
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.GoodsRepository
@@ -35,8 +37,9 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     var liveDataThemeListResult = MutableLiveData<ApiResult<GoodsOfCategory?>>()
 
     fun getGoodsDetail(goodsId:String){
+        var userId = QuanModule.userId
 
-        GoodsRepository.getGoodsDetail(goodsId)
+        GoodsRepository.getGoodsDetail( userId , goodsId)
             .wrapper()
             .doOnSubscribe{t -> mDisposable.add(t)
                 //loading.value =true
@@ -55,8 +58,9 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
 
 
 
-    fun getGoodsCategorys(){
-        GoodsRepository.getGoodsCategories()
+    fun getGoodsCategorys(goodsSource: Int){
+        var userId= QuanModule.userId
+        GoodsRepository.getGoodsCategories(userId , goodsSource )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -71,7 +75,9 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
 
 
     fun getCouponList(){
-        GoodsRepository.getCouponList()
+        var userId = QuanModule.userId
+
+        GoodsRepository.getCouponList(userId)
             .wrapper()
             .doOnSubscribe {
                 t->mDisposable.add(t)
@@ -85,7 +91,9 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     }
 
     fun search(keywords:String? ,page:Int , goodsSource :Int= 0 ){
-        GoodsRepository.search(keywords , goodsSource ,page )
+        var userId = QuanModule.userId
+
+        GoodsRepository.search(userId ,keywords , goodsSource ,page )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -99,7 +107,9 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     }
 
     fun getShareInfo(goodsId:String , goodsSource:Int ){
-        GoodsRepository.getShareInfo( goodsId ,goodsSource )
+        var userId = QuanModule.userId
+
+        GoodsRepository.getShareInfo(userId , goodsId ,goodsSource )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -113,7 +123,10 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     }
 
     fun index(){
-        GoodsRepository.index()
+
+        var userId=  QuanModule.userId
+
+        GoodsRepository.index( userId )
             .wrapper()
             .doOnSubscribe {
                 t->mDisposable.add(t)
@@ -127,7 +140,9 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     }
 
     fun indexPage(page:Int ){
-        GoodsRepository.indexPage(page)
+        var userId = QuanModule.userId
+
+        GoodsRepository.indexPage( userId , page)
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -141,7 +156,10 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     }
 
     fun getGoodsOfCategory(categoryId:String, goodsSource: Int , sortEnum: GoodsSortEnum , page:Int){
-        GoodsRepository.getGoodsOfCategory(categoryId , goodsSource , sortEnum , page )
+
+        var userId = QuanModule.userId
+
+        GoodsRepository.getGoodsOfCategory(userId , categoryId , goodsSource , sortEnum , page )
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -155,7 +173,8 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     }
 
     fun getHotSearch(){
-        GoodsRepository.getHotSearch()
+        var userId = QuanModule.userId
+        GoodsRepository.getHotSearch(userId)
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)
@@ -169,7 +188,9 @@ class GoodsViewModel(application: Application) :  BaseViewModel(application) {
     }
 
     fun getThemeList(goodsSource: String? , code:String?,sortEnum: GoodsSortEnum,page: Int){
-        GoodsRepository.getTheme(goodsSource,code, sortEnum , page)
+        var userId = QuanModule.userId
+
+        GoodsRepository.getTheme( userId , goodsSource,code, sortEnum , page)
             .wrapper()
             .doOnSubscribe {
                     t->mDisposable.add(t)

@@ -99,6 +99,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         favorite_recyclerview.addItemDecoration( ItemDevider3(this.context!! , 1f , R.color.linecolor , 15f ))
         favorite_recyclerview.adapter = favoriteAdapter
         favorite_refreshview.setOnRefreshListener(this)
+        favoriteAdapter!!.disableLoadMoreIfNotFullPage(favorite_recyclerview)
 
 
         dataBinding!!.userViewModel!!.liveDataMyCollect.observe(this, Observer { it->
@@ -199,7 +200,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
                 if(!TextUtils.isEmpty(idList)){
                     idList +=","
                 }
-                idList+=bean.goodsId
+                idList+=bean.collectId
             }
         }
         if(TextUtils.isEmpty(idList)){
@@ -232,7 +233,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         if(view!!.id == R.id.favorite_item_circle) {
 
             (adapter!!.getItem(position) as FavoriteBean).selected =
-                    !(adapter!!.getItem(position) as FavoriteBean).selected
+                    !(adapter.getItem(position) as FavoriteBean).selected
 
 
             var count = 0

@@ -71,13 +71,12 @@ class SearchActivity : BaseActivity()
     }
 
     override fun initView(){
-
-        hotTags.add("s手动发送")
-        hotTags.add("任务")
-        hotTags.add("df")
-        hotTags.add("打发")
-        hotTags.add("reer玩儿玩儿")
-        hotTags.add("沃尔沃斯蒂芬")
+//        hotTags.add("s手动发送")
+//        hotTags.add("任务")
+//        hotTags.add("df")
+//        hotTags.add("打发")
+//        hotTags.add("reer玩儿玩儿")
+//        hotTags.add("沃尔沃斯蒂芬")
         search_tags_hot.setTags(hotTags)
 
         search_tags.setOnTagClickListener(this)

@@ -27,6 +27,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.Category
 import com.jxd.android.gohomeapp.libcommon.bean.Constants
+import com.jxd.android.gohomeapp.libcommon.bean.GoodsSourceEnum
 import com.jxd.android.gohomeapp.libcommon.util.AppUtil
 import com.jxd.android.gohomeapp.libcommon.util.newIntent
 import com.jxd.android.gohomeapp.libcommon.util.showToast
@@ -124,7 +125,7 @@ class IndexFragment : BaseFragment()
     }
 
     private fun fetchData() {
-        indexBinding!!.goodsViewModel!!.getGoodsCategorys()
+        indexBinding!!.goodsViewModel!!.getGoodsCategorys(GoodsSourceEnum.PingDuoDuo.code )
     }
 
     private fun initTabFragments() {

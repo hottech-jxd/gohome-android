@@ -30,6 +30,7 @@ import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatBean
 import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatDataBean
+import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatModel
 import com.jxd.android.gohomeapp.libcommon.util.DateUtils
 import com.jxd.android.gohomeapp.libcommon.util.showToast
 
@@ -75,8 +76,9 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.quan_fragment_income , container ,false )
         dataBinding!!.clickHandler = this
         dataBinding!!.userViewModel=ViewModelProviders.of(this).get(UserViewModel::class.java)
-        dataBinding!!.statsData = ProfitStatBean(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
-            BigDecimal.ZERO, null, BigDecimal.ZERO)
+        dataBinding!!.statsData = ProfitStatBean(BigDecimal.ZERO, 0
+            , BigDecimal.ZERO,0 ,BigDecimal.ZERO, 0 , BigDecimal.ZERO, 0 ,
+            BigDecimal.ZERO, 0 ,null, BigDecimal.ZERO ,0 )
         return  dataBinding!!.root
     }
 
@@ -167,6 +169,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         yAxis.gridColor = ContextCompat.getColor(context!!, R.color.linecolor)
         yAxis.gridLineWidth= 2f
         yAxis.setDrawGridLines(true)
+        yAxis.setDrawZeroLine(false)
 
 
         var legend:Legend = income_lineChart.legend
@@ -185,13 +188,13 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
 
     }
 
-    fun setChart(data: ProfitStatBean?){
-        if(data==null )return
+    fun setChart(data: ProfitStatModel?){
+        if(data==null ||data.data==null)return
 
-        dataBinding!!.statsData = data
+        dataBinding!!.statsData = data.data
 
 
-        var stats = data.trendsProfit
+        var stats = data.data!!.trendsProfit
         if(stats==null) return
         var list = ArrayList<Entry>()
         var x = 0f
@@ -301,7 +304,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
                 var eee = en[0]
                     if (eee is Entry1) {
                         //var e1 = eee
-                        tvDate1!!.text = DateUtils.formatDate( eee.data.profitData)
+                        tvDate1!!.text = DateUtils.formatDate( eee.data.profitData*1000)
                         tvContent1!!.text = "￥"+ eee.data.profitAmount.setScale(2,BigDecimal.ROUND_HALF_UP).toString() //Utils.formatNumber(e.x , 0, true)
 
                     }
