@@ -35,7 +35,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:text="asdfasfas阿斯法师fsdsdfsfasdfasdfsadfsadfasssfds飞撒旦法阿是打发发"
         android:maxLines="2"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/sp_13"
         android:textColor="@color/black"
         android:ellipsize="end"
         android:layout_width="0dp"

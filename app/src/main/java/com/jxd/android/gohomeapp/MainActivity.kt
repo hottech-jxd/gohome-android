@@ -6,11 +6,12 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.jxd.android.gohomeapp.databinding.ActivityMainBinding
+import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.fragment.CouponFragment
 
 
-class MainActivity : AppCompatActivity() , View.OnClickListener {
+class MainActivity : BaseActivity() , View.OnClickListener {
 
 
     var activityMainBinding : ActivityMainBinding?=null
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     }
 
-    fun initView() {
+    override fun initView() {
 
         QuanModule.setMobile("15869168181")
 

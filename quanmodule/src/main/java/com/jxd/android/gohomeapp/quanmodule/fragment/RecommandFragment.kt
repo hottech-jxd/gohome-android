@@ -35,6 +35,7 @@ import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnBannerListener
+import kotlinx.android.synthetic.main.layout_goods_coupon_item.*
 import kotlinx.android.synthetic.main.quan_fragment_recommand.*
 
 
@@ -207,12 +208,14 @@ class RecommandFragment : BaseFragment()
             showSingleThemeUI(item)
         } else if (mode == ThemeIndexRecommendModeEnum.slide) {
             showSlideUI(item)
-        } else if (mode == ThemeIndexRecommendModeEnum.limitedTheme) {
-            showLimitedUI(item)
+        //} else if (mode == ThemeIndexRecommendModeEnum.limitedTheme) {
+        //    showLimitedUI(item)
         } else if (mode == ThemeIndexRecommendModeEnum.listTheme) {
             //showListUI(item)
             showRowBannerUI(item)
-        } else {
+        } else if(mode == ThemeIndexRecommendModeEnum.couponTheme){
+            showCouponUI(item)
+        }else{
             showToast("样式不支持")
         }
     }
@@ -276,9 +279,21 @@ class RecommandFragment : BaseFragment()
         var itemCountDown = RecommandItem3(bean.limitedTime)
         recommands.add(itemCountDown)
 
+        for(item in bean.goodsList!!) {
+            var item4 = RecommandItem4(item)
+            recommands.add(item4)
+        }
+    }
+
+    /**
+     * 领券主题
+     */
+    private fun showCouponUI(bean:IndexBean){
+        if(bean.goodsList==null|| bean.goodsList!!.size<1)return
+        var itemCountDown = RecommandItem5(bean.name)
+        recommands.add(itemCountDown)
 
         for(item in bean.goodsList!!) {
-
             var item4 = RecommandItem4(item)
             recommands.add(item4)
         }
@@ -365,7 +380,10 @@ class RecommandFragment : BaseFragment()
             var goodsId = (recommandAdapter!!.getItem(position) as RecommandItem7).data.goodsId
             var platType = (recommandAdapter!!.getItem(position) as RecommandItem7).data.goodsSource
             dataBinding!!.userViewModel!!.collect( goodsId!! , platType)
+        }else if(view.id==R.id.goods_coupon_item_go){
+            showToast("todo")
         }
+
     }
 
     private fun goto(item :IndexBean){

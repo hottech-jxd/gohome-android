@@ -23,6 +23,8 @@ import android.view.View
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
+import kotlinx.android.synthetic.main.layout_goods_coupon_item.*
+import kotlinx.android.synthetic.main.layout_goods_coupon_item.view.*
 
 
 class RecommandAdapter(data : ArrayList<MultiItemEntity>)
@@ -141,6 +143,14 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
     }
 
     private fun setGoodsCouponOfRow(helper:BaseViewHolder?, item:MultiItemEntity?){
+        var bean = (item as RecommandItem4).data
+        var picUrl = bean.pictureUrl
+
+        helper!!.getView<SimpleDraweeView>(R.id.goods_coupon_item_pic).setImageURI(picUrl)
+        helper.setText(R.id.goods_coupon_item_couponPrice , bean.couponPrice+"元")
+        helper.setText(R.id.goods_coupon_item_goodname , bean.name)
+        //helper.setText(R.id.goods_coupon_item_)
+        helper.addOnClickListener(R.id.goods_coupon_item_go)
 
     }
 

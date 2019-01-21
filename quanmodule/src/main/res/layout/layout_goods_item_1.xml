@@ -23,9 +23,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <TextView
-            android:paddingTop="@dimen/dp_8"
-        android:textSize="@dimen/sp_14"
+    <TextView android:paddingTop="@dimen/dp_8"
+        android:textSize="@dimen/sp_13"
         android:paddingBottom="@dimen/dp_5"
         android:textColor="@color/black"
         android:id="@+id/good_item_1_title"
@@ -108,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="券￥"
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_10"
         android:textColor="#fe4c55"
         android:background="@drawable/shape_quan_bg"
         android:paddingLeft="6dp"
@@ -133,13 +132,13 @@
         android:layout_height="wrap_content">
         <TextView
             android:text="分享赚￥"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_10"
             android:textColor="#fe4c55"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView android:id="@+id/good_item_1_reword"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_10"
             android:textColor="#fe4c55"
             android:text=""
             android:layout_width="wrap_content"

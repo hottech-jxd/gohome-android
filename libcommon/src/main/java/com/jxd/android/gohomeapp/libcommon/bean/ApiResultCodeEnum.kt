@@ -35,10 +35,11 @@ enum class ThemeCategoryEnum(var code: Int,var desc:String){
 }
 
 enum class ThemeIndexRecommendModeEnum(var code: Int,var desc:String){
-    limitedTheme(3,"限时购主题 [商品列表形式展示，同时显示倒计时]"),
+    //limitedTheme(3,"限时购主题 [商品列表形式展示，同时显示倒计时]"),
     listTheme(2,"列表主题 [商品列表形式展示，可设置显示条数或分页获取]"),
     singleTheme(1,"单图主题 [单图展示]"),
-    slide(0,"幻灯")
+    slide(0,"幻灯"),
+    couponTheme(3,"领劵主题 [劵列表形式展示]")
 }
 
 enum class GoodsSortEnum(var code: Int , var desc: String){
