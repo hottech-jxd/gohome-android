@@ -53,6 +53,7 @@ import kotlinx.android.synthetic.main.quan_fragment_share.*
 import kotlinx.android.synthetic.main.quan_fragment_share.view.*
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass.
@@ -206,13 +207,16 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             }
             R.id.share_weChat->{
 
-                testBitmpa()
+                //testBitmpa()
+                shareImagesEx("com.tencent.mm.ui.tools.ShareImgUI")
 
                 //shareImages("com.tencent.mm.ui.tools.ShareImgUI")
                 //shareImageByWechaSDK(SendMessageToWX.Req.WXSceneSession)
             }
             R.id.share_weComment->{
-                shareImages("com.tencent.mm.ui.tools.ShareToTimeLineUI")
+                shareImagesEx("com.tencent.mm.ui.tools.ShareToTimeLineUI")
+                //shareImages("com.tencent.mm.ui.tools.ShareToTimeLineUI")
+
                 //shareImageByWechaSDK(SendMessageToWX.Req.WXSceneTimeline)
             }
         }
@@ -220,25 +224,56 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
     //var createPictureByLayout =CreatePictureByLayout()
 
-    private fun testBitmpa(){
+    private fun shareImagesEx(wechatUI: String){
 
-        var imagePath= AppUtil.getFileName( getSelectPicture())
+        var isSelectPicture = checkSelectPicture()
+        if(!isSelectPicture){
+            showToast("请选择需要分享的图片")
+            return
+        }
 
-        imagePath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"+ imagePath
+        var pictureList = getSelectPictureList()
+        if(pictureList==null|| pictureList.size<1){
+            return
+        }
 
+        var imageDir = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
+        var isDownLoad = isDownPicture(imageDir)
+        if(isDownLoad){
+            saveImage(true, wechatUI )
+            return
+        }
+
+        var imagePath= imageDir + AppUtil.getFileName( pictureList[0])
+
+        var linkUrl = shareBean!!.weAppWebViewUrl
+        if(TextUtils.isEmpty(linkUrl)){
+            linkUrl =shareBean!!.weAppWebViewShortUrl
+        }
+        if(TextUtils.isEmpty(linkUrl)){
+            linkUrl = shareBean!!.url
+        }
+        if(TextUtils.isEmpty(linkUrl)){
+            linkUrl = shareBean!!.shortUrl
+        }
 
         var info=SharePictureInfo(goodsDetailBean!!.name , goodsDetailBean!!.goodsSource
             , goodsDetailBean!!.finalPrice , goodsDetailBean!!.price , goodsDetailBean!!.couponPrice!! ,
-            imagePath , "", "")
+            imagePath , linkUrl , "")
         var drawLongPictureUtil=DrawLongPictureUtil(context , info )
 
         drawLongPictureUtil.setListener(object:DrawLongPictureUtil.Listener{
             override fun onSuccess(path: String?) {
-                //showToast("sss")
+                if(TextUtils.isEmpty(path)) return
+                var pictureList= ArrayList<String>()
+                pictureList.add(path!!)
+
+                post( {    shareImages(wechatUI , pictureList )}
+                )
             }
 
             override fun onFail() {
-                showToast("ss")
+                post({showToast("分享失败")})
             }
         })
 
@@ -258,7 +293,7 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
     /**
      * 将图片存到本地
      */
-    private fun saveImage( needShare:Boolean=false , scene: Int= -1) {
+    private fun saveImage( needShare:Boolean=false , wechatUI:String="") {
 
         if(!checkPermission()) return
 
@@ -289,7 +324,8 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
                     if(needShare){
                         //shareImages()
-                        shareImageByWechaSDK(scene)
+                        //shareImageByWechaSDK(scene)
+                        shareImagesEx(wechatUI)
                     }else{
                         showToast("图片已经保存在"+dir)
                     }
@@ -357,10 +393,10 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         }
         val imageDirectory = File(dirPath)
         val fileList = imageDirectory.list()
-        return fileList.isEmpty()
+        return fileList==null || fileList.isEmpty()
     }
 
-    private fun shareImages(wechatUI:String) {
+    private fun shareImages(wechatUI:String , sharePicturePathList:ArrayList<String>) {
         var dirPath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
         if(isDownPicture(dirPath)) saveImage( true)
 
@@ -368,7 +404,9 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         var shareText = share_content.text.toString().trim()
         var intent = Intent(Intent.ACTION_SEND_MULTIPLE)
         intent.type = "image/*"
-        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImages( Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"  ))
+        //intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImages( Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"  ))
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImagesList( sharePicturePathList ))
+
         intent.putExtra(Intent.EXTRA_SUBJECT, goodsDetailBean!!.name )
         intent.putExtra(Intent.EXTRA_TEXT, shareText )
         intent.putExtra(Intent.EXTRA_TITLE, goodsDetailBean!!.name)
@@ -398,6 +436,15 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         return ""
     }
 
+    private fun getSelectPictureList():ArrayList<String>?{
+        if(sharePictureAdapter!!.data.size<1) return null
+        var list = ArrayList<String>()
+        for(item in sharePictureAdapter!!.data){
+            if(item.check) list.add(item.url)
+        }
+        return list
+    }
+
 
     private fun shareImageByWechaSDK( scene: Int ){
         if(goodsDetailBean==null) return
@@ -416,7 +463,7 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         var dirPath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
         if(isDownPicture(dirPath)) {
-            saveImage(true , scene )
+            //saveImage(true , scene )
             return
         }
 
@@ -489,13 +536,51 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         QuanModule.WechatApi!!.sendReq(req)
     }
 
+
+
+    private fun getLocalImagesList(pathList:ArrayList<String>):ArrayList<Uri> {
+        val myList = ArrayList<Uri>()
+        var count = pathList.size
+
+        for (i in 0 until count) {
+
+            try {
+
+                val values = ContentValues(7)
+
+                values.put(MediaStore.Images.Media.TITLE, pathList[i])
+
+                values.put(MediaStore.Images.Media.DISPLAY_NAME, pathList[i])
+
+                values.put(MediaStore.Images.Media.DATE_TAKEN, Date().time)
+
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+
+                values.put(MediaStore.Images.ImageColumns.BUCKET_ID, pathList.hashCode())
+
+                values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, pathList[i])
+
+                values.put("_data", pathList[i])
+
+                val uri = getUriByFile(context!!, pathList[i])
+
+                myList.add(uri!!)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        return myList
+    }
+
     /**
      * 设置需要分享的照片放入Uri类型的集合里
      */
     private fun getLocalImages( dirPath:String   ): ArrayList<Uri> {
         val myList = ArrayList<Uri>()
 
-        val imageDirectoryPath = dirPath //Constants.ImageDirPath  + dataId+"/"
+        val imageDirectoryPath = dirPath
         val dir = File(imageDirectoryPath)
         if (!dir.exists()) {
             dir.mkdirs()
