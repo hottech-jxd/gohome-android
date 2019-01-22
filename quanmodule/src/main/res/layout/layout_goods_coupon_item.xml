@@ -2,7 +2,12 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_0"
+        android:paddingBottom="@dimen/dp_10"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     
  <RelativeLayout android:layout_width="wrap_content"
                  android:background="@drawable/shape_goods_coupon_bg2"
@@ -46,28 +51,28 @@
                   android:textColor="#EFEEEC"
                   android:layout_alignParentTop="true"
                   android:maxLines="2"
+                  android:lineSpacingExtra="@dimen/dp_4"
                   android:layout_above="@+id/goods_coupon_item_go"
                   android:text="safdsafasfaf"
                   android:ellipsize="end"
                   android:layout_height="wrap_content"/>
 
         <TextView android:layout_width="wrap_content"
-                  android:layout_marginTop="@dimen/dp_8"
+                  android:layout_marginTop="@dimen/dp_6"
                   android:id="@+id/goods_coupon_item_go"
                   android:layout_height="wrap_content"
                   android:textColor="#936223"
                   android:background="@drawable/shape_good_coupon_bg"
                   android:layout_alignParentBottom="true"
                   android:text="立即抢"
-                  android:paddingTop="@dimen/dp_4"
-                  android:paddingBottom="@dimen/dp_4"
+                  android:paddingTop="@dimen/dp_5"
+                  android:paddingBottom="@dimen/dp_5"
                   android:paddingLeft="@dimen/dp_10"
                   android:paddingRight="@dimen/dp_10"
                  android:textSize="@dimen/sp_10" />
         
         <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="@dimen/dp_58"
-                android:background="@color/white"
                 android:layout_centerVertical="true"
                 android:id="@+id/goods_coupon_item_pic"
                 android:layout_alignParentRight="true"

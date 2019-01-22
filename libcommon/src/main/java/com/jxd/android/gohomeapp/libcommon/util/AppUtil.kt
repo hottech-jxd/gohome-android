@@ -2,12 +2,21 @@ package com.jxd.android.gohomeapp.libcommon.util
 
 import android.app.ActivityManager
 import android.content.Context
-import java.io.ByteArrayOutputStream
-import java.io.FileInputStream
-import java.io.IOException
-import java.io.InputStream
 import java.lang.Exception
 import java.math.BigDecimal
+import android.graphics.Bitmap.CompressFormat
+import android.graphics.Bitmap
+import java.io.*
+import java.nio.file.Files.delete
+import java.nio.file.Files.exists
+import com.facebook.common.file.FileUtils.mkdirs
+import java.nio.file.Files.isDirectory
+import java.nio.file.Files.exists
+
+
+
+
+
 
 /**
  * Created by jinxiangdong on 2017/12/16.
@@ -109,6 +118,60 @@ object AppUtil {
         }catch (ex:Exception){
             return false
         }
+    }
+
+
+    /**
+     * Save the bitmap.
+     *
+     * @param src     The source of bitmap.
+     * @param file    The file.
+     * @param format  The format of the image.
+     * @param recycle True to recycle the source of bitmap, false otherwise.
+     * @return `true`: success<br></br>`false`: fail
+     */
+    fun save( src: Bitmap, file: File, format: CompressFormat, recycle: Boolean ): Boolean {
+        if (isEmptyBitmap(src) || !createFileByDeleteOldFile(file)) return false
+        var os: OutputStream? = null
+        var ret = false
+        try {
+            os = BufferedOutputStream(FileOutputStream(file))
+            ret = src.compress(format, 100, os)
+            if (recycle && !src.isRecycled) src.recycle()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            try {
+                if (os != null) {
+                    os!!.close()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+        return ret
+    }
+
+    private fun isEmptyBitmap(src: Bitmap?): Boolean {
+        return src == null || src.width == 0 || src.height == 0
+    }
+
+    private fun createFileByDeleteOldFile(file: File?): Boolean {
+        if (file == null) return false
+        if (file.exists() && !file.delete()) return false
+        if (!createOrExistsDir(file.parentFile)) return false
+        try {
+            return file.createNewFile()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return false
+        }
+
+    }
+
+    private fun createOrExistsDir(file: File?): Boolean {
+        return file != null && if (file.exists()) file.isDirectory else file.mkdirs()
     }
 
 }

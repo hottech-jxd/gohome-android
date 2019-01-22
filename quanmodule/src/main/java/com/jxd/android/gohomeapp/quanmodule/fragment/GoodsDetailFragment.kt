@@ -326,14 +326,17 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
         //    start(ShareTipFragment.newInstance("", ""))
         //}else {
             //start(ShareFragment.newInstance("",""))
+        if(goodDetail==null){
+            return
+        }
 
-            if(quanFragmentDetailBinding==null || quanFragmentDetailBinding!!.goodsViewModel==null ) return
-            var goods = quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value
-            if(goods ==null || goods.resultData== null ||goods.resultData!!.detail==null ) return
-            if(goods.resultCode != ApiResultCodeEnum.SUCCESS.code ) return
+//            if(quanFragmentDetailBinding==null || quanFragmentDetailBinding!!.goodsViewModel==null ) return
+//            var goods = quanFragmentDetailBinding!!.goodsViewModel!!.liveDataGoodsDetail.value
+//            if(goods ==null || goods.resultData== null ||goods.resultData!!.detail==null ) return
+//            if(goods.resultCode != ApiResultCodeEnum.SUCCESS.code ) return
 
             var shareFragment=ARouter.getInstance().build(ARouterPath.QuanFragmentGoodsSharePath)
-                .withObject("goods" , goods.resultData!!.detail )
+                .withObject("goods" , goodDetail )
                 .navigation() as ShareFragment
 
             start(shareFragment)

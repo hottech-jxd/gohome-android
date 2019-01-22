@@ -2,7 +2,9 @@ package com.jxd.android.gohomeapp.quanmodule.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -24,6 +26,7 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
 import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.libcommon.bean.*
+import com.jxd.android.gohomeapp.libcommon.util.AppUtil
 import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
 import com.jxd.android.gohomeapp.libcommon.util.NetworkUtil.url
 import com.jxd.android.gohomeapp.libcommon.util.showToast
@@ -182,9 +185,60 @@ class RecommandFragment : BaseFragment()
 
             var position = it.resultData.toString().toInt()
             var bean = recommandAdapter!!.getItem(position)
-            //bean.
-
         })
+
+        dataBinding!!.goodsViewModel!!.liveDataGoodsShareBean.observe(this , Observer { it->
+            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                showToast(it.resultMsg)
+                return@Observer
+            }
+            if(it.resultData==null || it.resultData!!.share==null){
+                return@Observer
+            }
+            getCoupon(it.resultData!!.share!!)
+        })
+    }
+
+    /**
+     *
+     */
+    private fun getCoupon( shareBean:GoodsShareBean ){
+
+        var isInstallPingDuoduo = AppUtil.checkInstallApp( context!! , Constants.PACKAGENAME_PINDUODUO )
+        var url:String?=""
+        if(isInstallPingDuoduo) {
+            url = shareBean.mobileUrl
+            if (TextUtils.isEmpty(url)) {
+                url = shareBean.mobileShortUrl
+            }
+
+            if (TextUtils.isEmpty(url)) {
+                url = shareBean.url
+            }
+            if (TextUtils.isEmpty(url)) {
+                url = shareBean.shortUrl
+            }
+
+        }else{
+            if (TextUtils.isEmpty(url)) {
+                url = shareBean.url
+            }
+            if (TextUtils.isEmpty(url)) {
+                url = shareBean.shortUrl
+            }
+        }
+
+        if(TextUtils.isEmpty(url)) {
+            showToast("缺少信息，无法领取")
+            return
+        }
+
+        var intent = Intent()
+        intent.action= Intent.ACTION_VIEW
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.data = Uri.parse( url )
+        context!!.startActivity(intent)
+
     }
 
     private fun transferData(result:ArrayList<IndexBean>?) {
@@ -381,9 +435,14 @@ class RecommandFragment : BaseFragment()
             var platType = (recommandAdapter!!.getItem(position) as RecommandItem7).data.goodsSource
             dataBinding!!.userViewModel!!.collect( goodsId!! , platType)
         }else if(view.id==R.id.goods_coupon_item_go){
-            showToast("todo")
+            var bean = (recommandAdapter!!.getItem(position) as RecommandItem4).data
+            getGoodsCoupon(bean)
         }
+    }
 
+    private fun getGoodsCoupon(bean:GoodBean){
+        if(TextUtils.isEmpty(bean.goodsId)) return
+        dataBinding!!.goodsViewModel!!.getShareInfo( bean.goodsId!! , bean.goodsSource )
     }
 
     private fun goto(item :IndexBean){

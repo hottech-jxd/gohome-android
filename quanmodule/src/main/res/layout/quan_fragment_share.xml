@@ -232,7 +232,7 @@
                   android:layout_weight="1"
                   android:text="复制文案"
                   android:gravity="center"
-                  android:drawableTop="@mipmap/download"
+                  android:drawableTop="@mipmap/copy"
                   android:textSize="@dimen/sp_14"
                   android:onClick="@{clickHandler::onClick}"
                   android:drawablePadding="@dimen/dp_8"

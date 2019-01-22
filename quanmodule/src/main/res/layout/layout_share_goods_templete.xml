@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_10"
+        android:background="@color/white"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_20"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:paddingTop="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="vertical"
+            android:id="@+id/share_goods_templete_lay_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView android:layout_width="match_parent" android:textSize="@dimen/sp_16"
+              android:textColor="@color/black"
+                  android:textStyle="bold"
+              android:text="阿萨德法师法师阿萨德法师法师打发阿斯顿发阿萨德法师法师打发阿斯顿发阿萨德法师法师打发阿斯顿发阿萨德法师法师打发阿斯顿发打发阿斯顿发"
+              android:lineSpacingExtra="@dimen/dp_3"
+              android:layout_height="wrap_content"
+            android:id="@+id/share_goods_templete_title"/>
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_width="wrap_content"
+            android:paddingBottom="@dimen/dp_5"
+            android:layout_height="wrap_content">
+
+        <TextView android:layout_width="wrap_content"
+                  android:id="@+id/share_goods_templete_price_symbol"
+                  android:textColor="#FE2120"
+                  android:textSize="@dimen/sp_14"
+                  android:paddingTop="@dimen/dp_10"
+                  android:paddingBottom="@dimen/dp_0"
+                  android:text="￥"
+              android:layout_height="wrap_content"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_alignBottom="@id/share_goods_templete_price_symbol"
+                  android:layout_toRightOf="@id/share_goods_templete_price_symbol"
+                  android:id="@+id/share_goods_templete_finalprice"
+                  android:textColor="#FE2120"
+                  android:textSize="@dimen/sp_24"
+                  android:textStyle="bold"
+                  android:text="224.12"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_below="@id/share_goods_templete_price_symbol"
+                  android:id="@+id/share_goods_templete_price"
+                  android:textSize="@dimen/sp_14"
+                  android:layout_marginTop="@dimen/dp_10"
+                  android:text="￥228.12"
+                  android:layout_height="wrap_content"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_centerVertical="true"
+                          android:layout_alignParentRight="true"
+                            android:orientation="horizontal"
+                          android:paddingRight="@dimen/dp_45"
+                            android:background="@mipmap/coupon2"
+                            android:layout_height="wrap_content">
+
+                <TextView
+                android:id="@+id/share_goods_templete_couponPrice"
+                android:text="0.00"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_18"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_18"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="元"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_9"
+                        android:paddingLeft="@dimen/dp_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+    </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:id="@+id/share_goods_templete_lay_finalprice"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <View android:layout_width="0dp" android:layout_height="@dimen/dp_10" android:layout_weight="1"/>
+
+        <LinearLayout  android:background="@drawable/shape_price_bg"
+                       android:paddingRight="@dimen/dp_10"
+                       android:layout_gravity="right"
+                       android:paddingLeft="@dimen/dp_10" android:layout_width="wrap_content" android:orientation="horizontal" android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/white"
+                      android:textSize="@dimen/sp_14"
+                      android:paddingTop="@dimen/dp_10"
+                      android:paddingBottom="@dimen/dp_0"
+                      android:id="@+id/share_goods_templete_finalprice_symbol"
+                      android:text="￥"
+                      android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                  android:id="@+id/share_goods_templete_finalprice2"
+                  android:textColor="@color/white"
+                  android:textSize="@dimen/sp_24"
+                  android:textStyle="bold"
+                  android:text="224.12"
+                  android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+            android:id="@+id/share_goods_templete_lay_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+    </FrameLayout>
+
+
+    <LinearLayout
+            android:id="@+id/share_goods_templete_lay_bottom"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_width="match_parent"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_20"
+            android:background="@mipmap/rec"
+            android:paddingRight="@dimen/dp_10"
+            android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:layout_width="@dimen/dp_90"
+                android:id="@+id/share_goods_templete_qrcode"
+                android:layout_height="@dimen/dp_90"/>
+
+        <View android:layout_width="0dp" android:layout_height="10dp" android:layout_weight="1" />
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView android:layout_width="wrap_content"
+                      android:drawableTop="@mipmap/hand"
+                      android:drawablePadding="@dimen/dp_6"
+                      android:layout_gravity="center_vertical"
+                      android:textColor="#E9E9E9"
+                      android:textSize="@dimen/sp_10"
+                      android:text="长按识别二维码进入购买"
+                      android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

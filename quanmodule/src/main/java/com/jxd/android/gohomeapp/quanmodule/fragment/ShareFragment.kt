@@ -4,10 +4,7 @@ package com.jxd.android.gohomeapp.quanmodule.fragment
 import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.ClipData
-import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Build
@@ -208,21 +205,53 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
                 showToast("复制成功")
             }
             R.id.share_weChat->{
-                //shareImages()
-                shareImageByWechaSDK(SendMessageToWX.Req.WXSceneSession)
+
+                testBitmpa()
+
+                //shareImages("com.tencent.mm.ui.tools.ShareImgUI")
+                //shareImageByWechaSDK(SendMessageToWX.Req.WXSceneSession)
             }
             R.id.share_weComment->{
-                //shareImages()
-                shareImageByWechaSDK(SendMessageToWX.Req.WXSceneTimeline)
+                shareImages("com.tencent.mm.ui.tools.ShareToTimeLineUI")
+                //shareImageByWechaSDK(SendMessageToWX.Req.WXSceneTimeline)
             }
         }
     }
 
+    //var createPictureByLayout =CreatePictureByLayout()
+
+    private fun testBitmpa(){
+
+        var imagePath= AppUtil.getFileName( getSelectPicture())
+
+        imagePath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"+ imagePath
+
+
+        var info=SharePictureInfo(goodsDetailBean!!.name , goodsDetailBean!!.goodsSource
+            , goodsDetailBean!!.finalPrice , goodsDetailBean!!.price , goodsDetailBean!!.couponPrice!! ,
+            imagePath , "", "")
+        var drawLongPictureUtil=DrawLongPictureUtil(context , info )
+
+        drawLongPictureUtil.setListener(object:DrawLongPictureUtil.Listener{
+            override fun onSuccess(path: String?) {
+                //showToast("sss")
+            }
+
+            override fun onFail() {
+                showToast("ss")
+            }
+        })
+
+
+        drawLongPictureUtil.startDraw()
+
+        //createPictureByLayout.initShareGoodsTemplete(goodsDetailBean!! , context!!)
+
+    }
+
     private fun checkPermission():Boolean{
         if(activity==null) return false
-        var list = PermissionsUtils.Builder(activity!!).addPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .initPermission()
-
+        var list = PermissionsUtils.Builder(activity!!).addPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE).initPermission()
         return list.isEmpty()
     }
 
@@ -238,10 +267,10 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             return
         }
 
-        if(!checkSelectPicture()){
-            showToast("请勾选要下载的图片")
-            return
-        }
+//        if(!checkSelectPicture()){
+//            showToast("请勾选要下载的图片")
+//            return
+//        }
 
 
         var dir = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
@@ -298,48 +327,45 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             f.parentFile.mkdir()
         }
 
-        //var index= 0
+        var index= 0
+        var count = sharePictureAdapter!!.data.size
         for ( item in  sharePictureAdapter!!.data) {
-            if(!item.check) continue
+            //if(!item.check) continue
 
             var url = item.url
 
             var name = AppUtil.getFileName( url )
             var path = dir + name
-            var idId = IdId( 1 , 1 )
+            var idId = IdId( index+1 , count )
 
             tasks.add(FileDownloader.getImpl().create(url).setPath(path).setTag(idId))
 
-            //index++
+            index++
 
         }
         downLoadQueueSet.disableCallbackProgressTimes()
         downLoadQueueSet.setAutoRetryTimes(1)
         downLoadQueueSet.downloadSequentially(tasks)//串行下载
         downLoadQueueSet.start()
-        //showProgress("")
         dataBinding!!.goodsViewModel!!.loading.postValue(true)
     }
 
     private fun isDownPicture( dirPath : String ):Boolean{
-        //val imageDirectoryPath = Constants.ImageDirPath  + quan.dataId+"/"
         val dir = File(dirPath)
         if (!dir.exists()) {
             dir.mkdirs()
         }
         val imageDirectory = File(dirPath)
-
         val fileList = imageDirectory.list()
         return fileList.isEmpty()
     }
 
-    private fun shareImages() {
+    private fun shareImages(wechatUI:String) {
         var dirPath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
         if(isDownPicture(dirPath)) saveImage( true)
 
         //val cm = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         var shareText = share_content.text.toString().trim()
-
         var intent = Intent(Intent.ACTION_SEND_MULTIPLE)
         intent.type = "image/*"
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImages( Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"  ))
@@ -347,6 +373,7 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         intent.putExtra(Intent.EXTRA_TEXT, shareText )
         intent.putExtra(Intent.EXTRA_TITLE, goodsDetailBean!!.name)
         //intent.putExtra(Intent., quan.ShareTitle)
+        intent.component = ComponentName("com.tencent.mm",wechatUI)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         var shareIntent = Intent.createChooser(intent, "分享")
@@ -354,7 +381,6 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         //currentShareDataId=quan.dataId
         startActivityForResult( shareIntent , REQUEST_CODE_SHARE )
     }
-
 
     private fun checkSelectPicture():Boolean{
         if(sharePictureAdapter!!.data.size<1) return false
