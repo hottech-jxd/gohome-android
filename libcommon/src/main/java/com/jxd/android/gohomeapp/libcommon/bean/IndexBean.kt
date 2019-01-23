@@ -24,7 +24,8 @@ data class IndexBean(
         var name: String?="",
         var pictureUrl:String?="",
         var sort: Int=0,
-        var toCode: String?="") {
+        var toCode: String?="",
+        var listBannerUrl:String?="") {
 }
 
 data class IndexModel(var list:ArrayList<IndexBean>?)

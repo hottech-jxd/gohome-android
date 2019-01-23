@@ -90,7 +90,6 @@ class SearchActivity : BaseActivity()
         tags = ArrayList( SPUtils.getInstance(this, Constants.PREF_SEARCH_FILENAME).readStringSet(Constants.PREF_KEY , Collections.emptySet() ))
         search_tags.setTags(tags)
 
-
         searchAdapter= SearchResultAdapter(ArrayList())
         searchAdapter!!.onItemClickListener=this
         searchAdapter!!.setOnLoadMoreListener(this,search_recyclerView)

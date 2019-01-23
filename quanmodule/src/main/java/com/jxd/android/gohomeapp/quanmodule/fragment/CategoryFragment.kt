@@ -132,12 +132,11 @@ class CategoryFragment : BaseBackFragment()
 
 
 
-        var pictureUrl = indexBean!!.pictureUrl
-        //todo banner图片 需要后端开发 确认
+        var pictureUrl = indexBean!!.listBannerUrl
+
         FrescoDraweeController.loadImage(category_Banner , DensityUtils.getScreenWidth(context!!), 100,pictureUrl,this)
 
         //var category=Category( indexBean!!.goodsId , "" )
-
 
         //var fragment = ARouter.getInstance().build(ARouterPath.QuanFragmentTabPath)
         //    .withObject("category",category).navigation() as TabFragment
