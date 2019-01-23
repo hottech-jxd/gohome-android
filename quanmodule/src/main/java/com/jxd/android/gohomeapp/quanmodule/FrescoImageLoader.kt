@@ -21,7 +21,7 @@ class FrescoImageLoader(var banner : Banner, var width :Int ) : ImageLoader(),
     }
 
     override fun displayImage(context: Context?, path: Any?, imageView: ImageView?) {
-        var uri = Uri.parse(path.toString())
+        //var uri = Uri.parse(path.toString())
         //imageView!!.setImageURI(uri)
         FrescoDraweeController.loadImage(
             imageView as SimpleDraweeView,

@@ -1,6 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule
 
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -29,7 +30,7 @@ class DetailActivity : BaseActivity(),View.OnClickListener , OnBannerListener {
 
 
     override fun setStatusColor(){
-        ImmersionBar.with(this).init()
+        ImmersionBar.with(this).statusBarDarkFont(true).init()
     }
 
     override fun initView(){

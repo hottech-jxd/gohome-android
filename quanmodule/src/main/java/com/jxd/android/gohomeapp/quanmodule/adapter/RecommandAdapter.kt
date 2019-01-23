@@ -164,13 +164,6 @@ class RecommandAdapter(data : ArrayList<MultiItemEntity>)
         horizontalBanner.layoutManager= LinearLayoutManager( mContext , LinearLayout.HORIZONTAL ,false )
 
         var goodsList = (item as RecommandItem6).data
-
-        //var horizontalBannerUrl = ArrayList<String>()
-        //horizontalBannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
-        //horizontalBannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
-        //horizontalBannerUrl.add("http://image.tkcm888.com/adSet_2018-06-04_d18eb67c0fbc43a398fc7c55f818122415281204839937212.png")
-
-
         var horizontalBannerAdapter = HorizontalBannerAdapter( goodsList )
         horizontalBanner.adapter=horizontalBannerAdapter
         horizontalBannerAdapter.onItemClickListener = this

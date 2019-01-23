@@ -42,15 +42,8 @@ import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadListener
 import com.liulishuo.filedownloader.FileDownloadQueueSet
 import com.liulishuo.filedownloader.FileDownloader
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject
-import com.tencent.wxop.stat.event.i
-import kotlinx.android.synthetic.main.layout_me_header.*
 import kotlinx.android.synthetic.main.quan_layout_common_header.*
-import kotlinx.android.synthetic.main.quan_fragment_goods_detail.*
 import kotlinx.android.synthetic.main.quan_fragment_share.*
-import kotlinx.android.synthetic.main.quan_fragment_share.view.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -62,12 +55,16 @@ import kotlin.collections.ArrayList
  *
  */
 @Route(path = ARouterPath.QuanFragmentGoodsSharePath)
-class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener , View.OnClickListener {
+class ShareFragment : BaseBackFragment()
+    , BaseQuickAdapter.OnItemClickListener
+    , DrawLongPictureUtil.Listener
+    , View.OnClickListener {
     private var dataBinding:QuanFragmentShareBinding?=null
     private var sharePictureAdapter : SharePictureAdapter?=null
     private var REQUEST_CODE_SHARE=3001
     @Autowired(name="goods") @JvmField var goodsDetailBean :GoodsDetailBean?=null
     private var shareBean:GoodsShareBean?=null
+    private var drawLongPictureUtil:DrawLongPictureUtil?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ARouter.getInstance().inject(this)
@@ -173,6 +170,10 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
     override fun onDestroyView() {
         super.onDestroyView()
         share_scrollTextInfo.destroySwitcher()
+
+        if(drawLongPictureUtil!=null){
+            drawLongPictureUtil!!.removeListener()
+        }
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
@@ -190,7 +191,6 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         sharePictureAdapter!!.notifyDataSetChanged()
     }
-
 
     override fun onClick(v: View?) {
         when(v!!.id){
@@ -216,16 +216,12 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             R.id.share_weComment->{
                 shareImagesEx("com.tencent.mm.ui.tools.ShareToTimeLineUI")
                 //shareImages("com.tencent.mm.ui.tools.ShareToTimeLineUI")
-
                 //shareImageByWechaSDK(SendMessageToWX.Req.WXSceneTimeline)
             }
         }
     }
 
-    //var createPictureByLayout =CreatePictureByLayout()
-
     private fun shareImagesEx(wechatUI: String){
-
         var isSelectPicture = checkSelectPicture()
         if(!isSelectPicture){
             showToast("请选择需要分享的图片")
@@ -259,29 +255,18 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         var info=SharePictureInfo(goodsDetailBean!!.name , goodsDetailBean!!.goodsSource
             , goodsDetailBean!!.finalPrice , goodsDetailBean!!.price , goodsDetailBean!!.couponPrice!! ,
-            imagePath , linkUrl , "")
-        var drawLongPictureUtil=DrawLongPictureUtil(context , info )
+            imagePath , linkUrl , "", wechatUI )
+        if(drawLongPictureUtil==null) {
+            drawLongPictureUtil = DrawLongPictureUtil(context)
+            drawLongPictureUtil!!.setData(info)
+        }else{
+            drawLongPictureUtil!!.setData(info)
+        }
 
-        drawLongPictureUtil.setListener(object:DrawLongPictureUtil.Listener{
-            override fun onSuccess(path: String?) {
-                if(TextUtils.isEmpty(path)) return
-                var pictureList= ArrayList<String>()
-                pictureList.add(path!!)
+        drawLongPictureUtil!!.setListener( this )
 
-                post( {    shareImages(wechatUI , pictureList )}
-                )
-            }
-
-            override fun onFail() {
-                post({showToast("分享失败")})
-            }
-        })
-
-
-        drawLongPictureUtil.startDraw()
-
-        //createPictureByLayout.initShareGoodsTemplete(goodsDetailBean!! , context!!)
-
+        share_progress.visibility = View.VISIBLE
+        drawLongPictureUtil!!.startDraw()
     }
 
     private fun checkPermission():Boolean{
@@ -396,6 +381,33 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         return fileList==null || fileList.isEmpty()
     }
 
+    /**
+     * 由于微信最新版本，已经不支持分享多图到朋友圈了，所有这个需要注意，不然，无法分享
+     */
+    private fun shareOneImage(wechatUI:String ,  sharePicturePathList:ArrayList<String>){
+        var dirPath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
+        if(isDownPicture(dirPath)) saveImage( true)
+
+        var shareText = share_content.text.toString().trim()
+        var intent = Intent(Intent.ACTION_SEND)
+        intent.type = "image/*"
+        var uri = getLocalImagesList( sharePicturePathList )
+        //intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImages( Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"  ))
+        //intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImagesList( sharePicturePathList ))
+        intent.putExtra(Intent.EXTRA_STREAM, uri[0])
+        //intent.putExtra(Intent.EXTRA_SUBJECT, goodsDetailBean!!.name )
+        //intent.putExtra(Intent.EXTRA_TEXT, shareText )
+        //intent.putExtra(Intent.EXTRA_TITLE, goodsDetailBean!!.name)
+        //intent.putExtra(Intent., quan.ShareTitle)
+        intent.component = ComponentName("com.tencent.mm",wechatUI)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        var shareIntent = Intent.createChooser(intent, "分享")
+        //shareIntent.putExtra(Constants.INTENT_GOODSID , quan.dataId )
+        //currentShareDataId=quan.dataId
+        startActivityForResult( shareIntent , REQUEST_CODE_SHARE )
+    }
+
     private fun shareImages(wechatUI:String , sharePicturePathList:ArrayList<String>) {
         var dirPath = Constants.ImageDirPath + goodsDetailBean!!.goodsId+"/"
         if(isDownPicture(dirPath)) saveImage( true)
@@ -403,13 +415,14 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
         //val cm = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         var shareText = share_content.text.toString().trim()
         var intent = Intent(Intent.ACTION_SEND_MULTIPLE)
+        //var intent = Intent(Intent.ACTION_SEND)
         intent.type = "image/*"
         //intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImages( Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"  ))
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, getLocalImagesList( sharePicturePathList ))
 
-        intent.putExtra(Intent.EXTRA_SUBJECT, goodsDetailBean!!.name )
-        intent.putExtra(Intent.EXTRA_TEXT, shareText )
-        intent.putExtra(Intent.EXTRA_TITLE, goodsDetailBean!!.name)
+        //intent.putExtra(Intent.EXTRA_SUBJECT, goodsDetailBean!!.name )
+        //intent.putExtra(Intent.EXTRA_TEXT, shareText )
+        //intent.putExtra(Intent.EXTRA_TITLE, goodsDetailBean!!.name)
         //intent.putExtra(Intent., quan.ShareTitle)
         intent.component = ComponentName("com.tencent.mm",wechatUI)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -500,43 +513,35 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
         var imageBytes = AppUtil.fileToByte(filePath)
 
-        shareWechat(scene , linkUrl , title , description , imageBytes)
+        //shareWechat(scene , linkUrl , title , description , imageBytes)
     }
 
-    private fun shareWechat( scene:Int ,  linkUrl:String? , title:String?, description:String? , imageBytes:ByteArray?){
-
-        var maxImageSize = 1024*32
-        var imageSize = if(imageBytes==null ) 0 else imageBytes.size
-        if(imageSize> maxImageSize){
-            showToast("分享图片大小超过32KB,分享失败")
-            return
-        }
-
-        var webPage = WXWebpageObject()
-        webPage.webpageUrl = linkUrl//"http://wwww.baidu.com"
-
-        var msg= WXMediaMessage(webPage)
-        msg.title = title //"testtest"
-        msg.description= description // "testtestest"
-        //var bitmapFolder = Constants.ImageDirPath  + goodsDetailBean!!.goodsId +"/"
-        //val imageDirectory = File(bitmapFolder)
-
-        //val filePath = imageDirectory.list()[0]
-        //var bitmap = AppUtil.fileToByte(filePath)
-
-        msg.thumbData = imageBytes //bitmap
-
-        var req = SendMessageToWX.Req()
-        req.transaction =  System.currentTimeMillis().toString()
-        req.message =msg
-        req.scene = scene // SendMessageToWX.Req.WXSceneSession
-        //req.userOpenId = getOpenId()
-
-        //调用api接口，发送数据到微信
-        QuanModule.WechatApi!!.sendReq(req)
-    }
-
-
+//    private fun shareWechat( scene:Int ,  linkUrl:String? , title:String?, description:String? , imageBytes:ByteArray?){
+//
+//        var maxImageSize = 1024*32
+//        var imageSize = if(imageBytes==null ) 0 else imageBytes.size
+//        if(imageSize> maxImageSize){
+//            showToast("分享图片大小超过32KB,分享失败")
+//            return
+//        }
+//
+//        var webPage = WXWebpageObject()
+//        webPage.webpageUrl = linkUrl
+//
+//        var msg= WXMediaMessage(webPage)
+//        msg.title = title
+//        msg.description= description
+//        msg.thumbData = imageBytes
+//
+//        var req = SendMessageToWX.Req()
+//        req.transaction =  System.currentTimeMillis().toString()
+//        req.message =msg
+//        req.scene = scene
+//        //req.userOpenId = getOpenId()
+//
+//        //调用api接口，发送数据到微信
+//        QuanModule.WechatApi!!.sendReq(req)
+//    }
 
     private fun getLocalImagesList(pathList:ArrayList<String>):ArrayList<Uri> {
         val myList = ArrayList<Uri>()
@@ -560,7 +565,7 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
 
                 values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, pathList[i])
 
-                values.put("_data", pathList[i])
+                //values.put("_data", pathList[i])
 
                 val uri = getUriByFile(context!!, pathList[i])
 
@@ -691,9 +696,28 @@ class ShareFragment : BaseBackFragment() , BaseQuickAdapter.OnItemClickListener 
             //var dataId = data!!.getLongExtra(Constants.INTENT_GOODSID,0L)
 
             //iPresenter.shareSuccess(currentShareDataId)
-            showToast("分享成功")
+            //showToast("分享成功")
 
         }
+    }
+
+
+    override fun onSuccess(path: String?, tag:String?) {
+        post( {
+            share_progress.visibility = View.GONE
+            if(TextUtils.isEmpty(path)) return@post
+            var pictureList= ArrayList<String>()
+            pictureList.add(path!!)
+            //shareImages( tag!! , pictureList )
+            shareOneImage(tag!!, pictureList)
+        })
+    }
+
+    override fun onFail() {
+
+        post({
+            share_progress.visibility = View.GONE
+            showToast("分享失败")})
     }
 
     companion object {

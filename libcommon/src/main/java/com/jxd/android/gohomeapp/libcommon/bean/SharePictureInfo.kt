@@ -17,6 +17,7 @@ data class SharePictureInfo(var goodsName:String? , var goodsSource:Int
                             ,var couponPrice:String,
                             var picturePath:String?,
                             var linkUrl:String?,
-                            var qrCodePath:String?) {
+                            var qrCodePath:String?,
+                            var tag:String?) {
 
 }

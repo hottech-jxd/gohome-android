@@ -66,7 +66,7 @@ class CashFragment : BaseBackFragment()
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden) {
-            ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
+            ImmersionBar.with(this).statusBarColor(R.color.default_status_color).statusBarDarkFont(true).init()
         }
     }
 
@@ -125,6 +125,12 @@ class CashFragment : BaseBackFragment()
                     pageIndex++
                 }
                 cashRecordAdapter!!.addData(datas)
+
+
+                if(pageIndex<=1) {
+                    cashRecordAdapter!!.disableLoadMoreIfNotFullPage(cash_recyclerview)
+                }
+
             }
 
         })
@@ -148,7 +154,7 @@ class CashFragment : BaseBackFragment()
         cashRecordAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text="暂无数据"
         cash_recyclerview.layoutManager = LinearLayoutManager(context)
         cash_recyclerview.adapter = cashRecordAdapter
-        cashRecordAdapter!!.disableLoadMoreIfNotFullPage(cash_recyclerview)
+
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {

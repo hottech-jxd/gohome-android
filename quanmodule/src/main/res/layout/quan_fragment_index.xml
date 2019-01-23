@@ -36,7 +36,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
         <android.support.design.widget.TabLayout
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginRight="@dimen/dp_4"
             android:id="@+id/index_tab"
             android:layout_weight="1"
             android:layout_width="0dp"

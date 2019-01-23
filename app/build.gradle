@@ -9,8 +9,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
     defaultConfig {
-        //applicationId "com.jxd.android.gohomeapp"
-        applicationId "com.huotu.mall.cathigo"
+        applicationId "com.jxd.android.gohomeapp"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -39,12 +38,12 @@ android {
             storePassword 'jinxiangdong'
         }
 
-        test{
-            keyAlias 'huotucathigo'
-            keyPassword 'huotucathigo'
-            storeFile file('../keystore/cathigo.jks')
-            storePassword 'huotucathigo'
-        }
+//        test{
+//            keyAlias 'huotucathigo'
+//            keyPassword 'huotucathigo'
+//            storeFile file('../keystore/cathigo.jks')
+//            storePassword 'huotucathigo'
+//        }
     }
 
     compileOptions{
@@ -58,11 +57,11 @@ android {
 
     buildTypes {
         debug{
-            //signingConfig signingConfigs.app
+            signingConfig signingConfigs.app
         }
 
         release {
-            //signingConfig signingConfigs.app
+            signingConfig signingConfigs.app
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -114,5 +113,5 @@ dependencies {
     /*recyckerview库*/
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
     //微信分享库
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
+    //implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
 }

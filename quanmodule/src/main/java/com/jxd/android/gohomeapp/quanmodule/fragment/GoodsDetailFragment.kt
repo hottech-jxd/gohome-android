@@ -97,7 +97,12 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
 
         data.clear()
 
-        data.add( PictureBean( goodsDetailModel.detail!!.detail!! ) )
+        //data.add( PictureBean( goodsDetailModel.detail!!.detail!! ) )
+        if(goodDetail!!.pictureUrls!=null) {
+            for(item in goodDetail!!.pictureUrls!!) {
+                data.add(PictureBean(item))
+            }
+        }
 
         detailAdapter!!.setNewData(data)
 

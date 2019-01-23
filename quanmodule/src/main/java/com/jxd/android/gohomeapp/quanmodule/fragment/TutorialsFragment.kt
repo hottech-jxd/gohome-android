@@ -92,11 +92,13 @@ class TutorialsFragment : BaseBackFragment() , View.OnClickListener {
 
     private fun initVedioPlayer( videoUrl :String? ){
 
-        if(TextUtils.isEmpty(videoUrl)) return
+        var source1 = videoUrl// "https://media.w3.org/2010/05/sintel/trailer.mp4"
 
-        //var source1 = "https://res.exexm.com/cw_145225549855002"
+        if(TextUtils.isEmpty(source1)) return
+
+        //var source1 = "https://media.w3.org/2010/05/sintel/trailer.mp4"//"https://res.exexm.com/cw_145225549855002"
         //source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4"
-        tutorials_videoplay.setUp(videoUrl , true, "")
+        tutorials_videoplay.setUp( source1  , true, "")
 
 
 

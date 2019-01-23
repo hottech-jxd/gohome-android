@@ -59,7 +59,6 @@ private const val ARG_PARAM2 = "param2"
  * 收益
  */
 class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueSelectedListener , SwipeRefreshLayout.OnRefreshListener {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     var dataBinding:QuanFragmentIncomeBinding?=null
@@ -85,8 +84,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ImmersionBar.with(this).statusBarColor(R.color.default_status_color).init()
-
+        ImmersionBar.with(this).statusBarColor(R.color.default_status_color).statusBarDarkFont(true).init()
 
         header_title.text="收益中心"
 

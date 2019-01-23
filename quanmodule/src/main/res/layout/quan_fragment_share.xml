@@ -12,6 +12,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_10"
+                android:fitsSystemWindows="true"
+                android:clipToPadding="true"
              android:layout_height="match_parent"
              tools:context=".fragment.ShareFragment">
 
@@ -31,8 +34,8 @@
             android:paddingLeft="@dimen/dp_12"
             android:paddingRight="@dimen/dp_12"
             android:background="#FFF99F"
-            android:paddingTop="@dimen/dp_6"
-            android:paddingBottom="@dimen/dp_6"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
             android:layout_height="wrap_content"
     android:orientation="horizontal">
         <ImageView android:layout_width="wrap_content"
@@ -45,25 +48,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:switcherRollingTime="3500"
-                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginLeft="@dimen/dp_10"
                 app:switcherTextColor="#FF7A09"
                 app:switcherTextSize="@dimen/sp_12" />
-
-    <!--<com.gongwen.marqueen.SimpleMarqueeView-->
-            <!--android:id="@+id/share_scrollTextInfo"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:flipInterval="2500"-->
-            <!--android:inAnimation="@anim/in_bottom"-->
-            <!--android:outAnimation="@anim/out_top"-->
-            <!--app:marqueeAnimDuration="2000"-->
-            <!--app:smvTextColor="@color/scroll_text_color"-->
-            <!--app:smvTextEllipsize="end"-->
-            <!--app:smvTextGravity="left"-->
-            <!--app:smvTextSingleLine="true"-->
-            <!--app:smvTextSize="@dimen/sp_12"/>-->
 
     </LinearLayout>
 

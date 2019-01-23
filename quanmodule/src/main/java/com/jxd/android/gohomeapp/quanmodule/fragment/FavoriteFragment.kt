@@ -50,7 +50,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     private var param1: String? = null
     private var param2: String? = null
     var favoriteAdapter: FavoriteAdapter?=null
-    var data= ArrayList<FavoriteBean>()
+    //var data= ArrayList<FavoriteBean>()
     var selectedAll=false
     var dataBinding:QuanFragmentFavoriteBinding?=null
     var pageIndex:Int=0
@@ -87,10 +87,9 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
 
     override fun initView(){
         header_title.text="收藏夹"
-        header_right_text.text="批量删除"
+        //header_right_text.text="批量删除"
 
-
-        favoriteAdapter = FavoriteAdapter(data)
+        favoriteAdapter = FavoriteAdapter(ArrayList())
         favoriteAdapter!!.setOnLoadMoreListener(this , favorite_recyclerview)
         favoriteAdapter!!.onItemChildClickListener =this
         favoriteAdapter!!.emptyView = View.inflate( context , R.layout.layout_empty , null)
@@ -99,7 +98,6 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
         favorite_recyclerview.addItemDecoration( ItemDevider3(this.context!! , 1f , R.color.linecolor , 15f ))
         favorite_recyclerview.adapter = favoriteAdapter
         favorite_refreshview.setOnRefreshListener(this)
-        favoriteAdapter!!.disableLoadMoreIfNotFullPage(favorite_recyclerview)
 
 
         dataBinding!!.userViewModel!!.liveDataMyCollect.observe(this, Observer { it->
@@ -123,6 +121,11 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
                     pageIndex++
                 }
                 favoriteAdapter!!.addData(datas)
+
+
+                if(pageIndex <=1){
+                    favoriteAdapter!!.disableLoadMoreIfNotFullPage(favorite_recyclerview)
+                }
             }
         })
 
@@ -144,6 +147,11 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             onRefresh()
         })
 
+
+        dataBinding!!.userViewModel!!.loading.observe(this, Observer { it->
+            favorite_loading.visibility = if( it==null || !it) View.GONE else View.VISIBLE
+        })
+
         dataBinding!!.userViewModel!!.getMyCollect( platType ,pageIndex+1)
     }
 
@@ -153,15 +161,18 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
                 _mActivity.onBackPressed()
             }
             R.id.header_right_text -> {
-                batchDelete()
+                //batchDelete()
             }
             R.id.favorite_select->{
                 select()
             }
+            R.id.favorite_delete->{
+                batchDelete()
+            }
         }
     }
 
-    fun select(){
+    private fun select(){
         if(favoriteAdapter==null)return
         var data =favoriteAdapter!!.data
         var count:Int
@@ -214,6 +225,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
     override fun onRefresh() {
         pageIndex=0
         favoriteAdapter!!.setNewData(ArrayList())
+        favorite_refreshview.isRefreshing=false
 
         var drawa =ContextCompat.getDrawable(this.context!! , R.mipmap.unselected)
         drawa!!.setBounds(0,0,drawa.intrinsicWidth, drawa.intrinsicHeight)
@@ -238,7 +250,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
 
             var count = 0
             selectedAll = true
-            for (bean in data) {
+            for (bean in favoriteAdapter!!.data ) {
                 if (!bean.selected) {
                     selectedAll = false
                 }
@@ -257,7 +269,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
             adapter.notifyItemChanged(position)
 
             favorite_select.text = "已选(${count})"
-        }else if(view.id==R.id.favorite_item_container){
+        }else if(view.id==R.id.good_item_image){
             var goodsid = favoriteAdapter!!.getItem(position)!!.goodsId
             ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId",goodsid).navigation()
         }
@@ -269,11 +281,8 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment FavoriteFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             FavoriteFragment().apply {

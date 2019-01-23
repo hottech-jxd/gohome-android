@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.*;
 import android.media.ExifInterface;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.*;
 import android.text.style.ImageSpan;
@@ -26,6 +27,7 @@ import com.jxd.android.gohomeapp.quanmodule.R;
 import com.jxd.android.gohomeapp.quanmodule.adapter.CenteredImageSpan;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,7 +94,7 @@ public class DrawLongPictureUtil extends LinearLayout {
 		 *
 		 * @param path 长图路径
 		 */
-		void onSuccess(String path);
+		void onSuccess(String path, String tag);
 
 		/**
 		 * 生成长图失败的回调
@@ -100,9 +102,9 @@ public class DrawLongPictureUtil extends LinearLayout {
 		void onFail();
 	}
 
-	public DrawLongPictureUtil(Context context, SharePictureInfo shareInfo) {
+	public DrawLongPictureUtil(Context context) {
 		super(context);
-		setData(shareInfo);
+
 		init(context);
 	}
 
@@ -125,7 +127,7 @@ public class DrawLongPictureUtil extends LinearLayout {
 		longPictureWidth = DensityUtils.INSTANCE.getScreenWidth(context);
 		picMargin = 40;
 		rootView = LayoutInflater.from(context).inflate(R.layout.layout_share_goods_templete , this, false);
-		initView();
+		//initView();
 	}
 
 
@@ -213,14 +215,22 @@ public class DrawLongPictureUtil extends LinearLayout {
 			localImagePathMap = new LinkedHashMap<>();
 		}
 		localImagePathMap.put("0" , info.getPicturePath());
+
+		initView();
 	}
 
 	public void startDraw() {
 		new Thread(new Runnable() {
 			@Override public void run() {
-				createQrCode();
-				// 开始绘制view
-				draw();
+				try {
+					createQrCode();
+					// 开始绘制view
+					draw();
+				}catch (Exception ex){
+					if (listener != null) {
+						listener.onFail();
+					}
+				}
 			}
 		}).start();
 	}
@@ -234,7 +244,7 @@ public class DrawLongPictureUtil extends LinearLayout {
 	}
 
 	private Bitmap getLinearLayoutBitmap(LinearLayout relativeLayout, int w, int h) {
-		Bitmap originBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Bitmap originBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
 		Canvas canvas = new Canvas(originBitmap);
 		relativeLayout.draw(canvas );
 		//return ImageUtil.resizeImage(originBitmap, longPictureWidth, h);
@@ -261,19 +271,19 @@ public class DrawLongPictureUtil extends LinearLayout {
 		return height;
 	}
 
-	private int getImageHeight(String imagePath){
-		int[] wh = ImageUtil.getWidthHeight(imagePath);
-		int w = wh[0];
-		int h = wh[1];
-		wh[0] = (longPictureWidth - (picMargin) * 2);
-		wh[1] = (wh[0]) * h / w;
-		float imgRatio = h / w;
-		if (imgRatio > maxSingleImageRatio) {
-			wh[1] = wh[0] * maxSingleImageRatio;
-			Log.d(TAG, "getAllImageHeight w h > maxSingleImageRatio = " + Arrays.toString(wh));
-		}
-		return wh[1];
-	}
+//	private int getImageHeight(String imagePath){
+//		int[] wh = ImageUtil.getWidthHeight(imagePath);
+//		int w = wh[0];
+//		int h = wh[1];
+//		wh[0] = (longPictureWidth - (picMargin) * 2);
+//		wh[1] = (wh[0]) * h / w;
+//		float imgRatio = h / w;
+//		if (imgRatio > maxSingleImageRatio) {
+//			wh[1] = wh[0] * maxSingleImageRatio;
+//			Log.d(TAG, "getAllImageHeight w h > maxSingleImageRatio = " + Arrays.toString(wh));
+//		}
+//		return wh[1];
+//	}
 
 //	private Bitmap getSingleBitmap(String path) {
 //		int[] wh = ImageUtil.getWidthHeight(path);
@@ -338,7 +348,7 @@ public class DrawLongPictureUtil extends LinearLayout {
 		int imageHeight = getAllImageHeight();
 		int imageWidth = (longPictureWidth - picMargin* 2);
 		// 计算图片的总高度
-		allBitmapHeight = allBitmapHeight + imageHeight + DensityUtils.INSTANCE.dip2px(context, 20);
+		allBitmapHeight = allBitmapHeight + imageHeight + DensityUtils.INSTANCE.dip2px(context, 40);
 		//当总长度小于 屏幕的长度是，设置为屏幕的高度，解决背景黑色问题
 		int longScreenHeight= DensityUtils.INSTANCE.getScreenHeight(context);
 		if(allBitmapHeight < longScreenHeight){
@@ -346,7 +356,7 @@ public class DrawLongPictureUtil extends LinearLayout {
 		}
 
 		//创建空白画布
-		Bitmap.Config config = Bitmap.Config.ARGB_8888;
+		Bitmap.Config config = Bitmap.Config.ARGB_4444;
 		Bitmap bitmapAll;
 		try {
 			bitmapAll = Bitmap.createBitmap(longPictureWidth, allBitmapHeight, config);
@@ -394,6 +404,9 @@ public class DrawLongPictureUtil extends LinearLayout {
 
 		// 生成最终的文件，并压缩大小，这里使用的是：implementation 'com.github.nanchen2251:CompressHelper:1.0.5'
 		try {
+
+		    bitmapAll = ImageUtils.compressByQuality(bitmapAll , 50 , true);
+
 			String resultPath = Constants.INSTANCE.getImageDirPath()+"share/"+ String.valueOf( System.currentTimeMillis())+".jpg";
 			AppUtil.INSTANCE.save( bitmapAll , new File( resultPath ) , Bitmap.CompressFormat.JPEG,true);
 //			float imageRatio = ImageUtil.getImageRatio(path);
@@ -434,9 +447,12 @@ public class DrawLongPictureUtil extends LinearLayout {
 //					.compressToFile(new File(path))
 //					.getAbsolutePath();
 //			}
+
+			insertImageToSystem(resultPath);
+
 			Log.d(TAG, "最终生成的长图路径为：" + resultPath);
 			if (listener != null) {
-				listener.onSuccess(resultPath);
+				listener.onSuccess(resultPath , shareInfo.getTag());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -445,6 +461,23 @@ public class DrawLongPictureUtil extends LinearLayout {
 			}
 		}
 	}
+
+	/**
+	 * 生成图片以后，告诉系统我生成了一张图片
+	 * @param imagePath
+	 * @return
+	 */
+	private String insertImageToSystem(  String imagePath) {
+		String url = "";
+		try {
+			String picName = AppUtil.INSTANCE.getFileName(imagePath);
+			url = MediaStore.Images.Media.insertImage(context.getContentResolver(), imagePath, picName , picName );
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return url;
+	}
+
 }
 
 

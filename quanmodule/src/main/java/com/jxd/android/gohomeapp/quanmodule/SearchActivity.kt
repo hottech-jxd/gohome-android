@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.layout_search_header.view.*
 import kotlinx.android.synthetic.main.quan_activity_search.*
 import kotlinx.android.synthetic.main.quan_fragment_tab.*
 import me.gujun.android.taggroup.TagGroup
+import org.w3c.dom.Text
 import java.security.Key
 import java.util.*
 import kotlin.collections.ArrayList
@@ -71,14 +72,7 @@ class SearchActivity : BaseActivity()
     }
 
     override fun initView(){
-//        hotTags.add("s手动发送")
-//        hotTags.add("任务")
-//        hotTags.add("df")
-//        hotTags.add("打发")
-//        hotTags.add("reer玩儿玩儿")
-//        hotTags.add("沃尔沃斯蒂芬")
         search_tags_hot.setTags(hotTags)
-
         search_tags.setOnTagClickListener(this)
         search_tags_hot.setOnTagClickListener(this)
         search_delete.setOnClickListener(this)
@@ -103,6 +97,8 @@ class SearchActivity : BaseActivity()
 
         search_recyclerView.layoutManager= GridLayoutManager(this,2)
         search_recyclerView.adapter=searchAdapter
+        searchAdapter!!.emptyView = layoutInflater.inflate(R.layout.layout_empty , null)
+        searchAdapter!!.emptyView.findViewById<TextView>(R.id.empty_text).text="暂无数据"
 
         search_recyclerView.addItemDecoration( ItemDevider2(this , 15f , R.color.white ) )
 
@@ -122,12 +118,10 @@ class SearchActivity : BaseActivity()
                     search_scrollview.visibility=View.GONE
                 }
 
-
                 if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                     showToast(it.resultMsg)
                     return@Observer
                 }
-
 
                 search_fouse.requestFocus()
                 KeybordUtils.closeKeyboard(this, search_key)
@@ -158,7 +152,6 @@ class SearchActivity : BaseActivity()
             search_progress.visibility=View.GONE
             showToast(it!!)
         })
-
 
         dataBinding!!.goodsViewModel!!.liveDataHotSearch.observe(this,android.arch.lifecycle.Observer{it->
 
@@ -199,7 +192,6 @@ class SearchActivity : BaseActivity()
         }
     }
 
-
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         var goodsid = searchAdapter!!.getItem(position)!!.goodsId
         ARouter.getInstance().build(ARouterPath.QuanActivityGoodsDetailPath).withString("goodsId",goodsid).navigation()
@@ -235,8 +227,6 @@ class SearchActivity : BaseActivity()
 
         dataBinding!!.goodsViewModel!!.search(key, page+1)
     }
-
-
 
     override fun onClick(v: View?) {
         when(v!!.id){

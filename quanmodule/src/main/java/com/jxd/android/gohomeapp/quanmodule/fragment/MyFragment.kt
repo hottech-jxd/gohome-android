@@ -125,11 +125,25 @@ class MyFragment : BaseFragment() , View.OnClickListener
             quan_my_refresview.isEnabled= verticalOffset>=0
     }
 
+    override fun onSupportInvisible() {
+        super.onSupportInvisible()
+    }
+
+    override fun onSupportVisible() {
+        super.onSupportVisible()
+        ImmersionBar.with(this).statusBarColor(R.color.my_status_color).init()
+    }
+
+
+
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden) {
-            ImmersionBar.with(this).statusBarColor(R.color.my_status_color).init()
         }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
@@ -174,7 +188,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
     }
 
-    fun fetchData() {
+    private fun fetchData() {
         dataBinding!!.userViewModel!!.getMyIndex()
         //dataBinding!!.userViewModel!!.getUserInfo(false)
         dataBinding!!.userViewModel!!.getRollDesc()
@@ -213,7 +227,6 @@ class MyFragment : BaseFragment() , View.OnClickListener
         when(v!!.id){
             R.id.my_header_cash->{
                 (this.parentFragment as MainFragment).start(CashFragment.newInstance("",""))
-
             }
             R.id.my_header_lay_all,
             R.id.my_header_lay_preweek,
@@ -224,18 +237,6 @@ class MyFragment : BaseFragment() , View.OnClickListener
             R.id.my_header_detail->{
                 (this.parentFragment as MainFragment).start(ARouter.getInstance().build(ARouterPath.QuanFragmentBalancePath).navigation() as BalanceFragment)
             }
-//            R.id.my_lay_favorite->{
-//                newIntent<FavoriteActivity>()
-//            }
-//            R.id.my_lay_message->{
-//                newIntent<MessageActivity>()
-//            }
-//            R.id.my_lay_invite->{
-//                newIntent<InviteActivity>()
-//            }
-//            R.id.my_lay_zhuan->{
-//                newIntent<MyMoneyActivity>()
-//            }
         }
     }
 
@@ -256,11 +257,8 @@ class MyFragment : BaseFragment() , View.OnClickListener
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment MyFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance() =
                 MyFragment().apply {
