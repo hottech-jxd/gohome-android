@@ -1,6 +1,6 @@
 package com.jxd.android.gohomeapp.quanmodule.repository
 
-import com.jxd.android.gohomeapp.libcommon.bean.*
+import com.jxd.android.gohomeapp.quanmodule.bean.*
 import com.jxd.android.gohomeapp.quanmodule.http.ApiService
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
 import io.reactivex.Observable

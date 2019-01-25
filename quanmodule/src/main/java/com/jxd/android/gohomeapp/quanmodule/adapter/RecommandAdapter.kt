@@ -13,8 +13,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.*
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
+
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.youth.banner.Banner
@@ -22,7 +21,9 @@ import com.youth.banner.listener.OnBannerListener
 import android.view.View
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.bean.*
+import com.jxd.android.gohomeapp.quanmodule.util.DensityUtils
 import kotlinx.android.synthetic.main.layout_goods_coupon_item.*
 import kotlinx.android.synthetic.main.layout_goods_coupon_item.view.*
 

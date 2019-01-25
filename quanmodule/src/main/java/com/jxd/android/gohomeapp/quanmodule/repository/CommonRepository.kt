@@ -1,9 +1,7 @@
 package com.jxd.android.gohomeapp.quanmodule.repository
 
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
-import com.jxd.android.gohomeapp.libcommon.bean.GlobalModel
-import com.jxd.android.gohomeapp.libcommon.bean.Globalbean
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResult
+import com.jxd.android.gohomeapp.quanmodule.bean.GlobalModel
 import com.jxd.android.gohomeapp.quanmodule.http.RetrofitManager
 import io.reactivex.Observable
 

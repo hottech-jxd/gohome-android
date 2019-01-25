@@ -16,9 +16,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import com.jxd.android.gohomeapp.libcommon.base.BaseApplication
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.base.BaseApplication
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentWebBinding
 import com.jxd.android.gohomeapp.quanmodule.widget.TipAlertDialog
 import kotlinx.android.synthetic.main.quan_layout_common_header.*

@@ -7,10 +7,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentShareTipBinding
 import kotlinx.android.synthetic.main.quan_layout_common_header.*
 

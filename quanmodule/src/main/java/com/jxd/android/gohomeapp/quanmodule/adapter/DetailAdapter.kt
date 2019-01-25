@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.PictureBean
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
+
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.PictureBean
+import com.jxd.android.gohomeapp.quanmodule.util.DensityUtils
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeController
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeListener
 
 
 class DetailAdapter(data :ArrayList<PictureBean>)

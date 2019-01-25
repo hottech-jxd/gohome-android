@@ -4,8 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.widget.ImageView
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
+
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeController
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeListener
 import com.youth.banner.Banner
 import com.youth.banner.loader.ImageLoader
 

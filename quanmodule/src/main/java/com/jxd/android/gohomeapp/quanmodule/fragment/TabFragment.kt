@@ -2,7 +2,6 @@ package com.jxd.android.gohomeapp.quanmodule.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.R
 
 
@@ -24,13 +23,17 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.huotu.android.couponsleague.adapter.CategoryAdapter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.bean.*
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider2
 import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandDevider
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.Category
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodBean
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodsSortEnum
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentTabBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import kotlinx.android.synthetic.main.layout_column.*
 import kotlinx.android.synthetic.main.quan_fragment_recommand.*
@@ -62,7 +65,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
     private var categoryAdapter: CategoryAdapter?=null
     private var dataList =ArrayList<GoodBean>()
     private var dataAdapter: DataAdapter?=null
-    private var column_price_sort :GoodsSortEnum = GoodsSortEnum.rewardDes
+    private var column_price_sort : GoodsSortEnum = GoodsSortEnum.rewardDes
     private var page=0
     private var dataBinding:QuanFragmentTabBinding?=null
 
@@ -124,7 +127,7 @@ class TabFragment : BaseFragment() ,View.OnClickListener
         dataBinding!!.goodsViewModel!!.liveDataGoodsOfCategory.observe(this,
             Observer { it->
                 tab_refreshview.isRefreshing=false
-                if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+                if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                     showToast(it.resultMsg)
                     return@Observer
                 }

@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat.startActivity
@@ -18,10 +17,6 @@ import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.gyf.barlibrary.ImmersionBar
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.MainActivity2
 
 import com.jxd.android.gohomeapp.quanmodule.R
@@ -30,7 +25,11 @@ import com.jxd.android.gohomeapp.quanmodule.R.id.coupon_swipeRefreshView
 import com.jxd.android.gohomeapp.quanmodule.TutorialsActivity
 import com.jxd.android.gohomeapp.quanmodule.adapter.CouponAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCouponBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import kotlinx.android.synthetic.main.quan_fragment_coupon.*
 

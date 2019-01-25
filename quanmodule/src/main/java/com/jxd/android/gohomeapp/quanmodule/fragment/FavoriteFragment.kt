@@ -16,17 +16,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.FavoriteBean
-import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
-import com.jxd.android.gohomeapp.libcommon.util.showToast
-
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.FavoriteAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.FavoriteBean
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentFavoriteBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_favorite.*
@@ -104,7 +102,7 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
 
             favorite_refreshview.isRefreshing=false
 
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }
@@ -203,7 +201,6 @@ class FavoriteFragment : BaseBackFragment() ,View.OnClickListener
 
         if(favoriteAdapter==null)return
         var data =favoriteAdapter!!.data
-        var count:Int
         var idList=""
         selectedAll=true
         for(bean in data){

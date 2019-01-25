@@ -2,7 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
-        <variable name="accountBean" type="com.jxd.android.gohomeapp.libcommon.bean.UserApplyAccount"/>
+        <variable name="accountBean" type="com.jxd.android.gohomeapp.quanmodule.bean.UserApplyAccount"/>
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
         <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
     </data>

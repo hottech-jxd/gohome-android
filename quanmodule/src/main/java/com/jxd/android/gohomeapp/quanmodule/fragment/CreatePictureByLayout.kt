@@ -8,15 +8,13 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.Constants
-import com.jxd.android.gohomeapp.libcommon.bean.GoodBean
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean
-import com.jxd.android.gohomeapp.libcommon.util.AppUtil
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.Constants
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodsDetailBean
+import com.jxd.android.gohomeapp.quanmodule.util.AppUtil
+import com.jxd.android.gohomeapp.quanmodule.util.DensityUtils
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeListener
 import java.io.File
 
 /**
@@ -31,10 +29,10 @@ import java.io.File
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-class CreatePictureByLayout :FrescoDraweeListener.ImageCallback {
+class CreatePictureByLayout : FrescoDraweeListener.ImageCallback {
     var rootView:View?=null
 
-    fun initShareGoodsTemplete(bean:GoodsDetailBean , context: Context){
+    fun initShareGoodsTemplete(bean: GoodsDetailBean, context: Context){
         rootView = LayoutInflater.from(context).inflate(R.layout.layout_share_goods_templete , null ,false)
         var screenWidth = DensityUtils.getScreenWidth(context)
         var screenHeight = DensityUtils.getScreenHeight(context)

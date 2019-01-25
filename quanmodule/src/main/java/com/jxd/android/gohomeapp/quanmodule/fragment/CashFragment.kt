@@ -15,18 +15,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.gyf.barlibrary.ImmersionBar
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.ApplyRecord
-import com.jxd.android.gohomeapp.libcommon.bean.CashBean
-import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
-import com.jxd.android.gohomeapp.libcommon.util.showToast
-
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.*
 import com.jxd.android.gohomeapp.quanmodule.adapter.CashRecordAdapter
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.ApplyRecord
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCashBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_cash.*
@@ -94,7 +90,7 @@ class CashFragment : BaseBackFragment()
         header_title.text = title
 
         UserViewModel.liveDataMyResult.observe(this, Observer { it->
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }

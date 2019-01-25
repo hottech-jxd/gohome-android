@@ -12,12 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentTutorialsBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.CommonViewModel
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
@@ -64,7 +64,7 @@ class TutorialsFragment : BaseBackFragment() , View.OnClickListener {
 
         header_left_image.setOnClickListener(this)
          dataBinding!!.commonViewModel!!.liveDataInitResult.observe(this, Observer { it->
-             if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+             if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                  showToast(it.resultMsg)
                  return@Observer
              }

@@ -20,16 +20,15 @@ import com.alibaba.android.arouter.launcher.ARouter
 
 import com.facebook.drawee.view.SimpleDraweeView
 import com.gyf.barlibrary.ImmersionBar
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
-
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.Category
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsSourceEnum
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.AppFragmentAdapter
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.Category
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodsSourceEnum
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIndexBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import kotlinx.android.synthetic.main.quan_fragment_index.*
 import kotlin.collections.ArrayList

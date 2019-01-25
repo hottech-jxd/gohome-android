@@ -11,10 +11,6 @@ import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 
 import com.jxd.android.gohomeapp.quanmodule.R
@@ -29,9 +25,13 @@ import android.net.Uri
 import android.text.TextPaint
 import android.text.TextUtils
 import android.widget.TextView
-import com.jxd.android.gohomeapp.libcommon.bean.*
-import com.jxd.android.gohomeapp.libcommon.util.AppUtil
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.LayoutDetailTopBinding
+import com.jxd.android.gohomeapp.quanmodule.util.AppUtil
+import com.jxd.android.gohomeapp.quanmodule.util.DensityUtils
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import com.wx.goodview.GoodView
 import kotlinx.android.synthetic.main.quan_fragment_goods_detail.*
@@ -49,7 +49,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
     @Autowired  @JvmField var goodsId:String=""
     private var quanFragmentDetailBinding : QuanFragmentGoodsDetailBinding?=null
     private var detailTopBinding:LayoutDetailTopBinding?=null
-    private var goodDetail:GoodsDetailBean?=null
+    private var goodDetail: GoodsDetailBean?=null
 
     override fun onCreateView(  inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         quanFragmentDetailBinding =
@@ -86,7 +86,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
 
     private fun setDetail( goodsDetailModel :GoodsDetailModel? ){
         if(goodsDetailModel==null ||goodsDetailModel.detail==null ) return
-        if(goodsDetailModel!!.detail!!.detail==null) return
+        if(goodsDetailModel!!.detail==null) return
 
 
         goodDetail = goodsDetailModel.detail
@@ -160,7 +160,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
         })
 
         quanFragmentDetailBinding!!.userViewModel!!.liveDataCollectResult.observe(this, Observer { it->
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }
@@ -236,7 +236,7 @@ class GoodsDetailFragment : BaseFragment() , OnBannerListener ,View.OnLongClickL
     /**
      *
      */
-    private fun getCoupon( shareBean:GoodsShareBean ){
+    private fun getCoupon( shareBean: GoodsShareBean){
 
         var isInstallPingDuoduo = AppUtil.checkInstallApp( context!! , Constants.PACKAGENAME_PINDUODUO )
         var url:String?=""

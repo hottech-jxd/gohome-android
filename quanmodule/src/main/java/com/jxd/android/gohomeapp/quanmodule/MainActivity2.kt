@@ -11,10 +11,10 @@ import android.view.KeyEvent
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
-import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseActivity
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityMainBinding
 import com.jxd.android.gohomeapp.quanmodule.fragment.CashFragment
 import com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment
@@ -23,7 +23,7 @@ import com.jxd.android.gohomeapp.quanmodule.fragment.MyFragment
 import kotlinx.android.synthetic.main.layout_bottom_menu.*
 import kotlinx.android.synthetic.main.quan_activity_main.*
 
-@Route(path=ARouterPath.QuanActivityIndexPath)
+@Route(path= ARouterPath.QuanActivityIndexPath)
 class MainActivity2 : BaseActivity() ,View.OnClickListener {
 
     var fragments = ArrayList<BaseFragment>()

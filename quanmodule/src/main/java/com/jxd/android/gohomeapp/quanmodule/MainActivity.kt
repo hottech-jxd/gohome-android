@@ -11,10 +11,10 @@ import android.view.KeyEvent
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
-import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.AppFragmentAdapter
+import com.jxd.android.gohomeapp.quanmodule.base.BaseActivity
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityMainBinding
 import com.jxd.android.gohomeapp.quanmodule.fragment.CashFragment
 import com.jxd.android.gohomeapp.quanmodule.fragment.IndexFragment

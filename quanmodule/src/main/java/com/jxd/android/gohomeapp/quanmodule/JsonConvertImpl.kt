@@ -5,7 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.facade.service.SerializationService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
 import java.lang.reflect.Type
 
 /**

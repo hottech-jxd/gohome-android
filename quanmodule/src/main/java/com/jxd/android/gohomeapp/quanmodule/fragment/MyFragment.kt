@@ -17,15 +17,15 @@ import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.barlibrary.ImmersionBar
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.AppFragmentAdapter
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.*
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.*
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.AppFragmentAdapter
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentMeBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_me_header.*
 import kotlinx.android.synthetic.main.quan_fragment_me.*
@@ -44,7 +44,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-@Route(path=ARouterPath.QuanFragmentMyPath)
+@Route(path= ARouterPath.QuanFragmentMyPath)
 class MyFragment : BaseFragment() , View.OnClickListener
     , TabLayout.OnTabSelectedListener
     , SwipeRefreshLayout.OnRefreshListener
@@ -52,7 +52,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
     var fragments=ArrayList<BaseFragment>()
     var titles =ArrayList<String?>()
-    var orderAdapter:AppFragmentAdapter?=null
+    var orderAdapter: AppFragmentAdapter?=null
     var dataBinding:QuanFragmentMeBinding?=null
     //var myBean:MyBean?=null
 
@@ -81,7 +81,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
         UserViewModel.liveDataMyResult.observe(this, Observer { it->
             quan_my_refresview.isRefreshing=false
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
 
                 showToast(it.resultMsg)
                 return@Observer
@@ -195,7 +195,7 @@ class MyFragment : BaseFragment() , View.OnClickListener
 
     }
 
-    private fun getMessages(messageList :MessageModel?){
+    private fun getMessages(messageList : MessageModel?){
         if(messageList==null || messageList.list==null|| messageList.list!!.size<1){
             my_header_lay_message.visibility=View.GONE
             return

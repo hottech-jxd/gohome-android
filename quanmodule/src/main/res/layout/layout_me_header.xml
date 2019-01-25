@@ -3,7 +3,7 @@
 <layout>
     <data>
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
-        <variable name="myBean" type="com.jxd.android.gohomeapp.libcommon.bean.MyBean" />
+        <variable name="myBean" type="com.jxd.android.gohomeapp.quanmodule.bean.MyBean" />
     </data>
 
 

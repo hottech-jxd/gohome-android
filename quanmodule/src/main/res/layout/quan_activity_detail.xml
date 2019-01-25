@@ -5,7 +5,6 @@
 
     <data>
         <import type="android.view.View" />
-        <!--<variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />-->
     </data>
 
     <FrameLayout android:layout_width="match_parent"

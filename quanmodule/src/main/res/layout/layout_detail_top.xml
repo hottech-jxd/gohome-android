@@ -2,8 +2,8 @@
 
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.jxd.android.gohomeapp.libcommon.util.DateUtils"/>
-        <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
+        <import type="com.jxd.android.gohomeapp.quanmodule.util.DateUtils"/>
+        <variable name="goodsBean" type="com.jxd.android.gohomeapp.quanmodule.bean.GoodsDetailBean" />
     </data>
 
 <RelativeLayout

@@ -4,7 +4,7 @@
     <data>
         <import type="android.view.View" />
         <variable name="goodsViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel" />
-        <variable name="goodsBean" type="com.jxd.android.gohomeapp.libcommon.bean.GoodsDetailBean" />
+        <variable name="goodsBean" type="com.jxd.android.gohomeapp.quanmodule.bean.GoodsDetailBean" />
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
         <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
     </data>

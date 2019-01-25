@@ -4,9 +4,9 @@ import android.content.Context
 import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.jxd.android.gohomeapp.libcommon.bean.ItemTypeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.RecommandItem2
-import com.jxd.android.gohomeapp.libcommon.bean.RecommandItem7
+import com.jxd.android.gohomeapp.quanmodule.bean.ItemTypeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.RecommandItem2
+import com.jxd.android.gohomeapp.quanmodule.bean.RecommandItem7
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration

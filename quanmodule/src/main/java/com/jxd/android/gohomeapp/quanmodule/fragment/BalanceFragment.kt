@@ -15,17 +15,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.BalanceLog
-import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
-import com.jxd.android.gohomeapp.libcommon.util.showToast
-
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.BalanceAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider3
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.BalanceLog
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentBalanceBinding
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_balance.*
@@ -84,7 +82,7 @@ class BalanceFragment : BaseBackFragment() , SwipeRefreshLayout.OnRefreshListene
         dataBinding!!.userViewModel!!.liveDataBalanceLogResult.observe(this, Observer { it->
             balance_refreshview.isRefreshing=false
             balanceAdapter!!.isUseEmpty(true )
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }

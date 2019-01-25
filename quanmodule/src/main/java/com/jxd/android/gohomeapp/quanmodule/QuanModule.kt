@@ -2,7 +2,7 @@ package com.jxd.android.gohomeapp.quanmodule
 
 import com.alibaba.android.arouter.launcher.ARouter
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.jxd.android.gohomeapp.libcommon.base.BaseApplication
+import com.jxd.android.gohomeapp.quanmodule.base.BaseApplication
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import com.liulishuo.filedownloader.FileDownloader
 import me.yokeyword.fragmentation.Fragmentation

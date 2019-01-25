@@ -3,9 +3,9 @@ package com.jxd.android.gohomeapp.quanmodule.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.Category
-import com.jxd.android.gohomeapp.libcommon.bean.CouponBean
+
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.CouponBean
 
 /**
  *

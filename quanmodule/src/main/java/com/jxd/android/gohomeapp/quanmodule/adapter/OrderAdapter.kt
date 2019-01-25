@@ -3,9 +3,10 @@ package com.jxd.android.gohomeapp.quanmodule.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
-import com.jxd.android.gohomeapp.libcommon.util.DateUtils
+
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.OrderBean
+import com.jxd.android.gohomeapp.quanmodule.util.DateUtils
 import java.math.BigDecimal
 
 

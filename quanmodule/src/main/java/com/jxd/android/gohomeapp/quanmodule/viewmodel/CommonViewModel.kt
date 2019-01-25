@@ -2,10 +2,9 @@ package com.jxd.android.gohomeapp.quanmodule.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
-import com.jxd.android.gohomeapp.libcommon.bean.GlobalModel
-import com.jxd.android.gohomeapp.libcommon.bean.Globalbean
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResult
+import com.jxd.android.gohomeapp.quanmodule.bean.GlobalModel
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper
 import com.jxd.android.gohomeapp.quanmodule.repository.CommonRepository
 

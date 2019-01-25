@@ -2,11 +2,11 @@ package com.jxd.android.gohomeapp.quanmodule.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.jxd.android.gohomeapp.libcommon.bean.ApplyRecord
-import com.jxd.android.gohomeapp.libcommon.bean.BalanceLog
-import com.jxd.android.gohomeapp.libcommon.bean.CashBean
-import com.jxd.android.gohomeapp.libcommon.util.DateUtils
+
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.ApplyRecord
+import com.jxd.android.gohomeapp.quanmodule.bean.BalanceLog
+import com.jxd.android.gohomeapp.quanmodule.util.DateUtils
 import java.math.BigDecimal
 
 /**

@@ -7,9 +7,10 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.GoodBean
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsSourceEnum
+
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodBean
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodsSourceEnum
 
 
 class DataAdapter(data: List<GoodBean>) : BaseQuickAdapter<GoodBean, BaseViewHolder>( R.layout.layout_goods_item_1 , data) {

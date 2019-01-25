@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
 
-    <data>
-        <variable name="clickHandler" type="com.jxd.android.gohomeapp.MainActivity" />
-    </data>
 
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,7 +26,6 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{clickHandler.onClick}"
             android:text="Hello World!"
             android:padding="@dimen/dp_15"
             android:background="@color/colorPrimary"
@@ -39,5 +34,3 @@
             app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
-
-</layout>

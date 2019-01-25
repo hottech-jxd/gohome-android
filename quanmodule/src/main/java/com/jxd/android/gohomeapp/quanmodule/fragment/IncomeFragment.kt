@@ -25,19 +25,17 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Utils
 import com.gyf.barlibrary.ImmersionBar
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatBean
-import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatDataBean
-import com.jxd.android.gohomeapp.libcommon.bean.ProfitStatModel
-import com.jxd.android.gohomeapp.libcommon.util.DateUtils
-import com.jxd.android.gohomeapp.libcommon.util.showToast
-
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.R.id.income_lineChart
 import com.jxd.android.gohomeapp.quanmodule.R.mipmap.x
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.ProfitStatBean
+import com.jxd.android.gohomeapp.quanmodule.bean.ProfitStatDataBean
+import com.jxd.android.gohomeapp.quanmodule.bean.ProfitStatModel
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentIncomeBinding
+import com.jxd.android.gohomeapp.quanmodule.util.DateUtils
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.quan_layout_common_header.*
 import kotlinx.android.synthetic.main.quan_fragment_cash.*
@@ -96,7 +94,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
 
             income_refreshview.isRefreshing=false
 
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }
@@ -318,7 +316,7 @@ class IncomeFragment : BaseBackFragment() , View.OnClickListener , OnChartValueS
         }
     }
 
-    class Entry1(var data :ProfitStatDataBean , x:Float,  y:Float): Entry( x,  y) {
+    class Entry1(var data : ProfitStatDataBean, x:Float, y:Float): Entry( x,  y) {
 
     }
 

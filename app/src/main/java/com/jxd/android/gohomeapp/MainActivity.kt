@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.jxd.android.gohomeapp.databinding.ActivityMainBinding
-import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
+import com.jxd.android.gohomeapp.quanmodule.base.BaseActivity
 import com.jxd.android.gohomeapp.quanmodule.fragment.CouponFragment
 
 
 class MainActivity : BaseActivity() , View.OnClickListener {
 
 
-    var activityMainBinding : ActivityMainBinding?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +36,6 @@ class MainActivity : BaseActivity() , View.OnClickListener {
             .commit()
 
 
-
-        activityMainBinding  = DataBindingUtil.setContentView(this, R.layout.activity_main )
-        activityMainBinding!!.clickHandler = this
     }
 
 

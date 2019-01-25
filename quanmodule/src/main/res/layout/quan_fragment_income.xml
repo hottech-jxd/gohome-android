@@ -5,7 +5,7 @@
         <import type="java.math.BigDecimal" />
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
         <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel"/>
-        <variable name="statsData" type="com.jxd.android.gohomeapp.libcommon.bean.ProfitStatBean" />
+        <variable name="statsData" type="com.jxd.android.gohomeapp.quanmodule.bean.ProfitStatBean" />
     </data>
 
     <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView

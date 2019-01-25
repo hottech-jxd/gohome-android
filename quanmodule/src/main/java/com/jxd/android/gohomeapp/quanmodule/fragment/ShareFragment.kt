@@ -24,18 +24,18 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.bean.*
-import com.jxd.android.gohomeapp.libcommon.util.AppUtil
-import com.jxd.android.gohomeapp.libcommon.util.PermissionsUtils
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
 
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider4
 import com.jxd.android.gohomeapp.quanmodule.adapter.SharePictureAdapter
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentShareBinding
+import com.jxd.android.gohomeapp.quanmodule.util.AppUtil
+import com.jxd.android.gohomeapp.quanmodule.util.PermissionsUtils
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import com.liulishuo.filedownloader.BaseDownloadTask
@@ -62,8 +62,8 @@ class ShareFragment : BaseBackFragment()
     private var dataBinding:QuanFragmentShareBinding?=null
     private var sharePictureAdapter : SharePictureAdapter?=null
     private var REQUEST_CODE_SHARE=3001
-    @Autowired(name="goods") @JvmField var goodsDetailBean :GoodsDetailBean?=null
-    private var shareBean:GoodsShareBean?=null
+    @Autowired(name="goods") @JvmField var goodsDetailBean : GoodsDetailBean?=null
+    private var shareBean: GoodsShareBean?=null
     private var drawLongPictureUtil:DrawLongPictureUtil?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +98,7 @@ class ShareFragment : BaseBackFragment()
 
 
         dataBinding!!.goodsViewModel!!.liveDataGoodsShareBean.observe(this, Observer { it->
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }

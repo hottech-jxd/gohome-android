@@ -3,11 +3,12 @@ package com.jxd.android.gohomeapp.quanmodule.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.GoodBean
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
+
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodBean
+import com.jxd.android.gohomeapp.quanmodule.util.DensityUtils
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeController
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeListener
 
 class HorizontalBannerAdapter(data:List<GoodBean>)
     :BaseQuickAdapter<GoodBean,BaseViewHolder>( R.layout.layout_horizontal_banner_item, data) , FrescoDraweeListener.ImageCallback {

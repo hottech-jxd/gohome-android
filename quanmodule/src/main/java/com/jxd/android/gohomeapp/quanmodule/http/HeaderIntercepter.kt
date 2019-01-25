@@ -1,8 +1,8 @@
 package com.jxd.android.gohomeapp.quanmodule.http
 
 import android.os.Build
-import com.guoxintaiyi.android.wallet.util.SignUtils
-import com.jxd.android.gohomeapp.libcommon.bean.Constants
+import com.jxd.android.gohomeapp.quanmodule.util.SignUtils
+import com.jxd.android.gohomeapp.quanmodule.bean.Constants
 import com.jxd.android.gohomeapp.quanmodule.BuildConfig
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
 import okhttp3.*

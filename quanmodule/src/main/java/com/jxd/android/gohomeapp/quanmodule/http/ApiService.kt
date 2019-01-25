@@ -1,10 +1,9 @@
 package com.jxd.android.gohomeapp.quanmodule.http
 
-import com.jxd.android.gohomeapp.libcommon.bean.*
+import com.jxd.android.gohomeapp.quanmodule.bean.*
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.*
-import java.math.BigDecimal
 
 /**
  *

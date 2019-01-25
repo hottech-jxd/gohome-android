@@ -2,7 +2,7 @@ package com.jxd.android.gohomeapp.quanmodule.http
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jxd.android.gohomeapp.libcommon.bean.Constants
+import com.jxd.android.gohomeapp.quanmodule.bean.Constants
 import com.jxd.android.gohomeapp.quanmodule.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,7 +1,7 @@
 package com.jxd.android.gohomeapp
 
 import com.alibaba.android.arouter.launcher.ARouter
-import com.jxd.android.gohomeapp.libcommon.base.BaseApplication
+import com.jxd.android.gohomeapp.quanmodule.base.BaseApplication
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
 
 /**

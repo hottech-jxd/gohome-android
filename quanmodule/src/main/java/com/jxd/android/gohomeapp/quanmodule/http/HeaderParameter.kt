@@ -1,6 +1,6 @@
 package com.jxd.android.gohomeapp.quanmodule.http
 
-import com.jxd.android.gohomeapp.libcommon.bean.Constants
+import com.jxd.android.gohomeapp.quanmodule.bean.Constants
 
 
 data class HeaderParameter(var appVersion: String? = null,

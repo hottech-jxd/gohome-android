@@ -8,11 +8,11 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.barlibrary.ImmersionBar
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
-import com.jxd.android.gohomeapp.libcommon.util.showToast
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseActivity
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityDetailBinding
 import com.jxd.android.gohomeapp.quanmodule.fragment.GoodsDetailFragment
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.youth.banner.listener.OnBannerListener
 
 @Route(path = ARouterPath.QuanActivityGoodsDetailPath)

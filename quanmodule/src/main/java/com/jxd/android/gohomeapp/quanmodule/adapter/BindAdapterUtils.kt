@@ -9,8 +9,8 @@ import android.text.SpannableString
 import android.text.style.ImageSpan
 import android.widget.ImageView
 import android.widget.TextView
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsSourceEnum
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodsSourceEnum
 
 /**
  *

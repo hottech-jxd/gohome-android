@@ -24,17 +24,20 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.bean.*
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeController
-import com.jxd.android.gohomeapp.libcommon.util.FrescoDraweeListener
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.DataAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider2
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodBean
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodsSortEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.IndexBean
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCategoryBinding
+import com.jxd.android.gohomeapp.quanmodule.util.DensityUtils
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeController
+import com.jxd.android.gohomeapp.quanmodule.util.FrescoDraweeListener
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.layout_column.*
@@ -63,7 +66,7 @@ class CategoryFragment : BaseBackFragment()
     private var column_price_sort : GoodsSortEnum = GoodsSortEnum.rewardDes
     private var page=0
 
-    @Autowired(name = "indexbean") @JvmField var indexBean:IndexBean?=null
+    @Autowired(name = "indexbean") @JvmField var indexBean: IndexBean?=null
 
     private var dataBinding:QuanFragmentCategoryBinding?=null
 

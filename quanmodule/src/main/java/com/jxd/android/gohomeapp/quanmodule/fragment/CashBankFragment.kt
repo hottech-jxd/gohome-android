@@ -16,17 +16,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cn.iwgang.countdownview.CountdownView
-import com.guoxintaiyi.android.wallet.util.MobileUtils
-import com.jxd.android.gohomeapp.libcommon.base.BaseBackFragment
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResult
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.UserApplyAccount
-import com.jxd.android.gohomeapp.libcommon.util.KeybordUtils
-import com.jxd.android.gohomeapp.libcommon.util.showToast
-
+import com.jxd.android.gohomapp.quanmodule.util.MobileUtils
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.base.BaseBackFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.UserApplyAccount
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentCashBankBinding
 import com.jxd.android.gohomeapp.quanmodule.repository.UserRepository.sendCode
+import com.jxd.android.gohomeapp.quanmodule.util.KeybordUtils
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.quan_layout_common_header.*
@@ -58,7 +56,7 @@ class CashBankFragment : BaseBackFragment()
 
     var showCountdown:Boolean=false
     var userViewModel:UserViewModel?=null
-    var userAccount:UserApplyAccount?=null
+    var userAccount: UserApplyAccount?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +76,7 @@ class CashBankFragment : BaseBackFragment()
         dataBinding.userViewModel = userViewModel
         dataBinding.accountBean= userAccount
         userViewModel!!.liveDataCashApplyResult.observe(this , Observer { it->
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }

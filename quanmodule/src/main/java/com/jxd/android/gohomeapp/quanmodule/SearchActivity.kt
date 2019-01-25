@@ -18,20 +18,19 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
-import com.jxd.android.gohomeapp.libcommon.bean.ApiResultCodeEnum
-import com.jxd.android.gohomeapp.libcommon.bean.Constants
-import com.jxd.android.gohomeapp.libcommon.bean.OrderBean
-import com.jxd.android.gohomeapp.libcommon.bean.SearchGoodsBean
-import com.jxd.android.gohomeapp.libcommon.util.KeybordUtils
-import com.jxd.android.gohomeapp.libcommon.util.SPUtils
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.adapter.ItemDevider2
 import com.jxd.android.gohomeapp.quanmodule.adapter.RecommandAdapter
 import com.jxd.android.gohomeapp.quanmodule.adapter.SearchResultAdapter
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseActivity
+import com.jxd.android.gohomeapp.quanmodule.bean.ApiResultCodeEnum
+import com.jxd.android.gohomeapp.quanmodule.bean.Constants
+import com.jxd.android.gohomeapp.quanmodule.bean.SearchGoodsBean
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivitySearchBinding
 import com.jxd.android.gohomeapp.quanmodule.fragment.SearchResultFragment
+import com.jxd.android.gohomeapp.quanmodule.util.KeybordUtils
+import com.jxd.android.gohomeapp.quanmodule.util.SPUtils
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import kotlinx.android.synthetic.main.layout_clipboard.*
 import kotlinx.android.synthetic.main.layout_search_header.*
@@ -44,7 +43,7 @@ import java.security.Key
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Route(path=ARouterPath.QuanActivitySearch)
+@Route(path= ARouterPath.QuanActivitySearch)
 class SearchActivity : BaseActivity()
     , TextView.OnEditorActionListener
     , BaseQuickAdapter.RequestLoadMoreListener

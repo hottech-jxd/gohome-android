@@ -5,7 +5,7 @@
     <data>
         <variable name="clickHandler" type="android.view.View.OnClickListener" />
         <variable name="userViewModel" type="com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel" />
-        <variable name="myBean" type="com.jxd.android.gohomeapp.libcommon.bean.MyBean" />
+        <variable name="myBean" type="com.jxd.android.gohomeapp.quanmodule.bean.MyBean" />
     </data>
 
     <com.jxd.android.gohomeapp.quanmodule.widget.SwiperRefreshView
@@ -60,8 +60,6 @@
                     android:layout_height="?attr/actionBarSize"
                     app:tabIndicatorColor="#FF3D44"
                     app:tabIndicatorHeight="@dimen/dp_3"
-                    app:tabIndicatorGravity="bottom"
-                    app:tabIndicatorFullWidth="false"
                     app:tabSelectedTextColor="#FF3D44"
                     app:tabGravity="fill"
                     app:tabTextAppearance="@android:style/TextAppearance.DeviceDefault.Small"

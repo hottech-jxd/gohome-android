@@ -23,22 +23,17 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.base.ARouterPath
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
-import com.jxd.android.gohomeapp.libcommon.bean.*
-import com.jxd.android.gohomeapp.libcommon.util.AppUtil
-import com.jxd.android.gohomeapp.libcommon.util.DensityUtils
-import com.jxd.android.gohomeapp.libcommon.util.NetworkUtil.url
-import com.jxd.android.gohomeapp.libcommon.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.FrescoImageLoader
 import com.jxd.android.gohomeapp.quanmodule.R
 import com.jxd.android.gohomeapp.quanmodule.adapter.*
+import com.jxd.android.gohomeapp.quanmodule.base.ARouterPath
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
+import com.jxd.android.gohomeapp.quanmodule.bean.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentRecommandBinding
+import com.jxd.android.gohomeapp.quanmodule.util.AppUtil
+import com.jxd.android.gohomeapp.quanmodule.util.showToast
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.GoodsViewModel
 import com.jxd.android.gohomeapp.quanmodule.viewmodel.UserViewModel
-import com.youth.banner.Banner
-import com.youth.banner.listener.OnBannerListener
-import kotlinx.android.synthetic.main.layout_goods_coupon_item.*
 import kotlinx.android.synthetic.main.quan_fragment_recommand.*
 
 
@@ -134,7 +129,7 @@ class RecommandFragment : BaseFragment()
             recommand_refreshLayout.isRefreshing=false
             recommandAdapter!!.isUseEmpty(true)
             recommandAdapter!!.notifyItemChanged(0)
-            if(it!!.resultCode!=ApiResultCodeEnum.SUCCESS.code){
+            if(it!!.resultCode!= ApiResultCodeEnum.SUCCESS.code){
                 showToast(it.resultMsg)
                 return@Observer
             }
@@ -183,8 +178,8 @@ class RecommandFragment : BaseFragment()
                 return@Observer
             }
 
-            var position = it.resultData.toString().toInt()
-            var bean = recommandAdapter!!.getItem(position)
+            //var position = it.resultData.toString().toInt()
+            //var bean = recommandAdapter!!.getItem(position)
         })
 
         dataBinding!!.goodsViewModel!!.liveDataGoodsShareBean.observe(this , Observer { it->
@@ -202,7 +197,7 @@ class RecommandFragment : BaseFragment()
     /**
      *
      */
-    private fun getCoupon( shareBean:GoodsShareBean ){
+    private fun getCoupon( shareBean: GoodsShareBean){
 
         var isInstallPingDuoduo = AppUtil.checkInstallApp( context!! , Constants.PACKAGENAME_PINDUODUO )
         var url:String?=""

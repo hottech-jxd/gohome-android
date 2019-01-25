@@ -3,8 +3,8 @@ package com.jxd.android.gohomeapp.quanmodule.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import com.jxd.android.gohomeapp.libcommon.bean.*
 import com.jxd.android.gohomeapp.quanmodule.QuanModule
+import com.jxd.android.gohomeapp.quanmodule.bean.*
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanActivityDetailBinding
 
 import com.jxd.android.gohomeapp.quanmodule.http.wrapper

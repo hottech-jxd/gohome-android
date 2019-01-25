@@ -7,9 +7,9 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.facebook.drawee.view.SimpleDraweeView
-import com.jxd.android.gohomeapp.libcommon.bean.FavoriteBean
-import com.jxd.android.gohomeapp.libcommon.bean.GoodsSourceEnum
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.bean.FavoriteBean
+import com.jxd.android.gohomeapp.quanmodule.bean.GoodsSourceEnum
 
 class FavoriteAdapter(data :ArrayList<FavoriteBean>) :BaseQuickAdapter<FavoriteBean,BaseViewHolder>(R.layout.layout_favorite_item , data ) {
 

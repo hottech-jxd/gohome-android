@@ -3,7 +3,7 @@ package com.jxd.android.gohomeapp.quanmodule
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.gyf.barlibrary.ImmersionBar
-import com.jxd.android.gohomeapp.libcommon.base.BaseActivity
+import com.jxd.android.gohomeapp.quanmodule.base.BaseActivity
 import com.jxd.android.gohomeapp.quanmodule.fragment.TutorialsFragment
 
 class TutorialsActivity : BaseActivity() {

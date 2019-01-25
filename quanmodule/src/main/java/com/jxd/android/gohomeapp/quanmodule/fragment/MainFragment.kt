@@ -9,9 +9,9 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jxd.android.gohomeapp.libcommon.base.BaseFragment
 
 import com.jxd.android.gohomeapp.quanmodule.R
+import com.jxd.android.gohomeapp.quanmodule.base.BaseFragment
 import com.jxd.android.gohomeapp.quanmodule.databinding.QuanFragmentMainBinding
 import kotlinx.android.synthetic.main.layout_bottom_menu.*
 
